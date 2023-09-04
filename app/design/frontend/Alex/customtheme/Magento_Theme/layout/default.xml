@@ -1,4 +1,5 @@
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="logo">
             <arguments>
@@ -6,16 +7,43 @@
                 <argument name="logo_img_width" xsi:type="number">100</argument>
                 <argument name="logo_img_height" xsi:type="number">100</argument>
             </arguments>
+            <block class="Magento\Framework\View\Element\Text" name="custom.logo.left" as="custom_text">
+                <action method="setText">
+                    <argument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="value" xsi:type="string">My
+                        text left to the logo
+                    </argument>
+                </action>
+            </block>
         </referenceBlock>
-        <referenceContainer name="footer">
-            <container name="footer.test.container" htmlClass="pseudo-container" htmlTag="div" after="footer_links">
-                <block class="Magento\Framework\View\Element\Text" name="test.label" as="test_label">
-                    <action method="setText">
-                        <argument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="value" xsi:type="string">Your mom is a whore</argument>
-                    </action>
+
+        <referenceContainer name="columns">
+            <container name="promo.column.left" htmlTag="div" htmlClass="promo-column-left">
+                <block class="Magento\Cms\Block\Block" name="promotion-block">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">promotion-block</argument>
+                    </arguments>
                 </block>
-                <block class="Magento\Framework\View\Element\Template" name="test.template" as="test_template_block" template="Magento_Theme::geekhub/footer_item_template.phtml"/>
             </container>
         </referenceContainer>
+
+        <referenceContainer name="footer">
+            <container name="footer.test.container" htmlClass="test-container" htmlTag="div" after="footer_links">
+                <block class="Magento\Framework\View\Element\Text" name="test.label" as="test_label">
+                    <action method="setText">
+                        <argument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="value" xsi:type="string">
+                            This site is made in PhpStorm
+                        </argument>
+                    </action>
+                </block>
+                <block class="Magento\Framework\View\Element\Template"
+                       name="test.template" as="test_template_block"
+                       template="Magento_Theme::Alex/footer_item_template.phtml">
+                </block>
+            </container>
+        </referenceContainer>
+
+        <referenceBlock name="copyright" remove="true" />
+
+        <move element="form.subscribe" destination="footer.test.container" after="-"/>
     </body>
 </page>
