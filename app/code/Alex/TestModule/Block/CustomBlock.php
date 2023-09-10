@@ -7,7 +7,7 @@ use Magento\Framework\View\Element\Template;
 
 class CustomBlock extends Template
 {
-    const ALEX_TEMPLATE = "Alex_TestModule::test/testTemplate.phtml";
+    const ALEX_TEMPLATE = "Alex_TestModule::test/test.phtml";
 
     /**
      * * add custom template

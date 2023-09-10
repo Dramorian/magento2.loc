@@ -6,7 +6,7 @@
         <referenceContainer name="content">
             <block class="Alex\TestModule\Block\CustomBlock"
                    name="custom.test.page.result"
-                   template="Alex_TestModule::test/testTemplate.phtml">
+                   template="Alex_TestModule::test/test.phtml">
             </block>
         </referenceContainer>
     </body>

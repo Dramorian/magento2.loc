@@ -10,5 +10,9 @@
             <!--The module which this route match to-->
             <module name="Alex_TestModule" />
         </route>
+        <route id="home_work" frontName="home-work">
+            <!--The module which this route match to-->
+            <module name="Alex_TestModule" />
+        </route>
     </router>
 </config>

@@ -16,7 +16,7 @@
             </block>
         </referenceBlock>
 
-        <referenceContainer name="columns">
+        <referenceContainer name="sidebar.additional">
             <container name="promo.column.left" htmlTag="div" htmlClass="promo-column-left">
                 <block class="Magento\Cms\Block\Block" name="promotion-block">
                     <arguments>
