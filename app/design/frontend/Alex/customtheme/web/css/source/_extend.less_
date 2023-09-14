@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Gotham Regular";
+    src: url("https://db.onlinewebfonts.com/t/0ff8990774ec4865c7f45befbafd4910.eot");
+    src: url("https://db.onlinewebfonts.com/t/0ff8990774ec4865c7f45befbafd4910.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/0ff8990774ec4865c7f45befbafd4910.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/0ff8990774ec4865c7f45befbafd4910.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/0ff8990774ec4865c7f45befbafd4910.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/0ff8990774ec4865c7f45befbafd4910.svg#Gotham Regular") format("svg");
+}
+// Primary button
+@button-primary__background: #9400D3;
+@button-primary__border: #000080;
+@button-primary__color: #fff;
