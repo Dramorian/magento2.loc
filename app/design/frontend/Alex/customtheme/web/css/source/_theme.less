@@ -19,11 +19,11 @@
 @icons__font-path: '@{baseDir}fonts/Luma-Icons';
 @icons__font-name: 'luma-icons';
 
-@font-face {
-    font-family: 'Gotham';
-    src: url('@{baseDir}fonts/Gotham-Medium.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+@font-family-name__base: 'Gotham';
+@font-family__base: @font-family-name__base, @font-family__sans-serif;
+
+body{
+    font-family: @font-family__base
 }
 
 //  Color nesting
@@ -130,10 +130,11 @@
 @button__active__background: @color-gray-darken1;
 
 //  Primary button
-@button-primary__hover__color: @color-white;
-@button-primary__active__background: @link__hover__color;
-@button-primary__active__border: 1px solid @link__hover__color;
-@button-primary__active__color: @color-white;
+@button-primary__background: #9400D3;
+@button-primary__border: 1px solid #000080;
+@button-primary__color: #fff;
+
+
 
 //  Button with icon
 @button-icon__line-height: @icon-font__line-height;
