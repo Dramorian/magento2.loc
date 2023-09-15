@@ -1,7 +1,7 @@
 define([], function () {
-    return function (config) {
+    return function (config, node) {
         alert("Your Js module is working");
         console.log(config);
-        // alert(config);
+        console.log(node);
     };
 });
