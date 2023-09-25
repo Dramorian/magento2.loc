@@ -1,28 +1,22 @@
-define(
-    [
-        'jquery',
-        'Magento_Ui/js/modal/modal'
+define([
+        "jquery",
+        "Magento_Ui/js/modal/modal"
     ],
-    function (
-        $,
-        modal
-    ) {
-        var options = {
-            type: 'popup',
-            responsive: true,
-            innerScroll: true,
-            buttons: [{
-                text: $.mage.__('Close'),
-                class: '',
-                click: function () {
-                    this.closeModal();
-                }
-            }]
+
+    function ($) {
+        var RegistrationPopup = {
+            initModal: function (config, element) {
+                let $target = $(config.target);
+                $target.modal();
+                let $element = $(element);
+                $element.click(function () {
+                    $target.modal('openModal');
+                });
+            }
         };
 
-        var popup = modal(options, $('#popup-modal'));
-        $("#click-me").on('click', function () {
-            $("#popup-modal").modal("openModal");
-        });
+        return {
+            'registrationPopup': RegistrationPopup.initModal
+        };
     }
 );

@@ -1,16 +1,17 @@
-<!--<p>-->
-<!--    <a href="#" id="click-me" data-mage-init='{"registrationPopup":{}}'> Registration for dealer </a>-->
-<!--</p>-->
+<!--<script type="text/x-magento-init">-->
+<!--    {-->
+<!--        "*": {-->
+<!--            "registrationPopup": {}-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 
-<!--<div data-mage-init='{"registrationPopup":{}}'>-->
-<div class="123">
-    <a href="#" id="click-me">Registration for dealer</a>
+<div id="modal-content">
+    <?php  $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magento_Customer::form/register.phtml")->toHtml(); ?>
+
 </div>
 
-<script type="text/x-magento-init">
-    {
-        "*": {
-            "registrationPopup": {}
-        }
-    }
-</script>
+<button id="example-modal-button" data-mage-init='{"registrationPopup": {"target": "#modal-content"}}'>
+    Registration for dealer
+</button>
+
