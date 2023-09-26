@@ -2,21 +2,11 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceBlock name="form.additional.info">
+        <referenceBlock name="content">
             <block class="Magento\Customer\Block\Form\Register" name="custom.registration.block"
-                   as="custom_registration_block" template="Alex_Lesson5Homework::dealer_registration.phtml"/>
-<!--            <arguments>-->
-<!--                <argument name="attribute_data" xsi:type="object">-->
-<!--                    Magento\Customer\Block\DataProviders\AddressAttributeData-->
-<!--                </argument>-->
-<!--                <argument name="region_provider" xsi:type="object">Magento\Customer\ViewModel\Address\RegionProvider-->
-<!--                </argument>-->
-<!--                <argument name="create_account_button_view_model" xsi:type="object">-->
-<!--                    Magento\Customer\ViewModel\CreateAccountButton-->
-<!--                </argument>-->
-<!--            </arguments>-->
+                   as="custom_registration_block"
+                   template="Alex_Lesson5Homework::dealer_registration.phtml"
+                   after="customer_form_register"/>
         </referenceBlock>
-
-
     </body>
 </page>

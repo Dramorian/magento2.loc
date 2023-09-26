@@ -31,7 +31,7 @@ $createAccountButtonViewModel = $block->getData('create_account_button_view_mode
 <?php /* Extensions placeholder */ ?>
 <?= $block->getChildHtml('customer.form.register.extra') ?>
 
-<div id="modal-content">
+<div id="modal-content" style="display: none;">
 
     <form class="form create account form-create-account"
           action="<?= $escaper->escapeUrl($block->getPostActionUrl()) ?>"
@@ -277,7 +277,7 @@ $createAccountButtonViewModel = $block->getData('create_account_button_view_mode
             <div class="field password required">
                 <label for="password" class="label"><span><?= $escaper->escapeHtml(__('Password')) ?></span></label>
                 <div class="control">
-                    <input type="password" name="password" id="password"
+                    <input type="password" name="password" id="password2"
                            title="<?= $escaper->escapeHtmlAttr(__('Password')) ?>"
                            class="input-text"
                            data-password-min-length="<?=
@@ -305,9 +305,9 @@ $createAccountButtonViewModel = $block->getData('create_account_button_view_mode
                     <input type="password"
                            name="password_confirmation"
                            title="<?= $escaper->escapeHtmlAttr(__('Confirm Password')) ?>"
-                           id="password-confirmation"
+                           id="password-confirmation2"
                            class="input-text"
-                           data-validate="{required:true, equalTo:'#password'}"
+                           data-validate="{required:true, equalTo:'#password2'}"
                            autocomplete="off">
                 </div>
             </div>
@@ -425,7 +425,7 @@ script;
                     "components": {
                         "showPassword": {
                             "component": "Magento_Customer/js/show-password",
-                            "passwordSelector": "#password,#password-confirmation"
+                            "passwordSelector": "#password2,#password-confirmation2"
                         }
                     }
                 }
@@ -435,7 +435,7 @@ script;
 
 </div>
 
-<button id="example-modal-button" data-mage-init='{"registrationPopup": {"target": "#modal-content"}}'>
+<button id="example-modal-button" style="margin-top: 10px;" data-mage-init='{"registrationPopup": {"target": "#modal-content"}}'>
     Registration for dealer
 </button>
 

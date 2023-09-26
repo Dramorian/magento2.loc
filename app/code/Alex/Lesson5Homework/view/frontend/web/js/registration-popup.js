@@ -7,7 +7,22 @@ define([
         var RegistrationPopup = {
             initModal: function (config, element) {
                 let $target = $(config.target);
-                $target.modal();
+
+                // Modify the modal options to change the button text
+                let modalOptions = {
+                    type: 'popup',
+                    title: 'Registration for dealer',
+                    buttons: [{
+                        text: $.mage.__('Back'), // Change the button text to 'Back'
+                        class: 'action primary',
+                        click: function () {
+                            this.closeModal();
+                        }
+                    }]
+                };
+
+                $target.modal(modalOptions);
+
                 let $element = $(element);
                 $element.click(function () {
                     $target.modal('openModal');
@@ -18,5 +33,4 @@ define([
         return {
             'registrationPopup': RegistrationPopup.initModal
         };
-    }
-);
+    });
