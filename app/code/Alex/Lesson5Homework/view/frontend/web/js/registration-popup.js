@@ -2,7 +2,6 @@ define([
         "jquery",
         "Magento_Ui/js/modal/modal"
     ],
-
     function ($) {
         var RegistrationPopup = {
             initModal: function (config, element) {
@@ -12,6 +11,8 @@ define([
                 let modalOptions = {
                     type: 'popup',
                     title: 'Registration for dealer',
+                    'responsive': true,
+                    'innerScroll': true,
                     buttons: [{
                         text: $.mage.__('Back'), // Change the button text to 'Back'
                         class: 'action primary',
