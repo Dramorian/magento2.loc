@@ -1,7 +1,9 @@
 define([
     'jquery',
+    'alex_validationAlert',
     'jquery/ui'
-], function ($) {
+], function ($, validationAlert) {
+    'use strict';
 
     $.widget('alex.requestSample', {
         options: {
@@ -15,17 +17,15 @@ define([
 
         submitForm: function () {
             if (!this.validateForm()) {
+                validationAlert();
                 return;
             }
 
-            alert('Form was submitted');
+            console.log('Form was submitted');
         },
-        /**
-         *
-         * @returns {boolean}
-         */
+
         validateForm: function () {
-            return true;
+            return $(this.element).validation().valid();
         }
     });
 
