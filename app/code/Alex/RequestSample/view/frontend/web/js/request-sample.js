@@ -42,6 +42,11 @@ define([
                         title: $.mage.__(response.status),
                         content: $.mage.__(response.message)
                     });
+
+                    if (response.status === 'Success') {
+                        // can use this cookie to prevent from sending requests too often
+                        $.mage.cookies.set(this.options.cookieName, true);
+                    }
                 })
                 .fail(function (error) {
                     console.log(JSON.stringify(error));
