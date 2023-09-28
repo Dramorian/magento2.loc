@@ -2,6 +2,7 @@
 
 namespace Alex\RequestSample\Controller\Submit;
 
+use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
@@ -26,7 +27,7 @@ class Index extends Action
      */
     public function __construct(
         Validator $formKeyValidator,
-        Context          $context
+        Context   $context
     )
     {
         parent::__construct($context);
@@ -38,11 +39,18 @@ class Index extends Action
      */
     public function execute()
     {
+        /** @var Http $request */
         $request = $this->getRequest();
 
         try {
             if (!$this->formKeyValidator->validate($request) || $request->getParam('hideit')) {
-                throw new LocalizedException(__('Something went wrong. Probably you were away for quite a long time already. Please, reload the page and try again.'));
+                throw new LocalizedException(__('Something went wrong.
+                Probably you were away for quite a long time already.
+                Please, reload the page and try again.'));
+            }
+
+            if (!$request->isAjax()) {
+                throw new LocalizedException(__('This request is not valid and can not be processed.'));
             }
 
             // @TODO: #111 Backend form validation
