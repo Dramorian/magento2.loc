@@ -16,6 +16,7 @@ define([
         /** @inheritdoc */
         _create: function () {
             $(this.element).submit(this.submitForm.bind(this));
+            $('body').on('alex_request_sample_clear_cookie', this.clearCookie.bind(this));
         },
 
         submitForm: function () {
@@ -61,15 +62,19 @@ define([
                         title: $.mage.__('Error'),
                         content: $.mage.__('Your request can not be submitted right now. Please, contact us directly via email or phone to get your Sample.')
                     });
-                    }
-                })
+                }
+            })
 
         },
 
         validateForm: function () {
             return $(this.element).validation().valid();
+        },
+
+        clearCookie: function () {
+            $.mage.cookies.clear(this.options.cookieName);
         }
-    });
+        });
 
     return $.alex.requestSample;
 });
