@@ -3,13 +3,14 @@ define([
     'alex_validationAlert',
     'Magento_Ui/js/modal/alert',
     'mage/cookies',
+    'mage/translate',
     'jquery/ui'
 ], function ($, validationAlert, alert) {
     'use strict';
 
     $.widget('alex.requestSample', {
         options: {
-            action: ''
+            cookieName: 'alex_sample_was_requested'
         },
 
         /** @inheritdoc */
@@ -38,8 +39,8 @@ define([
             })
                 .done(function (response) {
                     alert({
-                        title: response.status,
-                        content: response.message
+                        title: $.mage.__(response.status),
+                        content: $.mage.__(response.message)
                     });
                 })
                 .fail(function (error) {

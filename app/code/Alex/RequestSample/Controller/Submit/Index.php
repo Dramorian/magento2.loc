@@ -51,7 +51,7 @@ class Index extends Action
 
             $data = [
                 'status' => self::STATUS_SUCCESS,
-                'message' => __('Your request was submitted. We\'ll get in touch with you as soon as possible.')
+                'message' => 'Your request was submitted. We\'ll get in touch with you as soon as possible.'
             ];
         } catch (LocalizedException $e) {
             $data = [
