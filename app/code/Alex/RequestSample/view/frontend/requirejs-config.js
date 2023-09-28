@@ -11,6 +11,9 @@ var config = {
         mixins: {
             'Magento_Catalog/js/catalog-add-to-cart': {
                 'Alex_RequestSample/js/product/catalog-add-to-cart-mixin': true
+            },
+            'Magento_Checkout/js/action/place-order': {
+                'Alex_RequestSample/js/checkout/place-order-mixin': true
             }
         }
     }
