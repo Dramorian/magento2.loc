@@ -59,7 +59,9 @@ class Index extends \Magento\Framework\App\Action\Action
                 Please, reload the page and try again.'));
             }
 
-            // Update the last request time in the session
+            if (!$request->isAjax()) {
+                throw new LocalizedException(__('This request is not valid and can not be processed.'));
+            }
 
             // @TODO: #111 Backend form validation
             // Here we must also process backend validation or all form fields.
@@ -71,6 +73,7 @@ class Index extends \Magento\Framework\App\Action\Action
             ];
             // Update the last request time in the session.
             $this->session->setData('last_request_time', time());
+
         } catch (LocalizedException $e) {
             $data = [
                 'status' => self::STATUS_ERROR,
