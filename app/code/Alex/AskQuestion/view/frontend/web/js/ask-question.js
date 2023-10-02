@@ -11,6 +11,7 @@ define([
     $.widget('alex.askQuestion', {
         options: {
             cookieName: 'alex_question_was_requested'
+
         },
 
         /** @inheritdoc */
@@ -20,11 +21,45 @@ define([
         },
 
         /**
+         * Set cookie expiration time. If no cookie — allow requestc
+         * @returns {boolean}
+         */
+        isSubmitAllowed: function () {
+            var cookieValue = $.mage.cookies.get(this.options.cookieName);
+
+            if (cookieValue) {
+                // Get the cookie expiration time.
+                var cookieExpirationTime = parseInt(cookieValue, 10);
+
+                // If the cookie has expired, allow the user to submit a request.
+                if (cookieExpirationTime < new Date().getTime()) {
+                    $.mage.cookies.clear(this.options.cookieName);  // Clear the expired cookie
+                    return true;
+                }
+            } else {
+                // If the cookie does not exist, allow the user to submit a request.
+                return true;
+            }
+
+            // Otherwise, prevent the user from submitting a request.
+            return false;
+        },
+
+        /**
          * Validate request and submit the form, if possible
          */
         submitForm: function () {
             if (!this.validateForm()) {
                 validationAlert();
+
+                return;
+            }
+
+            if (!this.isSubmitAllowed()) {
+                alert({
+                    title: $.mage.__('Error'),
+                    content: $.mage.__('You are not allowed to submit a request right now. Please wait for 2 minutes before submitting another request.')
+                });
 
                 return;
             }
@@ -78,7 +113,7 @@ define([
                     });
                 }
             });
-
+            $.mage.cookies.set(this.options.cookieName, String(new Date().getTime() + 5000), 1);
         },
 
 

@@ -15,26 +15,20 @@ class Index extends \Magento\Framework\App\Action\Action
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
     private $formKeyValidator;
-    /**
-     * @var \Magento\Framework\Session\SessionManager
-     */
-    private $session;
+
 
     /**
      * Index constructor.
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\Session\SessionManager $session
      */
     public function __construct(
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Framework\App\Action\Context          $context,
-        \Magento\Framework\Session\SessionManager      $session
     )
     {
         parent::__construct($context);
         $this->formKeyValidator = $formKeyValidator;
-        $this->session = $session;
     }
 
     /**
@@ -45,13 +39,6 @@ class Index extends \Magento\Framework\App\Action\Action
         $request = $this->getRequest();
 
         try {
-            // Check if 2 minutes have passed since the last request
-            $lastRequestTime = $this->session->getData('last_request_time');
-            if ($lastRequestTime && (time() - $lastRequestTime) < 120) {
-                throw new LocalizedException(__('You have already submitted a request in the past 2 minutes.
-                Please try again later.'));
-            }
-
 
             if (!$this->formKeyValidator->validate($request) || $request->getParam('hideit')) {
                 throw new LocalizedException(__('Something went wrong.
@@ -71,8 +58,6 @@ class Index extends \Magento\Framework\App\Action\Action
                 'status' => self::STATUS_SUCCESS,
                 'message' => __('Your request was submitted. We\'ll get in touch with you as soon as possible.')
             ];
-            // Update the last request time in the session.
-            $this->session->setData('last_request_time', time());
 
         } catch (LocalizedException $e) {
             $data = [
