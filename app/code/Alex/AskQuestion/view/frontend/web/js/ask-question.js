@@ -20,49 +20,29 @@ define([
             $('body').on('alex_ask_question_clear_cookie', this.clearCookie.bind(this));
         },
 
-        /**
-         * Set cookie expiration time. If no cookie — allow requestc
-         * @returns {boolean}
-         */
-        isSubmitAllowed: function () {
-            var cookieValue = $.mage.cookies.get(this.options.cookieName);
-
-            if (cookieValue) {
-                // Get the cookie expiration time.
-                var cookieExpirationTime = parseInt(cookieValue, 10);
-
-                // If the cookie has expired, allow the user to submit a request.
-                if (cookieExpirationTime < new Date().getTime()) {
-                    $.mage.cookies.clear(this.options.cookieName);  // Clear the expired cookie
-                    return true;
-                }
-            } else {
-                // If the cookie does not exist, allow the user to submit a request.
-                return true;
-            }
-
-            // Otherwise, prevent the user from submitting a request.
-            return false;
-        },
 
         /**
          * Validate request and submit the form, if possible
          */
         submitForm: function () {
+            // Check if 2 minutes have passed since the last request
+            var lastRequestTime = $.mage.cookies.get(this.options.cookieName);
+            var currentTime = Math.floor(Date.now() / 1000);  // UNIX timestamp in seconds
+
+            if (lastRequestTime && (currentTime - lastRequestTime < 120)) {
+                // Less than 2 minutes have passed, show a message to the user
+                alert({
+                    title: $.mage.__('Request Limit'),
+                    content: $.mage.__('You can make another request in ' + (120 - (currentTime - lastRequestTime)) + ' seconds.')
+                });
+                return;
+            }
+
             if (!this.validateForm()) {
                 validationAlert();
-
                 return;
             }
 
-            if (!this.isSubmitAllowed()) {
-                alert({
-                    title: $.mage.__('Error'),
-                    content: $.mage.__('You are not allowed to submit a request right now. Please wait for 2 minutes before submitting another request.')
-                });
-
-                return;
-            }
             this.ajaxSubmit();
         },
 
@@ -99,7 +79,8 @@ define([
 
                     if (response.status === 'Success') {
                         // Prevent from sending requests too often
-                        $.mage.cookies.set(this.options.cookieName, true);
+                        var currentTime = Math.floor(Date.now() / 1000);  // UNIX timestamp in seconds
+                        $.mage.cookies.set(this.options.cookieName, currentTime);
                     }
                 },
 
@@ -113,7 +94,6 @@ define([
                     });
                 }
             });
-            $.mage.cookies.set(this.options.cookieName, String(new Date().getTime() + 5000), 1);
         },
 
 
@@ -136,5 +116,4 @@ define([
 
     return $.alex.askQuestion;
 });
-
 
