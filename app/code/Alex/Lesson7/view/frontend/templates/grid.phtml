@@ -1,0 +1,17 @@
+<div id="ko-hello-world" data-bind="scope:'alex-ko-helloworld'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#ko-hello-world": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "alex-ko-helloworld": {
+                            "component": "Alex_Lesson7/js/view/grid",
+                            "template" : "Alex_Lesson7/grid"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>
