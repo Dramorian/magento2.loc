@@ -1,0 +1,31 @@
+<style>
+    .alex-custom-widget {
+        background: #ff0;
+        padding: 30px;
+        border-radius: 5px;
+        width: <?php echo $this->getData('content_width') ?>;
+        float: <?php echo $this->getData('content_alignment') ?>;
+    }
+</style>
+<div class="alex-custom-widget">
+    <?php if($this->getWidgetTitle()): ?>
+        <h2 class='custom-widget-title'>
+            <?php echo $this->getWidgetTitle(); ?>
+        </h2>
+    <?php endif; ?>
+    <?php if($this->getWidgetContent()): ?>
+        <h2 class='custom-widget-content'>
+            <?php echo $this->getWidgetContent(); ?>
+        </h2>
+    <?php endif; ?>
+
+    <?php if($this->getShowButtons()):
+        $buttonTypes = explode(",",$this->getShowButtons());
+        ?>
+        <?php foreach ($buttonTypes as $item): ?>
+        <button class='primary-<?= $item ?>'>
+            <?php echo $this->getButtonTitle($item); ?>
+        </button>
+    <?php endforeach;?>
+    <?php endif; ?>
+</div>
