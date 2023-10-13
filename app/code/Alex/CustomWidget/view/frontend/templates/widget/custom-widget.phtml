@@ -1,0 +1,62 @@
+<?php
+/* @var $block CustomWidget */
+
+use Alex\CustomWidget\Block\Widget\CustomWidget;
+
+?>
+<style>
+    .widget-container {
+        position: relative;
+    }
+
+    .widget-container img {
+        width: 100%;
+        height: auto;
+        display: inline-block;
+
+    }
+
+    .widget-container .btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+</style>
+
+
+<div class="widget-container">
+    <img class="banner-image"
+         src="<?= $this->getViewFileUrl('Alex_CustomWidget::images/banner-image.jpg') ?>"
+         alt="Banner image">
+    <?php if ($this->getChooseTitle()):
+    $buttonTypes = explode(",", $this->getChooseTitle());
+    ?>
+    <?php foreach ($buttonTypes as $item): ?>
+    <div class="btn">
+        <button class='primary-<?= $item ?>'>
+            <a href="<?php echo $this->getUrl('alex-cms'); ?>">
+                <?php echo $this->getButtonTitle($item); ?>
+            </a>
+        </button>
+    </div>
+</div>
+<?php endforeach; ?>
+<?php endif; ?>
+
+
+<div class="custom-widget-content">
+    <p>Simple text</p>
+
+    <!--    --><?php //if ($this->getChooseTitle()):
+    //        $buttonTypes = explode(",", $this->getChooseTitle());
+    //        ?>
+    <!--        --><?php //foreach ($buttonTypes as $item): ?>
+    <!--        <button class='primary---><?php //= $item ?><!--'>-->
+    <!--            <a href="--><?php //echo $this->getUrl('alex-cms'); ?><!--">-->
+    <!--                --><?php //echo $this->getButtonTitle($item); ?>
+    <!--            </a>-->
+    <!--        </button>-->
+    <!--        <div>-->
+    <!--    --><?php //endforeach; ?>
+    <!--    --><?php //endif; ?>
+
+</div>

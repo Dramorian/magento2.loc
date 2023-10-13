@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="Alex\CustomWidget\Block\Widget\CustomWidget"
+            id="alex_customwidget">
+        <label>Custom Widget</label>
+        <description>First Step to CMS</description>
+        <parameters>
+            <parameter name="static_block" xsi:type="select"
+                       source_model="Magento\Cms\Model\ResourceModel\Block\Collection"
+                       required="true"
+                       visible="true">
+                <label>Button block</label>
+            </parameter>
+            <parameter name="choose_title" xsi:type="select"
+                       required="true"
+                       visible="true">
+                <label>Button title</label>
+                <options>
+                    <option name="title1" value="title1">
+                        <label>Title 1</label>
+                    </option>
+                    <option name="title2" value="title2">
+                        <label>Title 2</label>
+                    </option>
+                    <option name="title3" value="title3">
+                        <label>Title 3</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+        <containers>
+            <container name="content">
+                <template name="grid" value="default"/>
+            </container>
+            <container name="content.top">
+                <template name="grid" value="default"/>
+            </container>
+        </containers>
+    </widget>
+</widgets>
