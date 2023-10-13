@@ -11,7 +11,7 @@ class CustomWidget extends Template implements BlockInterface
     /**
      * @var string
      */
-    protected $_template = "Alex_CustomWidget::templates/custom-widget.phtml";
+    protected $_template = "Alex_CustomWidget::widget/custom-widget.phtml";
 
     /**
      * @param $code
