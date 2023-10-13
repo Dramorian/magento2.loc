@@ -11,7 +11,7 @@ class CustomWidget extends Template implements BlockInterface
     /**
      * @var string
      */
-    protected $_template = "widget/custom-widget.phtml";
+    protected $_template = "Alex_CustomWidget::templates/custom-widget.phtml";
 
     /**
      * @param $code
@@ -33,19 +33,5 @@ class CustomWidget extends Template implements BlockInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCmsBlockId()
-    {
-        return 'banner-homepage'; // Replace with your actual CMS Block identifier
-    }
-
-    public function getButtonUrl()
-    {
-        // Specify the CMS Page URL here
-        return $this->getUrl('alex-cms');
     }
 }

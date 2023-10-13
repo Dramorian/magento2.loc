@@ -16,8 +16,7 @@ class Topmenu
      */
     public function __construct(
         NodeFactory $nodeFactory
-    )
-    {
+    ) {
         $this->nodeFactory = $nodeFactory;
     }
 
@@ -30,11 +29,10 @@ class Topmenu
      */
     public function beforeGetHtml(
         \Magento\Theme\Block\Html\Topmenu $subject,
-                                          $outermostClass = '',
-                                          $childrenWrapClass = '',
-                                          $limit = 0
-    )
-    {
+        $outermostClass = '',
+        $childrenWrapClass = '',
+        $limit = 0
+    ) {
 
         $node = $this->nodeFactory->create(
             [
@@ -52,12 +50,11 @@ class Topmenu
     protected function getNodeAsArray()
     {
         return [
-            'name' => __('CMS Page Link'),
+            'name' => __('CMS link'),
             'id' => 'cms-page-homework',
-            'url' => 'https://magento2.loc/alex-cms',
+            'url' => 'alex-cms',
             'has_active' => false,
             'is_active' => false
         ];
     }
-
 }
