@@ -1,14 +1,24 @@
 <?php
 /* @var $block Alex\CustomWidget\Block\Widget\CustomWidget */
 ?>
+<style>
+    .banner-wrapper {
+        position: relative;
+    }
 
+    .banner-wrapper img {
+        width: 100%;
+        height: auto;
+
+    }
+
+   .banner-wrapper .cmslink {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+</style>
 
 <div class="banner-wrapper">
-    <?php $block->getBlockContent() ?>
-    <a href="<?php echo $block->getUrl('alex-cms'); ?>">
-    <button class="btn">
-        <?php echo $block->getButtonTitle(); ?>
-    </button>
-    </a>
+    <?php echo $block->getBlockContent() ?>
+    <a class="cmslink" href="<?php echo $block->getUrl('alex-cms'); ?>"><?php echo $block->getButtonTitle(); ?></a>
 </div>
-
