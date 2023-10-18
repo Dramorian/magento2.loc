@@ -2,9 +2,11 @@
 
 namespace Alex\Lesson10\Ui\Component\Form;
 
-use Magento\Cron\Model\ResourceModel\Schedule\Collection;
+use Magento\Cron\Model\ResourceModel\Schedule\CollectionFactory;
 use Magento\Cron\Model\Schedule;
 use Magento\Ui\DataProvider\AbstractDataProvider;
+use Magento\Ui\DataProvider\Modifier\PoolInterface;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 
 /**
  * Class DataProvider
@@ -12,17 +14,28 @@ use Magento\Ui\DataProvider\AbstractDataProvider;
 class DataProvider extends AbstractDataProvider
 {
     /**
-     * @var Collection
+     * @var \Magento\Cron\Model\ResourceModel\Schedule\Collection
      */
     protected $collection;
 
     /**
+     * @var array
+     */
+    protected $loadedData;
+
+    /**
+     * @var PoolInterface
+     */
+    protected $pool;
+
+    /**
      * Constructor
      *
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
-     * @param Collection $collection
+     * @param $name
+     * @param $primaryFieldName
+     * @param $requestFieldName
+     * @param CollectionFactory $blockCollectionFactory
+     * @param PoolInterface $pool
      * @param array $meta
      * @param array $data
      */
@@ -30,11 +43,13 @@ class DataProvider extends AbstractDataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
-        Collection $collection,
+        CollectionFactory $blockCollectionFactory,
+        PoolInterface $pool,
         array $meta = [],
         array $data = []
     ) {
-        $this->collection = $collection;
+        $this->collection = $blockCollectionFactory->create();
+        $this->pool = $pool;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 
@@ -44,20 +59,11 @@ class DataProvider extends AbstractDataProvider
     public function getMeta()
     {
         $meta = parent::getMeta();
-        $meta['general']['children']['custom_field'] = [
-            'arguments' => [
-                'data' => [
-                    'config' => [
-                        'componentType' => 'field',
-                        'formElement' => 'input',
-                        'label' => __('Custom Field'),
-                        'dataType' => 'text',
-                        'sortOrder' => 45,
-                        'dataScope' => 'custom_field',
-                    ]
-                ]
-            ],
-        ];
+
+        /** @var ModifierInterface $modifier */
+        foreach ($this->pool->getModifiersInstances() as $modifier) {
+            $meta = $modifier->modifyMeta($meta);
+        }
 
         return $meta;
     }
@@ -66,21 +72,23 @@ class DataProvider extends AbstractDataProvider
      * Get data
      *
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getData()
     {
-        if (isset($this->loadedData)) {
-            return $this->loadedData;
+        if (!isset($this->loadedData)) {
+//            $this->modifyData = [];
+            $items = $this->collection->getItems();
+            /** @var Schedule $job */
+            foreach ($items as $job) {
+                $this->loadedData[$job->getId()] = $job->getData();
+            }
         }
-
-        $this->loadedData = [];
-        $items = $this->collection->getItems();
-
-        /** @var Schedule $job */
-        foreach ($items as $job) {
-            $this->loadedData[$job->getId()] = $job->getData();
+        $data = $this->loadedData;
+        /** @var ModifierInterface $modifier */
+        foreach ($this->pool->getModifiersInstances() as $modifier) {
+            $data = $modifier->modifyData($data);
         }
-
-        return $this->loadedData;
+        return $data;
     }
 }
