@@ -1,47 +1,14 @@
 <?php
-/* @var $block CustomWidget */
-
-use Alex\CustomWidget\Block\Widget\CustomWidget;
-
+/* @var $block Alex\CustomWidget\Block\Widget\CustomWidget */
 ?>
-<style>
-    .widget-container {
-        position: relative;
-    }
 
-    .widget-container img {
-        width: 100%;
-        height: auto;
-        display: inline-block;
 
-    }
-
-    .widget-container .btn {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-</style>
-
-<div class="widget-container">
-    <img class="banner-image"
-         src="<?= $this->getViewFileUrl('Alex_CustomWidget::images/banner-image.jpg') ?>"
-         alt="Banner image">
-    <?php if ($this->getChooseTitle()):
-    $buttonTypes = explode(",", $this->getChooseTitle());
-    ?>
-    <?php foreach ($buttonTypes as $item): ?>
-    <div class="btn">
-        <button class='primary-<?= $item ?>'>
-            <a href="<?php echo $this->getUrl('alex-cms'); ?>">
-                <?php echo $this->getButtonTitle($item); ?>
-            </a>
-        </button>
-    </div>
+<div class="banner-wrapper">
+    <?php $block->getBlockContent() ?>
+    <a href="<?php echo $block->getUrl('alex-cms'); ?>">
+    <button class="btn">
+        <?php echo $block->getButtonTitle(); ?>
+    </button>
+    </a>
 </div>
-<?php endforeach; ?>
-<?php endif; ?>
 
-
-<div class="custom-widget-content">
-    <p>Simple text</p>
-</div>
