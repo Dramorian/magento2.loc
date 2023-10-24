@@ -1,6 +1,6 @@
 <?php
 
-namespace Alex\Homework10\Controller\Adminhtml\Create;
+namespace Alex\Homework10\Controller\Adminhtml\Question;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\ResultFactory;
@@ -15,7 +15,7 @@ class Index extends Action
     {
         /** @var Page $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-        $resultPage->getConfig()->getTitle()->prepend(__('AskQuestion'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Ask Question'));
 
         return $resultPage;
     }

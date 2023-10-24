@@ -1,0 +1,18 @@
+<div id="ask-text" data-bind="scope:'ask_question_text'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#ask-text": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "ask_question_text": {
+                            "component": "Alex_Homework10/js/ask_question_text",
+                            "template": "Alex_Homework10/text_template",
+                            "question" : "<?php echo $block->getQuestion(); ?>"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

@@ -11,7 +11,7 @@ use Magento\Ui\Component\Form\Element\DataType\Text;
 use Magento\Ui\Component\Form\Element\Checkbox;
 use Magento\Ui\Component\Form\Element\ColorPicker;
 
-class NewField extends AbstractModifier
+class AddProductField extends AbstractModifier
 {
     /**
      * @var LocatorInterface
@@ -60,9 +60,9 @@ class NewField extends AbstractModifier
                     ],
                     'children' => [
                         'custom_field' => $this->getCustomField(), // Example Select field
-                        'custom_text_field' => $this->getCustomTextField(), // New Text input field
-                        'custom_checkbox' => $this->getCustomCheckbox(), // New Checkbox field
-                        'custom_color_picker' => $this->getCustomColorPicker() // New ColorPicker field
+                        'custom_text_field' => $this->getTextField(), // New Text input field
+                        'custom_checkbox' => $this->getCheckbox(), // New Checkbox field
+                        'custom_color_picker' => $this->getColorPicker() // New ColorPicker field
                     ],
                 ]
             ]
@@ -101,13 +101,13 @@ class NewField extends AbstractModifier
      *
      * @return array[]
      */
-    public function getCustomTextField()
+    public function getTextField()
     {
         return [
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label' => __('Custom Text Field'),
+                        'label' => __('Text Field'),
                         'componentType' => Field::NAME,
                         'formElement' => 'input',
                         'dataScope' => 'custom_text',
@@ -124,17 +124,18 @@ class NewField extends AbstractModifier
      *
      * @return array[]
      */
-    public function getCustomCheckbox()
+    public function getCheckbox()
     {
         return [
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label' => __('Custom Checkbox'),
+                        'label' => __('Checkbox'),
                         'componentType' => Field::NAME,
                         'formElement' => Checkbox::NAME,
                         'dataScope' => 'custom_checkbox',
                         'dataType' => Text::NAME,
+                        'prefer' => 'toggle',
                         'sortOrder' => 30,
                         'valueMap' => [
                             'true' => '1',
@@ -151,13 +152,13 @@ class NewField extends AbstractModifier
      *
      * @return array[]
      */
-    public function getCustomColorPicker()
+    public function getColorPicker()
     {
         return [
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label' => __('Custom Color Picker'),
+                        'label' => __('Color Picker'),
                         'componentType' => Field::NAME,
                         'formElement' => ColorPicker::NAME,
                         'dataScope' => 'custom_colorpicker',
