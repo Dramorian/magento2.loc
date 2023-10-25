@@ -1,3 +1,7 @@
+<?php
+/** @var $block \Magento\Backend\Block\Template  */
+?>
+
 <div id="ask-text" data-bind="scope:'ask_question_text'">
     <!-- ko template: getTemplate() --><!-- /ko -->
     <script type="text/x-magento-init">
@@ -8,7 +12,7 @@
                         "ask_question_text": {
                             "component": "Alex_Homework10/js/ask_question_text",
                             "template": "Alex_Homework10/text_template",
-                            "question" : "<?php echo $block->getQuestion(); ?>"
+                            "question" : "<?php echo $block->getData('question'); ?>"
                         }
                     }
                 }
