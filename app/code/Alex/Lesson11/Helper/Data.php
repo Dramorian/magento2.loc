@@ -1,11 +1,12 @@
 <?php
 
-namespace Alex\Lesson11;
+namespace Alex\Lesson11\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
 
-class Data extends AbstractHelper
+class Data extends AbstractHelper implements ArgumentInterface
 {
     /**
      * @param Context $context
@@ -18,9 +19,8 @@ class Data extends AbstractHelper
     /**
      * @return string
      */
-    public function publicContent()
+    public function publicContent(): string
     {
-        return "Public Test Content";
-
+        return "This is a string from helper's public function";
     }
 }

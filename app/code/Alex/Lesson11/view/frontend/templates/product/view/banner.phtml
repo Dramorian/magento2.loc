@@ -1,5 +1,5 @@
 <?php
-/** @var $block Magento\Catalog\Block\Product\View */
-$helperData = $block->getData('helperData');
+/* @var Alex\Lesson11\Helper\Data $helperBanner */
+$helperBanner = $this->getData('helperBanner');
 ?>
-<h1 class="test-111">1111111111111111111111<?php echo $helperData; ?></h1>
+<h1 class="test"><?php echo $helperBanner->publicContent(); ?></h1>
