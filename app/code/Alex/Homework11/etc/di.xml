@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Alex\Homework11\Model\ParameterDisplay">
+        <arguments>
+            <!-- Pass simple string -->
+            <argument name="stringParam" xsi:type="string">someStringValue</argument>
+            <!-- Pass instance of Magento\Some\Type -->
+            <argument name="instanceParam" xsi:type="object">Magento\Framework\Config\ValidationState\Required</argument>
+            <!-- Pass true -->
+            <argument name="boolParam" xsi:type="boolean">1</argument>
+            <!-- Pass 1 -->
+            <argument name="intParam" xsi:type="number">1</argument>
+            <!-- Pass application init argument, named by constant value -->
+            <argument name="globalInitParam" xsi:type="init_parameter">Magento\Framework\App\State::PARAM_MODE</argument>
+            <!-- Pass constant value -->
+            <argument name="constantParam" xsi:type="const">Magento\Store\Model\ScopeInterface::SCOPE_STORE</argument>
+            <!-- Pass null value -->
+            <argument name="nullParam" xsi:type="null"/>
+            <!-- Pass array -->
+            <argument name="arrayParam" xsi:type="array">
+                <!-- First element is value of constant -->
+                <item name="firstElem" xsi:type="const">Magento\Framework\App\Cache\Type\Block::TYPE_IDENTIFIER</item>
+                <!-- Second element is null -->
+                <item name="secondElem" xsi:type="null"/>
+                <!-- Third element is a subarray -->
+                <item name="thirdElem" xsi:type="array">
+                    <!-- Subarray contains scalar value -->
+                    <item name="scalarValue" xsi:type="string">ScalarValue</item>
+                </item>
+            </argument>
+        </arguments>
+
+    </type>
+</config>
