@@ -28,9 +28,7 @@ class ParameterDisplay
         $constantParam,
         $nullParam,
         $arrayParam,
-
-    )
-    {
+    ) {
         $this->parameters = [
             'stringParam' => $stringParam,
             'instanceParam' => $instanceParam,
@@ -46,14 +44,19 @@ class ParameterDisplay
     /**
      * @return array
      */
-    public function getParameters(): array
+    public function displayParameters(): array
     {
-        $parametersArray = [];
-        foreach ($this->parameters as $name => $value) {
-            $parameterValue = is_object($value) ? get_class($value) : $value;
-            $parametersArray[$name] = $parameterValue;
+        $result = [];
+
+        foreach ($this->parameters as $key => $value) {
+            if (is_object($value)) {
+                $result[$key] = get_class($value);
+            } else {
+                $result[$key] = $value;
+            }
         }
 
-        return $parametersArray;
+        return $result;
     }
+
 }

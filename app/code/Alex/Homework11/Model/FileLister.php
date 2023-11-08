@@ -7,41 +7,24 @@ use RecursiveIteratorIterator;
 
 class FileLister
 {
-    private $upOne;
-
-    public function __construct()
+    /**
+     * @return array
+     */
+    public function listFilesAndFolders(): array
     {
-        $this->upOne = dirname(__DIR__, 2);
-    }
+        $directory = new RecursiveDirectoryIterator(dirname(__DIR__, 3));
+        $iterator = new RecursiveIteratorIterator($directory);
 
-    public function getFileList(): array
-    {
-        $directory = $this->upOne;
-
-        $fileList = [];
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directory),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-
-        foreach ($iterator as $file) {
-            if ($file->isDir() || $file->isFile()) {
-                $filePath = $file->getPathname();
-                $fileList[] = [
-                    'name' => $file->getFilename(),
-                    'path' => $filePath,
-                    'type' => $file->isDir() ? 'directory' : 'file',
-                    'created' => date('Y-m-d H:i:s', $file->getCTime()),
-                    'modified' => date('Y-m-d H:i:s', $file->getMTime())
-                ];
-            }
+        $list = [];
+        foreach ($iterator as $info) {
+            $list[] = [
+                'name' => $info->getFilename(),
+                'type' => $info->getType(),
+                'created' => date('Y-m-d H:i:s', $info->getATime()),
+                'modified' => date('Y-m-d H:i:s', $info->getMTime())
+            ];
         }
 
-        return $fileList;
+        return $list;
     }
 }
-
-// Usage
-$fileList = new FileLister();
-$result = $fileList->getFileList();
-print_r($result);

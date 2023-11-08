@@ -10,6 +10,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Result\Page;
 
 class Index extends Action
@@ -18,7 +19,7 @@ class Index extends Action
     /**
      * @var DisplayConstantsAndMethods
      */
-    protected $displayConstantsAndMethods;
+    protected DisplayConstantsAndMethods $displayConstantsAndMethods;
     /**
      * @var FileLister
      */
@@ -28,12 +29,19 @@ class Index extends Action
      */
     protected ParameterDisplay $parameterDisplay;
 
+    /**
+     * @param Context $context
+     * @param DisplayConstantsAndMethods $displayConstantsAndMethods
+     * @param FileLister $fileLister
+     * @param ParameterDisplay $parameterDisplay
+     */
     public function __construct(
         Context                    $context,
         DisplayConstantsAndMethods $displayConstantsAndMethods,
         FileLister                 $fileLister,
         ParameterDisplay           $parameterDisplay
-    ) {
+    )
+    {
         $this->displayConstantsAndMethods = $displayConstantsAndMethods;
         $this->fileLister = $fileLister;
         $this->parameterDisplay = $parameterDisplay;
@@ -41,21 +49,25 @@ class Index extends Action
     }
 
     /**
-     * @return ResponseInterface|ResultInterface|Page|(Page&ResultInterface)
+     * @return Page
      */
     public function execute()
     {
         $data = [
-            'constantsAndMethodsData' => $this->displayConstantsAndMethods->displayInfo(),
-            'fileListData' => $this->fileLister->getFileList(),
-            'parameterDisplayData' => $this->parameterDisplay->getParameters(),
+            'constants' => $this->displayConstantsAndMethods->getConstants(),
+            'methods' => $this->displayConstantsAndMethods->getMethodNames(),
+            'fileList' => $this->fileLister->listFilesAndFolders(),
+            'parameters' => $this->parameterDisplay->displayParameters(),
         ];
 
-        $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-        $resultPage->getLayout()
-            ->createBlock('')
-            ->setData('info', $data);
+        /** @var Page $page */
+        $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        return $resultPage;
+
+        /** @var Template $block */
+        $block = $page->getLayout()->getBlock('class.content');
+        $block->setData('info', $data);
+
+        return $page;
     }
 }

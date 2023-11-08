@@ -1,1 +1,13 @@
-<h1>Just a lonely string that will soon be gone... </h1>
+<?php
+/** @var Template $block */
+
+use Magento\Framework\View\Element\Template;
+
+?>
+
+<div>
+    Data from classes:
+    <div>
+        <pre><?php print_r($block->getData('info'))?></pre>
+    </div>
+</div>
