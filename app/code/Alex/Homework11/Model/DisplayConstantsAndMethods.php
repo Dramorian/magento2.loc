@@ -14,8 +14,7 @@ class DisplayConstantsAndMethods
      */
     public function getConstants(): array
     {
-        $reflection = new ReflectionClass($this);
-        return $reflection->getConstants();
+        return (new ReflectionClass($this))->getConstants();
     }
 
     /**

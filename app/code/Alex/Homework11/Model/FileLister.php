@@ -2,6 +2,7 @@
 
 namespace Alex\Homework11\Model;
 
+use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -12,16 +13,15 @@ class FileLister
      */
     public function listFilesAndFolders(): array
     {
-        $directory = new RecursiveDirectoryIterator(dirname(__DIR__, 3));
-        $iterator = new RecursiveIteratorIterator($directory);
+        $directory = new RecursiveDirectoryIterator(dirname(__DIR__, 2), FilesystemIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
 
-        $list = [];
         foreach ($iterator as $info) {
             $list[] = [
-                'name' => $info->getFilename(),
+                'filename' => $info->getFilename(),
                 'type' => $info->getType(),
-                'created' => date('Y-m-d H:i:s', $info->getATime()),
-                'modified' => date('Y-m-d H:i:s', $info->getMTime())
+                'created' => date('Y-m-d H:i:s', $info->getCTime()),
+                'modified' => date('Y-m-d H:i:s', $info->getATime())
             ];
         }
 
