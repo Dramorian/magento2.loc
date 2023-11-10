@@ -11,6 +11,13 @@
                 <arguments>
                     <argument translate="true" name="title" xsi:type="string">Request a Sample</argument>
                 </arguments>
+                <block class="Alex\RequestSample\Block\Requests"
+                       name="request.list"
+                       template="Alex_RequestSample::product/view/requests_list.phtml">
+                    <arguments>
+                        <argument name="limit" xsi:type="number">5</argument>
+                    </arguments>
+                </block>
             </block>
         </referenceBlock>
     </body>
