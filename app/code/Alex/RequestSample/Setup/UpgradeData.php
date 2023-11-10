@@ -5,6 +5,8 @@ namespace Alex\RequestSample\Setup;
 use Alex\RequestSample\Model\RequestSample;
 use Alex\RequestSample\Model\RequestSampleFactory;
 use Magento\Framework\Component\ComponentRegistrar;
+use Magento\Framework\DB\Transaction;
+use Magento\Framework\DB\TransactionFactory;
 use Magento\Framework\File\Csv;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -19,12 +21,12 @@ class UpgradeData implements UpgradeDataInterface
     private $requestSampleFactory;
 
     /**
-     * @var Csv
+     * @var Csv $csv
      */
     private $csv;
 
     /**
-     * @var ComponentRegistrar
+     * @var ComponentRegistrar $componentRegistrar
      */
     private $componentRegistrar;
 
@@ -35,12 +37,14 @@ class UpgradeData implements UpgradeDataInterface
     public function __construct(
         RequestSampleFactory $requestSampleFactory,
         ComponentRegistrar   $componentRegistrar,
-        Csv                  $csv
+        Csv                  $csv,
+        TransactionFactory   $transactionFactory
     )
     {
+        $this->requestSampleFactory = $requestSampleFactory;
         $this->componentRegistrar = $componentRegistrar;
         $this->csv = $csv;
-        $this->requestSampleFactory = $requestSampleFactory;
+        $this->transactionFactory = $transactionFactory;
     }
 
     /**
@@ -51,6 +55,8 @@ class UpgradeData implements UpgradeDataInterface
         $setup->startSetup();
         if (version_compare($context->getVersion(), '1.0.2', '<')) {
             $statuses = [RequestSample::STATUS_PENDING, RequestSample::STATUS_PROCESSED];
+            /** @var Transaction $transaction */
+            $transaction = $this->transactionFactory->create();
 
             for ($i = 1; $i <= 5; $i++) {
                 /** @var RequestSample $requestSample */
@@ -63,8 +69,10 @@ class UpgradeData implements UpgradeDataInterface
                     ->setRequest('Just a test request')
                     ->setStatus($statuses[array_rand($statuses)])
                     ->setStoreId(Store::DISTRO_STORE_ID);
+                $transaction->addObject($requestSample);
                 $requestSample->save();
             }
+            $transaction->save();
         }
 
         if (version_compare($context->getVersion(), '1.0.3') < 0) {
@@ -83,15 +91,16 @@ class UpgradeData implements UpgradeDataInterface
     public function updateDataForRequestSample(ModuleDataSetupInterface $setup, $fileName)
     {
         $tableName = $setup->getTable('alex_request_sample');
-        $file_path = $this->getPathToCsvMagentoAtdec($fileName);
-        $csvData = $this->csv->getData($file_path);
+        $filePath = $this->getPathToCsvMagentoAtdec($fileName);
+        $csvData = $this->csv->getData($filePath);
 
-        if ($setup->getConnection()->isTableExists($tableName) == true) {
+        if ($setup->getConnection()->isTableExists($tableName)) {
             foreach ($csvData as $row => $data) {
-                if (count($data) == 9) {
+                if (count($data) === 9) {
                     $res = $this->getCsvData($data);
                     $setup->getConnection()->insertOnDuplicate(
-                        $tableName, $res,
+                        $tableName,
+                        $res,
                         [
                             'name',
                             'email',
