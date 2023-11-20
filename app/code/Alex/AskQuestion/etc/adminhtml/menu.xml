@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Alex_AskQuestion::askquestion"
+             title="AskQuestion"
+             translate="title"
+             module="Alex_AskQuestion"
+             sortOrder="50"
+             parent="Magento_Backend::content"
+             action="askquestion/question/index"
+             resource="Alex_AskQuestion::askquestion"/>
+    </menu>
+</config>

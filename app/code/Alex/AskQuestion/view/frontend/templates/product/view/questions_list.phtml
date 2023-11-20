@@ -1,0 +1,12 @@
+<?php /** @var \Alex\AskQuestion\Block\Questions $block */
+$questions = $block->getQuestions();
+?>
+<?php if ($questions->count()): ?>
+    <ul>
+        <?php /** @var \Alex\AskQuestion\Model\ResourceModel\AskQuestion\ $question */
+        foreach ($questions as $question):
+            ?>
+            <li><?= __('Asked by %1', $question->getQuestion()) ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

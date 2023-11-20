@@ -1,6 +1,8 @@
 <?php /** @var $block \Magento\Catalog\Block\Product\View */ ?>
 <?php /** @var $escaper \Magento\Framework\Escaper */ ?>
-<?php $imageObject = $block->getImage($block->getProduct(), 'product_base_image'); ?>
+<?php $product = $block->getProduct();
+$imageObject = $block->getImage($product, 'product_base_image');
+?>
 <div class="catalog-product-view-tab-ask-question-form">
     <h2><?= $block->escapeHtml(__('Ask a question')) ?></h2>
     <div>
@@ -53,13 +55,13 @@
                         />
                     </div>
                 </div>
-                <div class="field telephone required">
-                    <label class="label" for="telephone">
+                <div class="field phone required">
+                    <label class="label" for="phone">
                         <span><?= $block->escapeHtml(__('Phone Number')) ?></span>
                     </label>
                     <div class="control">
-                        <input name="telephone"
-                               id="telephone"
+                        <input name="phone"
+                               id="phone"
                                title="<?= $escaper->escapeHtmlAttr(__('Phone Number')) ?>"
                                class="input-text"
                                type="text"
@@ -69,13 +71,13 @@
                         />
                     </div>
                 </div>
-                <div class="field comment required">
-                    <label class="label" for="comment">
+                <div class="field question required">
+                    <label class="label" for="question">
                         <span><?= $block->escapeHtml(__('What’s on your mind?')) ?></span>
                     </label>
                     <div class="control">
-                        <textarea name="comment"
-                                  id="comment"
+                        <textarea name="question"
+                                  id="question"
                                   title="<?= $escaper->escapeHtmlAttr(__('What’s on your mind?')) ?>"
                                   class="input-text"
                                   cols="5" rows="3"
@@ -88,6 +90,8 @@
             <div class="actions-toolbar">
                 <div class="primary">
                     <input type="hidden" name="hideit" id="hideit" value=""/>
+                    <input type="hidden" name="sku" value="<?= $block->escapeHtml($product->getSku()) ?>"/>
+                    <input type="hidden" name="product_name" value="<?= $block->escapeHtml($product->getName()) ?>"/>
                     <button type="submit" title="<?= $escaper->escapeHtmlAttr(__('Submit')) ?>"
                             class="action submit primary">
                         <span><?= $block->escapeHtml(__('Submit')) ?></span>
@@ -97,4 +101,5 @@
         </form>
     </div>
 </div>
+<?= $block->getChildHtml('question.list') ?>
 

@@ -29,11 +29,11 @@ define([
             var lastRequestTime = $.mage.cookies.get(this.options.cookieName);
             var currentTime = Math.floor(Date.now() / 1000);  // UNIX timestamp in seconds
 
-            if (lastRequestTime && (currentTime - lastRequestTime < 120)) {
+            if (lastRequestTime && (currentTime - lastRequestTime < 5)) {
                 // Less than 2 minutes have passed, show a message to the user
                 alert({
                     title: $.mage.__('Request Limit'),
-                    content: $.mage.__('You can make another request in ' + (120 - (currentTime - lastRequestTime)) + ' seconds.')
+                    content: $.mage.__('You can make another request in ' + (5 - (currentTime - lastRequestTime)) + ' seconds.')
                 });
                 return;
             }

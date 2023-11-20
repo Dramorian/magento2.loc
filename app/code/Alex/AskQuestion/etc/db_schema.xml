@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="alex_ask_question" resource="default" engine="innodb" comment="Ask Question">
+        <column xsi:type="int" name="question_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Question ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Customer Name"/>
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Customer Email"/>
+        <column xsi:type="varchar" name="phone" nullable="false" length="63" comment="Customer Phone"/>
+        <column xsi:type="varchar" name="product_name" nullable="false" comment="Product Name"/>
+        <column xsi:type="varchar" name="sku" nullable="false" comment="SKU"/>
+        <column xsi:type="varchar" name="question" nullable="false" comment="Question"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Question Creation Time"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="15" default="pending" comment="Status"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" default="0"
+                comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="question_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_ALEX_ASK_QUESTION_STORE_STORE_ID" table="alex_ask_question"
+                    column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+    </table>
+</schema>
+

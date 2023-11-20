@@ -2,37 +2,50 @@
 
 namespace Alex\AskQuestion\Controller\Submit;
 
+use Alex\AskQuestion\Model\AskQuestion;
+use Alex\AskQuestion\Model\AskQuestionFactory;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\LocalizedException;
 
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends Action
 {
-    const STATUS_ERROR = 'Error';
+    public const STATUS_ERROR = 'Error';
 
-    const STATUS_SUCCESS = 'Success';
+    public const STATUS_SUCCESS = 'Success';
 
     /**
-     * @var \Magento\Framework\Data\Form\FormKey\Validator
+     * @var Validator
      */
-    private $formKeyValidator;
+    private Validator $formKeyValidator;
 
+    /**
+     * @var AskQuestionFactory
+     */
+    private $askQuestionFactory;
 
     /**
      * Index constructor.
-     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
-     * @param \Magento\Framework\App\Action\Context $context
+     * @param Validator $formKeyValidator
+     * @param AskQuestionFactory $askQuestionFactory
+     * @param Context $context
      */
     public function __construct(
-        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
-        \Magento\Framework\App\Action\Context          $context,
+        Validator          $formKeyValidator,
+        AskQuestionFactory $askQuestionFactory,
+        Context            $context
     )
     {
         parent::__construct($context);
         $this->formKeyValidator = $formKeyValidator;
+        $this->askQuestionFactory = $askQuestionFactory;
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @return \Magento\Framework\App\ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
@@ -54,6 +67,15 @@ class Index extends \Magento\Framework\App\Action\Action
             // Here we must also process backend validation or all form fields.
             // Otherwise attackers can just copy our page, remove fields validation and send anything they want
 
+            $askQuestion = $this->askQuestionFactory->create();
+            $askQuestion->setName($request->getParam('name'))
+                ->setEmail($request->getParam('email'))
+                ->setPhone($request->getParam('phone'))
+                ->setProductName($request->getParam('product_name'))
+                ->setSku($request->getParam('sku'))
+                ->setQuestion($request->getParam('question'));
+            $askQuestion->save();
+
             $data = [
                 'status' => self::STATUS_SUCCESS,
                 'message' => __('Your request was submitted. We\'ll get in touch with you as soon as possible.')
@@ -67,7 +89,7 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         /**
-         * @var \Magento\Framework\Controller\Result\Json $controllerResult
+         * @var Json $controllerResult
          */
         $controllerResult = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 

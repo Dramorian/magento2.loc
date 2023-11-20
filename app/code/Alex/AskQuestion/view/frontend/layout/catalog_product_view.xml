@@ -12,6 +12,13 @@
                     <argument translate="true" name="title" xsi:type="string">Ask a question</argument>
                 </arguments>
             </block>
+            <block class="Alex\AskQuestion\Block\Questions"
+                   name="question.list"
+                   template="Alex_AskQuestion::product/view/questions_list.phtml">
+                <arguments>
+                    <argument name="limit" xsi:type="number">5</argument>
+                </arguments>
+            </block>
         </referenceBlock>
     </body>
 </page>
