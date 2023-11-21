@@ -8,13 +8,13 @@
         </item>
     </argument>
     <settings>
-        <buttons>
-            <button name="add">
-                <url path="*/*/new"/>
-                <class>primary</class>
-                <label translate="true">Add New Question</label>
-            </button>
-        </buttons>
+<!--        <buttons>-->
+<!--            <button name="add">-->
+<!--                <url path="*/*/new"/>-->
+<!--                <class>primary</class>-->
+<!--                <label translate="true">Add New Question</label>-->
+<!--            </button>-->
+<!--        </buttons>-->
         <spinner>alex_ask_question_columns</spinner>
         <deps>
             <dep>alex_ask_question_listing.alex_ask_question_listing_data_source</dep>
@@ -96,17 +96,39 @@
                     <label translate="true">Enable</label>
                 </settings>
             </action>
-            <action name="edit">
+            <action name="status">
                 <settings>
-                    <callback>
-                        <target>editSelected</target>
-                        <provider>alex_ask_question_listing.alex_ask_question_listing.alex_ask_question_columns_editor
-                        </provider>
-                    </callback>
-                    <type>edit</type>
-                    <label translate="true">Edit</label>
+                    <type>status</type>
+                    <label translate="true">Change status</label>
+                    <actions>
+                        <action name="0">
+                            <type>enable</type>
+                            <label translate="true">Enable</label>
+                            <url path="askquestion/question/massStatus">
+                                <param name="status">1</param>
+                            </url>
+                        </action>
+                        <action name="1">
+                            <type>disable</type>
+                            <label translate="true">Disable</label>
+                            <url path="askquestion/question/massStatus">
+                                <param name="status">0</param>
+                            </url>
+                        </action>
+                    </actions>
                 </settings>
             </action>
+<!--            <action name="edit">-->
+<!--                <settings>-->
+<!--                    <callback>-->
+<!--                        <target>editSelected</target>-->
+<!--                        <provider>alex_ask_question_listing.alex_ask_question_listing.alex_ask_question_columns_editor-->
+<!--                        </provider>-->
+<!--                    </callback>-->
+<!--                    <type>edit</type>-->
+<!--                    <label translate="true">Edit</label>-->
+<!--                </settings>-->
+<!--            </action>-->
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>

@@ -37,7 +37,7 @@ class AskQuestion extends AbstractModel
 {
     public const STATUS_PENDING = 'pending';
 
-    public const STATUS_PROCESSED = 'processed';
+    public const STATUS_ANSWERED = 'answered';
 
     /**
      * @var StoreManagerInterface

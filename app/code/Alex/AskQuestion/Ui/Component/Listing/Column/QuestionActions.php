@@ -56,11 +56,12 @@ class QuestionActions extends Column
         ContextInterface   $context,
         UiComponentFactory $uiComponentFactory,
         UrlInterface       $urlBuilder,
-        Escaper $escaper,
+        Escaper            $escaper,
         array              $components = [],
         array              $data = [],
         string             $editUrl = self::URL_PATH_EDIT,
-    ) {
+    )
+    {
         $this->urlBuilder = $urlBuilder;
         $this->editUrl = $editUrl;
         $this->escaper = $escaper;
@@ -77,10 +78,10 @@ class QuestionActions extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 $name = $this->getData('name');
                 if (isset($item['question_id'])) {
-                    $item[$name]['edit'] = [
-                        'href' => $this->urlBuilder->getUrl($this->editUrl, ['question_id' => $item['question_id']]),
-                        'label' => __('Edit'),
-                    ];
+//                    $item[$name]['edit'] = [
+//                        'href' => $this->urlBuilder->getUrl($this->editUrl, ['question_id' => $item['question_id']]),
+//                        'label' => __('Edit'),
+//                    ];
                     $title = $this->escaper->escapeHtml($item['name']);
                     $item[$name]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(
