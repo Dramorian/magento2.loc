@@ -24,7 +24,8 @@ class Questions extends Template
         CollectionFactory $collectionFactory,
         Context           $context,
         array             $data = []
-    ) {
+    )
+    {
         parent::__construct($context, $data);
         $this->collectionFactory = $collectionFactory;
     }
@@ -36,9 +37,9 @@ class Questions extends Template
     {
         /** @var Collection $collection */
         $collection = $this->collectionFactory->create();
-        $collection->addStoreFilter()
-            ->getSelect()
-            ->orderRand();
+//        $collection->addStoreFilter();
+
+        $collection->getSelect()->orderRand();
 
         if ($limit = $this->getData('limit')) {
             $collection->setPageSize($limit);

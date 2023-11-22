@@ -35,9 +35,9 @@ use Magento\Store\Model\StoreManagerInterface;
  */
 class AskQuestion extends AbstractModel
 {
-    public const STATUS_PENDING = 'pending';
+    public const STATUS_PENDING = 'Pending';
 
-    public const STATUS_ANSWERED = 'answered';
+    public const STATUS_ANSWERED = 'Answered';
 
     /**
      * @var StoreManagerInterface

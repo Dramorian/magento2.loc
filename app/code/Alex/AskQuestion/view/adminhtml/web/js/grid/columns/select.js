@@ -8,8 +8,8 @@ define([
         defaults: {
             additionalCustomClass: '',
             customClasses: {
-                pending: 'red',
-                answered: 'green'
+                Pending: 'red',
+                Answered: 'green'
             },
             bodyTmpl: 'Alex_AskQuestion/grid/cells/text'
         },

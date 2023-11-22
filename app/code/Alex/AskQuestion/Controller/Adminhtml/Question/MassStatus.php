@@ -7,14 +7,15 @@ use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 
-class MassStatus extends Action
+class MassStatus extends Action implements HttpPostActionInterface
 {
     /**
-     * @var Filter
+     * @var Magento\Ui\Component\MassAction\Filter
      */
     protected $filter;
 
@@ -23,32 +24,35 @@ class MassStatus extends Action
      */
     protected CollectionFactory $collectionFactory;
 
-
     /**
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
      */
-    public function __construct(Context $context, Filter $filter, CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        Context           $context,
+        Filter            $filter,
+        CollectionFactory $collectionFactory
+    ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
 
     /**
-     * Execute action
+     * Update status
      *
      * @return Redirect
      * @throws LocalizedException|Exception
      */
     public function execute()
     {
-        $statusValue = $this->getRequest()->getParam('status');
         $collection = $this->filter->getCollection($this->collectionFactory->create());
+        $status = $this->getRequest()->getParam('status');
+
 
         foreach ($collection as $item) {
-            $item->setStatus($statusValue);
+            $item->setStatus($status);
             $item->save();
         }
 

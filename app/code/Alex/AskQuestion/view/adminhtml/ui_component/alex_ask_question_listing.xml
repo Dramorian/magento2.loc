@@ -70,7 +70,32 @@
                 </settings>
             </filterSelect>
         </filters>
-        <massaction name="listing_massaction">
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
+            <action name="status">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">action</item>
+                        <item name="label" xsi:type="string" translate="true">Change Status</item>
+                    </item>
+                </argument>
+                <argument name="actions" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="type" xsi:type="string">pending</item>
+                        <item name="label" xsi:type="string" translate="true">Pending</item>
+                        <item name="url" xsi:type="url" path="askquestion/question/massStatus">
+                            <param name="status">Pending</param>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="type" xsi:type="string">answered</item>
+                        <item name="label" xsi:type="string" translate="true">Answered</item>
+                        <item name="url" xsi:type="url" path="askquestion/question/massStatus">
+                            <param name="status">Answered</param>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+
             <action name="delete">
                 <settings>
                     <confirm>
@@ -80,42 +105,6 @@
                     <url path="askquestion/question/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
-                </settings>
-            </action>
-            <action name="disable">
-                <settings>
-                    <url path="askquestion/question/massDisable"/>
-                    <type>disable</type>
-                    <label translate="true">Disable</label>
-                </settings>
-            </action>
-            <action name="enable">
-                <settings>
-                    <url path="askquestion/question/massEnable"/>
-                    <type>enable</type>
-                    <label translate="true">Enable</label>
-                </settings>
-            </action>
-            <action name="status">
-                <settings>
-                    <type>status</type>
-                    <label translate="true">Change status</label>
-                    <actions>
-                        <action name="0">
-                            <type>enable</type>
-                            <label translate="true">Enable</label>
-                            <url path="askquestion/question/massStatus">
-                                <param name="status">1</param>
-                            </url>
-                        </action>
-                        <action name="1">
-                            <type>disable</type>
-                            <label translate="true">Disable</label>
-                            <url path="askquestion/question/massStatus">
-                                <param name="status">0</param>
-                            </url>
-                        </action>
-                    </actions>
                 </settings>
             </action>
 <!--            <action name="edit">-->

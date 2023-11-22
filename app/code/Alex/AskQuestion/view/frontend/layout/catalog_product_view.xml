@@ -9,15 +9,15 @@
                    template="Alex_AskQuestion::product/view/ask_question.phtml"
                    group="detailed_info">
                 <arguments>
-                    <argument translate="true" name="title" xsi:type="string">Ask a question</argument>
+                    <argument translate="true" name="title" xsi:type="string">Request a Sample</argument>
                 </arguments>
-            </block>
-            <block class="Alex\AskQuestion\Block\Questions"
-                   name="question.list"
-                   template="Alex_AskQuestion::product/view/questions_list.phtml">
-                <arguments>
-                    <argument name="limit" xsi:type="number">5</argument>
-                </arguments>
+                <block class="Alex\AskQuestion\Block\Questions"
+                       name="question.list"
+                       template="Alex_AskQuestion::product/view/questions_list.phtml">
+                    <arguments>
+                        <argument name="limit" xsi:type="number">20</argument>
+                    </arguments>
+                </block>
             </block>
         </referenceBlock>
     </body>

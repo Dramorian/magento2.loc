@@ -1,12 +1,16 @@
 <?php /** @var \Alex\AskQuestion\Block\Questions $block */
 $questions = $block->getQuestions();
 ?>
-<?php if ($questions->count()): ?>
-    <ul>
-        <?php /** @var \Alex\AskQuestion\Model\ResourceModel\AskQuestion\ $question */
-        foreach ($questions as $question):
-            ?>
-            <li><?= __('Asked by %1', $question->getQuestion()) ?></li>
-        <?php endforeach; ?>
-    </ul>
+<?php if ($questions->getSize() > 0): ?>
+    <div class="questions-list">
+        <h2>Customer Questions</h2>
+        <ul>
+            <?php foreach ($questions as $question): ?>
+                <li>
+                    <strong><?php echo $question->getName(); ?>:</strong>
+                    <?php echo $question->getQuestion(); ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 <?php endif; ?>

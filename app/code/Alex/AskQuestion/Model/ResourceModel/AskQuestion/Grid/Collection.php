@@ -12,9 +12,11 @@ use Magento\Framework\Data\Collection\EntityFactoryInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
+use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
 class Collection extends QuestionCollection implements SearchResultInterface
@@ -28,6 +30,11 @@ class Collection extends QuestionCollection implements SearchResultInterface
      * @var AggregationInterface
      */
     protected AggregationInterface $aggregations;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
 
     /**
      * @param EntityFactoryInterface $entityFactory
@@ -48,6 +55,7 @@ class Collection extends QuestionCollection implements SearchResultInterface
         LoggerInterface        $logger,
         FetchStrategyInterface $fetchStrategy,
         ManagerInterface       $eventManager,
+        StoreManagerInterface  $storeManager,
                                $mainTable,
                                $eventPrefix,
                                $eventObject,
@@ -62,6 +70,7 @@ class Collection extends QuestionCollection implements SearchResultInterface
         $this->_eventPrefix = $eventPrefix;
         $this->_eventObject = $eventObject;
         $this->timeZone = $timeZone;
+        $this->storeManager = $storeManager;
         $this->_init($model, $resourceModel);
 
 
@@ -162,6 +171,22 @@ class Collection extends QuestionCollection implements SearchResultInterface
      */
     public function setItems(array $items = null)
     {
+        return $this;
+    }
+
+    /**
+     * @param int $storeId
+     * @return Collection
+     * @throws NoSuchEntityException|LocalizedException
+     */
+    public function addStoreFilter(int $storeId = 0): self
+    {
+        if (!$storeId) {
+            $storeId = $this->storeManager->getStore()->getId();
+        }
+
+        $this->addFieldToFilter('store_id', $storeId);
+
         return $this;
     }
 }
