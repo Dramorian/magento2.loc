@@ -11,14 +11,14 @@ class Collection
      * @param ProductCollection $subject
      * @param bool $printQuery
      * @param bool $logQuery
-     * @return array
+     * @return void
      */
-    public function beforeLoad(ProductCollection $subject, bool $printQuery = false, bool $logQuery = false): array
+    public function beforeLoad(ProductCollection $subject, bool $printQuery = false, bool $logQuery = false)
     {
         // Arguments can be omitted
         $class = get_class($subject);
         // Can optionally modify method arguments here and return them as array
-        return [true, true];
+        // return [true, true];
     }
 
     /**
