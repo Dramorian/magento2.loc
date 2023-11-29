@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_catalog_product_view">
+        <observer name="alex_ask_question"
+                  instance="Alex\AskQuestion\Observer\Catalog\Controller\Product\View\Predispatch"
+        />
+    </event>
+    <event name="catalog_product_load_after">
+        <observer name="alex_ask_question"
+                  instance="Alex\AskQuestion\Observer\Catalog\Model\Product\LoadAfter"
+        />
+    </event>
+    <event name="catalog_product_save_after">
+        <observer name="askquestion_tab"
+                  instance="Alex\AskQuestion\Observer\QuestionTabToggle"
+        />
+    </event>
+</config>

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="ask_question_form"/>
     <body>
         <referenceBlock name="product.info.details">
             <block class="Magento\Catalog\Block\Product\View"
@@ -9,7 +10,7 @@
                    template="Alex_AskQuestion::product/view/ask_question.phtml"
                    group="detailed_info">
                 <arguments>
-                    <argument translate="true" name="title" xsi:type="string">Request a Sample</argument>
+                    <argument translate="true" name="title" xsi:type="string">Ask a question</argument>
                 </arguments>
                 <block class="Alex\AskQuestion\Block\Questions"
                        name="question.list"
