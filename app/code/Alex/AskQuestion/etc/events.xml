@@ -11,8 +11,8 @@
                   instance="Alex\AskQuestion\Observer\Catalog\Model\Product\LoadAfter"
         />
     </event>
-    <event name="catalog_product_save_after">
-        <observer name="askquestion_tab"
+    <event name="layout_load_before">
+        <observer name="question_tab_toggle"
                   instance="Alex\AskQuestion\Observer\QuestionTabToggle"
         />
     </event>
