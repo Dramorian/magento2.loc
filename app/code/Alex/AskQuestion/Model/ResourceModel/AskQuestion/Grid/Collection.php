@@ -7,17 +7,9 @@ use Magento\Framework\Api\ExtensibleDataInterface;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
-use Magento\Framework\Data\Collection\EntityFactoryInterface;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
-use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
-use Magento\Store\Model\StoreManagerInterface;
-use Psr\Log\LoggerInterface;
 
 class Collection extends QuestionCollection implements SearchResultInterface
 {
@@ -31,52 +23,66 @@ class Collection extends QuestionCollection implements SearchResultInterface
      */
     protected AggregationInterface $aggregations;
 
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
 
-    /**
-     * @param EntityFactoryInterface $entityFactory
-     * @param LoggerInterface $logger
-     * @param FetchStrategyInterface $fetchStrategy
-     * @param ManagerInterface $eventManager
-     * @param $mainTable
-     * @param $eventPrefix
-     * @param $eventObject
-     * @param $resourceModel
-     * @param TimezoneInterface $timeZone
-     * @param string $model
-     * @param AdapterInterface|null $connection
-     * @param AbstractDb|null $resource
-     */
     public function __construct(
-        EntityFactoryInterface $entityFactory,
-        LoggerInterface        $logger,
-        FetchStrategyInterface $fetchStrategy,
-        ManagerInterface       $eventManager,
-        StoreManagerInterface  $storeManager,
-                               $mainTable,
-                               $eventPrefix,
-                               $eventObject,
-                               $resourceModel,
-        TimezoneInterface      $timeZone,
-                               $model = Document::class,
-        AdapterInterface       $connection = null,
-        AbstractDb             $resource = null,
-
+        \Magento\Framework\Data\Collection\EntityFactoryInterface    $entityFactory,
+        \Psr\Log\LoggerInterface                                     $logger,
+        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
+        ManagerInterface                                             $eventManager,
+        \Magento\Framework\DB\Adapter\AdapterInterface               $connection = null,
+        \Magento\Framework\Model\ResourceModel\Db\AbstractDb         $resource = null,
+                                                                     $mainTable,
+                                                                     $eventPrefix,
+                                                                     $eventObject,
+                                                                     $resourceModel
     )
     {
-        $this->_eventPrefix = $eventPrefix;
-        $this->_eventObject = $eventObject;
-        $this->timeZone = $timeZone;
-        $this->storeManager = $storeManager;
-        $this->_init($model, $resourceModel);
-
-
         $this->setMainTable($mainTable);
+
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);
     }
+
+//    /**
+//     * @param EntityFactoryInterface $entityFactory
+//     * @param LoggerInterface $logger
+//     * @param FetchStrategyInterface $fetchStrategy
+//     * @param ManagerInterface $eventManager
+//     * @param $mainTable
+//     * @param $eventPrefix
+//     * @param $eventObject
+//     * @param $resourceModel
+//     * @param TimezoneInterface $timeZone
+//     * @param string $model
+//     * @param AdapterInterface|null $connection
+//     * @param AbstractDb|null $resource
+//     */
+//    public function __construct(
+//        EntityFactoryInterface $entityFactory,
+//        LoggerInterface        $logger,
+//        FetchStrategyInterface $fetchStrategy,
+//        ManagerInterface       $eventManager,
+//        StoreManagerInterface  $storeManager,
+//                               $mainTable,
+//                               $eventPrefix,
+//                               $eventObject,
+//                               $resourceModel,
+//        TimezoneInterface      $timeZone,
+//                               $model = Document::class,
+//        AdapterInterface       $connection = null,
+//        AbstractDb             $resource = null,
+//
+//    )
+//    {
+//        $this->_eventPrefix = $eventPrefix;
+//        $this->_eventObject = $eventObject;
+//        $this->timeZone = $timeZone;
+//        $this->storeManager = $storeManager;
+//        $this->_init($model, $resourceModel);
+//
+//
+//        $this->setMainTable($mainTable);
+//        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);
+//    }
 
 
     /**
@@ -174,19 +180,5 @@ class Collection extends QuestionCollection implements SearchResultInterface
         return $this;
     }
 
-    /**
-     * @param int $storeId
-     * @return Collection
-     * @throws NoSuchEntityException|LocalizedException
-     */
-    public function addStoreFilter(int $storeId = 0): self
-    {
-        if (!$storeId) {
-            $storeId = $this->storeManager->getStore()->getId();
-        }
 
-        $this->addFieldToFilter('store_id', $storeId);
-
-        return $this;
-    }
 }
