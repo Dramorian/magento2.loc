@@ -4,8 +4,6 @@
                  type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">alex_ask_question</argument>
-            <argument name="eventPrefix" xsi:type="string">alex_ask_question_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">question_grid_collection</argument>
             <argument name="resourceModel" xsi:type="string">Alex\AskQuestion\Model\ResourceModel\AskQuestion</argument>
         </arguments>
     </virtualType>

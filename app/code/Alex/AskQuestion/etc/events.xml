@@ -16,4 +16,9 @@
                   instance="Alex\AskQuestion\Observer\QuestionTabToggle"
         />
     </event>
+    <event name="alex_ask_question_collection_load_after">
+        <observer name="collection_observer_test"
+                  instance="Alex\AskQuestion\Observer\TestObserver"
+        />
+    </event>
 </config>
