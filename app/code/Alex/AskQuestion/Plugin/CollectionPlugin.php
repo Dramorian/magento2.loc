@@ -32,8 +32,7 @@ class CollectionPlugin
      */
     public function beforeLoad(QuestionCollection $collection)
     {
-        $storeId = 1;
-        $collection->addStoreFilter($storeId);
+        $collection->addStoreFilter();
         return $collection;
     }
 }

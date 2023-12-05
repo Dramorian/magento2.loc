@@ -28,7 +28,7 @@ class Collection extends AbstractCollection
     /**
      * @var StoreManagerInterface
      */
-    private StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     protected function _construct()
     {
