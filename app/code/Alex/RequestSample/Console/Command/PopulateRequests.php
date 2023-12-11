@@ -3,13 +3,14 @@
 namespace Alex\RequestSample\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 
 class PopulateRequests extends Command
 {
-    const DEFAULT_COUNT = 20;
+
+    public const DEFAULT_COUNT = 20;
 
     protected function configure()
     {
@@ -25,12 +26,7 @@ class PopulateRequests extends Command
         parent::configure();
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $count = $input->getArgument('count') ?: self::DEFAULT_COUNT;
         $i = 0;
@@ -41,5 +37,6 @@ class PopulateRequests extends Command
         }
 
         $output->writeln("<info>Completed!<info>");
+        return 0; // Return an integer value as required
     }
 }
