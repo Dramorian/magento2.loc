@@ -4,6 +4,7 @@ namespace Alex\RequestSample\Console\Command;
 
 use Alex\RequestSample\Model\RequestSample;
 use Alex\RequestSample\Model\RequestSampleFactory;
+use Exception;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Api\SearchCriteria;
@@ -95,39 +96,56 @@ class PopulateRequests extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->state->setAreaCode(Area::AREA_ADMINHTML);
-            $count = $input->getArgument('count') ?: self::DEFAULT_COUNT;
-            $i = 0;
-            /** @var Transaction $transaction */
-            $transaction = $this->transactionFactory->create();
-            $this->criteria->setPageSize(100);
-            $products = $this->productRepository->getList($this->criteria)
-                ->getItems();
-
-            while ($i < $count) {
-                ++$i;
-                /** @var ProductInterface $product */
-                $product = $products[array_rand($products)];
-
-                /** @var RequestSample $requestSample */
-                $requestSample = $this->requestSampleFactory->create();
-                $requestSample->setName("Test name $i")
-                    ->setEmail("email-$i@example.com")
-                    ->setPhone('888-88-88')
-                    ->setProductName($product->getName())
-                    ->setSku($product->getSku())
-                    ->setRequest("Lorem ipsum #$i");
-
-                $transaction->addObject($requestSample);
-                $output->writeln("<info>Generated item #$i...<info>");
-            }
-
-            $transaction->save();
-            $output->writeln("<info>Completed!<info>");
-        } catch (\Exception $e) {
+            $this->state->emulateAreaCode(
+                Area::AREA_ADMINHTML,
+                [$this, 'generate'],
+                [
+                    $input->getArgument('count') ?: self::DEFAULT_COUNT,
+                    $output
+                ]
+            );
+        } catch (Exception $e) {
             $output->writeln("<error>{$e->getMessage()}<error>");
 
         }
         return 0;
     }
+
+    /**
+     * @TODO: THIS IS JUST A DEMO! THIS FUNCTION JUST BE MOVED TO A SERVICE!
+     * @param int $count
+     * @param OutputInterface $output
+     * @throws Exception
+     */
+    public function generate(int $count, OutputInterface $output)
+    {
+        $i = 0;
+        /** @var Transaction $transaction */
+        $transaction = $this->transactionFactory->create();
+        $this->criteria->setPageSize(100);
+        $products = $this->productRepository->getList($this->criteria)
+            ->getItems();
+
+        while ($i < $count) {
+            ++$i;
+            /** @var ProductInterface $product */
+            $product = $products[array_rand($products)];
+
+            /** @var RequestSample $requestSample */
+            $requestSample = $this->requestSampleFactory->create();
+            $requestSample->setName("Test name $i")
+                ->setEmail("email-$i@example.com")
+                ->setPhone('888-88-88')
+                ->setProductName($product->getName())
+                ->setSku($product->getSku())
+                ->setRequest("Lorem ipsum #$i");
+
+            $transaction->addObject($requestSample);
+            $output->writeln("<info>Generated item #$i...<info>");
+        }
+
+        $transaction->save();
+        $output->writeln("<info>Completed!<info>");
+    }
 }
+
