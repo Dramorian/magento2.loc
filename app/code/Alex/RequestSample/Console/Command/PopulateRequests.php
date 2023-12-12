@@ -2,15 +2,10 @@
 
 namespace Alex\RequestSample\Console\Command;
 
-use Alex\RequestSample\Model\RequestSample;
 use Alex\RequestSample\Model\RequestSampleFactory;
-use Exception;
-use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Model\ProductRepository;
-use Magento\Framework\Api\SearchCriteria;
+use Alex\RequestSample\Model\RequestSampleGenerator;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
-use Magento\Framework\DB\Transaction;
 use Magento\Framework\DB\TransactionFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,24 +17,9 @@ class PopulateRequests extends Command
     public const DEFAULT_COUNT = 20;
 
     /**
-     * @var ProductRepository
+     * @var RequestSampleGenerator
      */
-    private $productRepository;
-
-    /**
-     * @var SearchCriteria
-     */
-    private $criteria;
-
-    /**
-     * @var RequestSampleFactory
-     */
-    private $requestSampleFactory;
-
-    /**
-     * @var TransactionFactory
-     */
-    private $transactionFactory;
+    private $requestSampleGenerator;
 
     /**
      * @var State
@@ -47,28 +27,18 @@ class PopulateRequests extends Command
     private $state;
 
     /**
-     * PopulateRequests constructor.
-     * @param ProductRepository $productRepository
-     * @param SearchCriteria $criteria
-     * @param RequestSampleFactory $requestSampleFactory
-     * @param TransactionFactory $transactionFactory
+     * @param RequestSampleGenerator $requestSampleGenerator
      * @param State $state
      * @param string|null $name
      */
     public function __construct(
-        ProductRepository    $productRepository,
-        SearchCriteria       $criteria,
-        RequestSampleFactory $requestSampleFactory,
-        TransactionFactory   $transactionFactory,
-        State                $state,
-        string               $name = null
+        RequestSampleGenerator $requestSampleGenerator,
+        State                  $state,
+        string                 $name = null
     ) {
         parent::__construct($name);
-        $this->productRepository = $productRepository;
-        $this->criteria = $criteria;
-        $this->requestSampleFactory = $requestSampleFactory;
-        $this->transactionFactory = $transactionFactory;
         $this->state = $state;
+        $this->requestSampleGenerator = $requestSampleGenerator;
     }
 
     /**
@@ -89,63 +59,25 @@ class PopulateRequests extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
+     * @inheritdoc
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->state->emulateAreaCode(
                 Area::AREA_ADMINHTML,
-                [$this, 'generate'],
+                function (int $count) use ($output) {
+                    foreach ($this->requestSampleGenerator->generate($count) as $message) {
+                        $output->writeln("<info>$message</info>");
+                    }
+                },
                 [
-                    $input->getArgument('count') ?: self::DEFAULT_COUNT,
-                    $output
+                    $input->getArgument('count') ?: self::DEFAULT_COUNT
                 ]
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln("<error>{$e->getMessage()}<error>");
-
         }
         return 0;
     }
-
-    /**
-     * @TODO: THIS IS JUST A DEMO! THIS FUNCTION JUST BE MOVED TO A SERVICE!
-     * @param int $count
-     * @param OutputInterface $output
-     * @throws Exception
-     */
-    public function generate(int $count, OutputInterface $output)
-    {
-        $i = 0;
-        /** @var Transaction $transaction */
-        $transaction = $this->transactionFactory->create();
-        $this->criteria->setPageSize(100);
-        $products = $this->productRepository->getList($this->criteria)
-            ->getItems();
-
-        while ($i < $count) {
-            ++$i;
-            /** @var ProductInterface $product */
-            $product = $products[array_rand($products)];
-
-            /** @var RequestSample $requestSample */
-            $requestSample = $this->requestSampleFactory->create();
-            $requestSample->setName("Test name $i")
-                ->setEmail("email-$i@example.com")
-                ->setPhone('888-88-88')
-                ->setProductName($product->getName())
-                ->setSku($product->getSku())
-                ->setRequest("Lorem ipsum #$i");
-
-            $transaction->addObject($requestSample);
-            $output->writeln("<info>Generated item #$i...<info>");
-        }
-
-        $transaction->save();
-        $output->writeln("<info>Completed!<info>");
-    }
 }
-
