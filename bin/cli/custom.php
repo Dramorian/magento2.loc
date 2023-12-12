@@ -19,8 +19,8 @@ try {
     require_once 'ProductRepository.php';
 
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-    /** @var \Geekhub\RequestSample\Model\RequestSampleGenerator $requestSampleGenerator */
-    $requestSampleGenerator = $objectManager->get(\Geekhub\RequestSample\Model\RequestSampleGenerator::class);
+    /** @var \Alex\RequestSample\Model\RequestSampleGenerator $requestSampleGenerator */
+    $requestSampleGenerator = $objectManager->get(\Alex\RequestSample\Model\RequestSampleGenerator::class);
     /** @var \Magento\Framework\App\State $state */
     $state = $objectManager->get(\Magento\Framework\App\State::class);
 
