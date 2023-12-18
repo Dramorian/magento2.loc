@@ -16,4 +16,13 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="ask_question_product_qty" xsi:type="object">
+                    Alex\AskQuestion\Console\Command\ProductQty
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>
