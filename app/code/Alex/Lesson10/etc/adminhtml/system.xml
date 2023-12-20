@@ -8,7 +8,7 @@
             <class>separator-top</class>
             <label>Cron Job Management Options</label>
             <tab>alex</tab>
-            <resource>Alex_Lesson10::cron_job_management</resource>
+            <resource>Alex_Lesson10::cron_job_management_settings</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
