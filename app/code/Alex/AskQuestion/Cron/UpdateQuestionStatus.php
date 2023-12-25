@@ -4,7 +4,6 @@ namespace Alex\AskQuestion\Cron;
 
 use Alex\AskQuestion\Model\ResourceModel\AskQuestion\CollectionFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Psr\Log\LoggerInterface;
 
 class UpdateQuestionStatus
 {
@@ -31,14 +30,15 @@ class UpdateQuestionStatus
     {
         $collection = $this->collectionFactory->create();
         $collection->addFieldToFilter('status', 'Pending');
-        $collection->addFieldToFilter(
-            'created_at',
-            ['lteq' => date(
-                'Y-m-d H:i:s',
-                strtotime('-' . $this->getNumberOfDays() . ' days')
-            )
-            ]
-        );
+
+//        $collection->addFieldToFilter(
+//            'created_at',
+//            ['lteq' => date(
+//                'Y-m-d H:i:s',
+//                strtotime('-' . $this->getNumberOfDays() . ' days')
+//            )
+//            ]
+//        );
 
         foreach ($collection as $item) {
             $item->setStatus('Answered');
