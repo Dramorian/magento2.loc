@@ -2,13 +2,17 @@
 
 namespace Alex\RequestSample\Controller\Submit;
 
+use Alex\RequestSample\Helper\Mail;
 use Alex\RequestSample\Model\RequestSample;
 use Alex\RequestSample\Model\RequestSampleFactory;
+use Exception;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\LocalizedException;
 
@@ -22,6 +26,7 @@ class Index extends Action
      * @var Validator
      */
     private $formKeyValidator;
+    private $mailHelper;
 
     /**
      * @var RequestSampleFactory
@@ -37,17 +42,19 @@ class Index extends Action
     public function __construct(
         Validator            $formKeyValidator,
         RequestSampleFactory $requestSampleFactory,
-        Context              $context
+        Context              $context,
+        Mail                 $mailHelper
     )
     {
         parent::__construct($context);
         $this->formKeyValidator = $formKeyValidator;
         $this->requestSampleFactory = $requestSampleFactory;
+        $this->mailHelper = $mailHelper;
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
-     * @throws \Exception
+     * @return Json
+     * @throws Exception
      */
     public function execute()
     {
@@ -76,6 +83,17 @@ class Index extends Action
                 ->setSku($request->getParam('sku'))
                 ->setRequest($request->getParam('request'));
             $requestSample->save();
+
+            /**
+             * Send Email
+             */
+            if ($request->getParam('email')) {
+                $email = $request->getParam('email');
+                $customerName = $request->getParam('name');
+                $message = $request->getParam('request');
+
+                $this->mailHelper->sendMail($email, $customerName, $message);
+            }
 
             $data = [
                 'status' => self::STATUS_SUCCESS,
