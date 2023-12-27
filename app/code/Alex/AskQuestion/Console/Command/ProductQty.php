@@ -23,6 +23,8 @@ class ProductQty extends Command
     protected $appState;
 
     /**
+     * Console command constructor
+     *
      * @param ProductRepositoryInterface $productRepository
      * @param State $appState
      * @param string|null $name
@@ -31,13 +33,17 @@ class ProductQty extends Command
         ProductRepositoryInterface $productRepository,
         State                      $appState,
         string                     $name = null
-    )
-    {
+    ) {
         parent::__construct($name);
         $this->productRepository = $productRepository;
         $this->appState = $appState;
     }
 
+    /**
+     * Command line configuration
+     *
+     * @return void
+     */
     protected function configure()
     {
         $this->setName('ask-question:update-product-qty')

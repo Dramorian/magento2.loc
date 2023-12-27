@@ -2,19 +2,21 @@
 
 namespace Alex\AskQuestion\Controller\Submit;
 
-use Alex\AskQuestion\Model\AskQuestion;
 use Alex\AskQuestion\Model\AskQuestionFactory;
-use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\LocalizedException;
 
-class Index extends Action
+class Index implements HttpGetActionInterface, HttpPostActionInterface
 {
     public const STATUS_ERROR = 'Error';
-
     public const STATUS_SUCCESS = 'Success';
 
     /**
@@ -28,28 +30,41 @@ class Index extends Action
     private $askQuestionFactory;
 
     /**
-     * Index constructor.
+     * @var RequestInterface
+     */
+    private $request;
+
+    /**
+     * @var ResultFactory
+     */
+    private $resultFactory;
+
+    /**
+     * Submit index constructor
+     *
      * @param Validator $formKeyValidator
      * @param AskQuestionFactory $askQuestionFactory
-     * @param Context $context
+     * @param RequestInterface $request
+     * @param ResultFactory $resultFactory
      */
     public function __construct(
         Validator          $formKeyValidator,
         AskQuestionFactory $askQuestionFactory,
-        Context            $context
-    )
-    {
-        parent::__construct($context);
+        RequestInterface   $request,
+        ResultFactory      $resultFactory,
+    ) {
         $this->formKeyValidator = $formKeyValidator;
         $this->askQuestionFactory = $askQuestionFactory;
+        $this->request = $request;
+        $this->resultFactory = $resultFactory;
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
+     * @return ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-        $request = $this->getRequest();
+        $request = $this->request;
 
         try {
 

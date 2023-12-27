@@ -15,8 +15,9 @@ class UpdateQuestionStatus
     /**
      * @param CollectionFactory $collectionFactory
      */
-    public function __construct(CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        CollectionFactory $collectionFactory
+    ) {
         $this->collectionFactory = $collectionFactory;
     }
 
@@ -31,15 +32,6 @@ class UpdateQuestionStatus
         $collection = $this->collectionFactory->create();
         $collection->addFieldToFilter('status', 'Pending');
 
-//        $collection->addFieldToFilter(
-//            'created_at',
-//            ['lteq' => date(
-//                'Y-m-d H:i:s',
-//                strtotime('-' . $this->getNumberOfDays() . ' days')
-//            )
-//            ]
-//        );
-
         foreach ($collection as $item) {
             $item->setStatus('Answered');
             $item->save();
@@ -49,7 +41,7 @@ class UpdateQuestionStatus
     /**
      * @return int
      */
-    protected function getNumberofDays()
+    protected function getNumberofDays(): int
     {
         return 3;
     }

@@ -3,7 +3,6 @@
 namespace Alex\AskQuestion\Setup\Patch\Data;
 
 use Magento\Catalog\Model\Product;
-use Magento\Catalog\Model\Product\Attribute\Source\Boolean;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
@@ -30,13 +29,17 @@ class AddAskQuestionAttribute implements DataPatchInterface
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory $eavSetupFactory
      */
-    public function __construct(ModuleDataSetupInterface $moduleDataSetup, EavSetupFactory $eavSetupFactory)
-    {
+    public function __construct(
+        ModuleDataSetupInterface $moduleDataSetup,
+        EavSetupFactory          $eavSetupFactory
+    ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
     }
 
     /**
+     * Adding new attribute to product
+     *
      * @return void
      * @throws LocalizedException
      * @throws ValidateException

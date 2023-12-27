@@ -44,8 +44,9 @@ class AskQuestion extends AbstractModel
      */
     private StoreManagerInterface $storeManager;
 
-
     /**
+     * AskQuestion model constructor
+     *
      * @param Context $context
      * @param Registry $registry
      * @param StoreManagerInterface $storeManager
@@ -60,11 +61,11 @@ class AskQuestion extends AbstractModel
         AbstractResource      $resource = null,
         AbstractDb            $resourceCollection = null,
         array                 $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
         $this->storeManager = $storeManager;
     }
+
 
     protected function _construct()
     {

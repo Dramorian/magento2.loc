@@ -8,13 +8,6 @@
         </item>
     </argument>
     <settings>
-<!--        <buttons>-->
-<!--            <button name="add">-->
-<!--                <url path="*/*/new"/>-->
-<!--                <class>primary</class>-->
-<!--                <label translate="true">Add New Question</label>-->
-<!--            </button>-->
-<!--        </buttons>-->
         <spinner>alex_ask_question_columns</spinner>
         <deps>
             <dep>alex_ask_question_listing.alex_ask_question_listing_data_source</dep>
@@ -61,7 +54,6 @@
             <filterSelect name="store_id" provider="${ $.parentName }">
                 <settings>
                     <captionValue>0</captionValue>
-                    <!--                    <options class="Alex\AskQuestion\Ui\Source\Listing\Column\AskQuestion\Options"/>-->
                     <label translate="true">Store View</label>
                     <dataScope>store_id</dataScope>
                     <imports>
@@ -107,46 +99,10 @@
                     <label translate="true">Delete</label>
                 </settings>
             </action>
-<!--            <action name="edit">-->
-<!--                <settings>-->
-<!--                    <callback>-->
-<!--                        <target>editSelected</target>-->
-<!--                        <provider>alex_ask_question_listing.alex_ask_question_listing.alex_ask_question_columns_editor-->
-<!--                        </provider>-->
-<!--                    </callback>-->
-<!--                    <type>edit</type>-->
-<!--                    <label translate="true">Edit</label>-->
-<!--                </settings>-->
-<!--            </action>-->
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="alex_ask_question_columns">
-        <settings>
-            <editorConfig>
-                <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="askquestion/question/inlineEdit"/>
-                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
-                </param>
-                <param name="indexField" xsi:type="string">question_id</param>
-                <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">
-                    alex_ask_question_listing.alex_ask_question_listing.alex_ask_question_columns.ids
-                </param>
-            </editorConfig>
-            <childDefaults>
-                <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">
-                        alex_ask_question_listing.alex_ask_question_listing.alex_ask_question_columns_editor
-                    </item>
-                    <item name="target" xsi:type="string">startEdit</item>
-                    <item name="params" xsi:type="array">
-                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
-                        <item name="1" xsi:type="boolean">true</item>
-                    </item>
-                </param>
-            </childDefaults>
-        </settings>
         <selectionsColumn name="ids">
             <settings>
                 <indexField>question_id</indexField>

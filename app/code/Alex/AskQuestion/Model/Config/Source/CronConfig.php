@@ -56,8 +56,7 @@ class CronConfig extends Value
         AbstractDb           $resourceCollection = null,
                              $runModelPath = '',
         array                $data = []
-    )
-    {
+    ) {
         $this->_runModelPath = $runModelPath;
         $this->_configValueFactory = $configValueFactory;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);

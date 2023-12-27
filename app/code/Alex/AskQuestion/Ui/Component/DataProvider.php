@@ -45,8 +45,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         array $meta = [],
         array $data = [],
         array $additionalFilterPool = []
-    )
-    {
+    ) {
         parent::__construct(
             $name,
             $primaryFieldName,

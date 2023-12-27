@@ -2,7 +2,6 @@
 
 namespace Alex\AskQuestion\Ui\Source\Listing\Column;
 
-
 use Magento\Framework\Data\OptionSourceInterface;
 
 class Status implements OptionSourceInterface

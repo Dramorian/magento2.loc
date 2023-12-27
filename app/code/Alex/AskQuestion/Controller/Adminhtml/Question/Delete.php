@@ -5,6 +5,7 @@ namespace Alex\AskQuestion\Controller\Adminhtml\Question;
 use Alex\AskQuestion\Model\AskQuestionFactory;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Block\Page;
 use Magento\Framework\Controller\ResultFactory;
 
 class Delete extends Action
@@ -15,7 +16,7 @@ class Delete extends Action
     protected $askQuestionFactory;
 
     /**
-     * Dependency Initialization
+     * Delete action constructor
      *
      * @param Context $context
      * @param AskQuestionFactory $askQuestionFactory
@@ -23,8 +24,7 @@ class Delete extends Action
     public function __construct(
         Context            $context,
         AskQuestionFactory $askQuestionFactory
-    )
-    {
+    ) {
         $this->askQuestionFactory = $askQuestionFactory;
         parent::__construct($context);
     }
@@ -40,14 +40,20 @@ class Delete extends Action
         if ($id) {
             try {
                 $model = $this->askQuestionFactory->create();
-                $model->getResource()->load($model, $id);
-                $model->delete();
-                $this->messageManager->addSuccessMessage(__('The question has been deleted.'));
+                $model->load($id);
+
+                // Retrieve the data from the model
+                $data = $model->getData();
+
+                if (!empty($data)) {
+                    $model->delete();
+                    $this->messageManager->addSuccessMessage(__('The question has been deleted.'));
+                } else {
+                    $this->messageManager->addErrorMessage(__('Unable to find the question to delete.'));
+                }
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage(__($e->getMessage()));
             }
-        } else {
-            $this->messageManager->addErrorMessage(__('Unable to find the question to delete.'));
         }
 
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('askquestion/question/index');

@@ -22,7 +22,7 @@ class MassDelete extends Action
     protected $filter;
 
     /**
-     * Dependency Initialization
+     * Mass Delete action constructor
      *
      * @param Context $context
      * @param Filter $filter
@@ -32,8 +32,7 @@ class MassDelete extends Action
         Context           $context,
         Filter            $filter,
         CollectionFactory $collectionFactory
-    )
-    {
+    ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
@@ -59,14 +58,4 @@ class MassDelete extends Action
         }
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('askquestion/question/index');
     }
-
-//    /**
-//     * Check Authorization
-//     *
-//     * @return boolean
-//     */
-//    public function _isAllowed()
-//    {
-//        return $this->_authorization->isAllowed('Alex_AskQuestion::delete');
-//    }
 }

@@ -7,7 +7,7 @@ use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
-use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
@@ -25,6 +25,8 @@ class MassStatus extends Action implements HttpPostActionInterface
     protected CollectionFactory $collectionFactory;
 
     /**
+     * MassStatus action constructor
+     *
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
@@ -49,8 +51,6 @@ class MassStatus extends Action implements HttpPostActionInterface
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
         $status = $this->getRequest()->getParam('status');
-
-
         foreach ($collection as $item) {
             $item->setStatus($status);
             $item->save();
