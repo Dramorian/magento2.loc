@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Alex\RequestSample\Api\Data\RequestSampleSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Alex\RequestSample\Api\Data\RequestSampleInterface"
+                type="Alex\RequestSample\Model\RequestSample"/>
+    <preference for="Alex\RequestSample\Api\RequestSampleRepositoryInterface"
+                type="Alex\RequestSample\Model\RequestSampleRepository"/>
+</config>

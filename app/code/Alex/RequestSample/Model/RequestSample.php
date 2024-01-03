@@ -2,6 +2,7 @@
 
 namespace Alex\RequestSample\Model;
 
+use Alex\RequestSample\Api\Data\RequestSampleInterface;
 use Alex\RequestSample\Model\ResourceModel\RequestSample as RequestSampleResource;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -13,28 +14,8 @@ use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class RequestSample
- * @package Alex\RequestSample\Model
- *
- * @method int|string getRequestId()
- * @method int|string getName()
- * @method RequestSample setName(string $name)
- * @method string getEmail()
- * @method RequestSample setEmail(string $email)
- * @method string getPhone()
- * @method RequestSample setPhone(string $phone)
- * @method string getProductName()
- * @method RequestSample setProductName(string $productName)
- * @method string getSku()
- * @method RequestSample setSku(string $sku)
- * @method string getRequest()
- * @method RequestSample setRequest(string $request)
- * @method string getCreatedAt()
- * @method string getStatus()
- * @method RequestSample setStatus(string $status)
- * @method int|string getStoreId()
- * @method RequestSample setStoreId(int $storeId)
  */
-class RequestSample extends AbstractModel
+class RequestSample extends AbstractModel implements RequestSampleInterface
 {
     public const STATUS_PENDING = 'pending';
 
@@ -60,8 +41,7 @@ class RequestSample extends AbstractModel
         AbstractResource      $resource = null,
         AbstractDb            $resourceCollection = null,
         array                 $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
         $this->storeManager = $storeManager;
     }
@@ -72,6 +52,158 @@ class RequestSample extends AbstractModel
     protected function _construct()
     {
         $this->_init(RequestSampleResource::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getId()
+    {
+        return $this->getData('request_id');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setId($id)
+    {
+        return $this->setData('request_id', $id);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreatedAt()
+    {
+        return $this->getData('created_at');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return $this->getData('name');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setName($name)
+    {
+        return $this->setData('name', $name);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmail()
+    {
+        return $this->getData('email');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEmail($email)
+    {
+        return $this->setData('email', $email);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPhone()
+    {
+        return $this->getData('phone');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPhone($phone)
+    {
+        return $this->setData('phone', $phone);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getProductName()
+    {
+        return $this->getData('product_name');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setProductName($productName)
+    {
+        return $this->setData('product_name', $productName);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSku()
+    {
+        return $this->getData('sku');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSku($sku)
+    {
+        return $this->setData('sku', $sku);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRequest()
+    {
+        return $this->getData('request');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setRequest($request)
+    {
+        return $this->setData('request', $request);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStatus()
+    {
+        return $this->getData('status');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setStatus($status)
+    {
+        return $this->setData('status', $status);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreId()
+    {
+        return $this->getData('store_id');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setStoreId($storeId)
+    {
+        return $this->setData('store_id', $storeId);
     }
 
     /**
