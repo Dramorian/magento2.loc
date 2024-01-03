@@ -1,0 +1,63 @@
+<!--@subject Ask Question Notification @-->
+<!--@styles
+body, td {
+    color: #2f2f2f;
+    font: 14px Verdana, Arial, Helvetica, sans-serif;
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+@-->
+
+<!--@vars
+{
+    "var store.getName()": "Store Name",
+    "var customer_name": "Customer Name",
+    "var message": "Customer Message",
+    "var product_name": "Product Name",
+    "var product_sku": "Product SKU"
+} @-->
+
+
+{{template config_path="design/email/header_template"}}
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto; font-family: Arial, sans-serif; border-collapse: collapse;">
+    <tr>
+        <td>
+            <h2>{{trans "Ask Question Notification"}}</h2>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                    <td >{{trans "Store:"}}</td>
+                    <td>{{var store.getName()}}</td>
+                </tr>
+                <tr>
+                    <td>{{trans "Customer Name:"}}</td>
+                    <td>{{var customer_name}}</td>
+                </tr>
+                <tr>
+                    <td>{{trans "Customer Phone:"}}</td>
+                    <td>{{var phone}}</td>
+                </tr>
+                <tr>
+                    <td>{{trans "Message:"}}</td>
+                    <td>{{var message}}</td>
+                </tr>
+                <tr>
+                    <td>{{trans "Product Name:"}}</td>
+                    <td>{{var product_name}}</td>
+                </tr>
+                <tr>
+                    <td>{{trans "Product SKU:"}}</td>
+                    <td>{{var product_sku}}</td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,21 @@
+<!--@subject Ask Question - Response @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var customer_name":"Customer Name",
+"var message":"Message"}
+@-->
+
+{{template config_path="design/email/header_template"}}
+
+<table cellspacing="0" cellpadding="0" border="0" width="650" style="margin: auto; font-family: Arial, sans-serif;">
+    <tr>
+        <td>
+            <h2>Dear {{var customer_name}},</h2>
+            <p>Thank you for reaching out.</p>
+            <p>Your question:</p>
+            <p> {{var message}}</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

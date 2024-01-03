@@ -66,7 +66,6 @@ class AskQuestion extends AbstractModel
         $this->storeManager = $storeManager;
     }
 
-
     protected function _construct()
     {
         $this->_init(AskQuestionResource::class);
