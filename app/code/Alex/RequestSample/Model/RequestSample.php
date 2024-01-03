@@ -47,7 +47,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return void
      */
     protected function _construct()
     {
@@ -55,7 +55,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|int|mixed|null
      */
     public function getId()
     {
@@ -63,7 +63,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $id
+     * @return RequestSampleInterface|RequestSample
      */
     public function setId($id)
     {
@@ -71,7 +72,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array|mixed|string|null
      */
     public function getCreatedAt()
     {
@@ -79,7 +80,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array|mixed|string|null
      */
     public function getName()
     {
@@ -87,7 +88,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $name
+     * @return RequestSampleInterface|RequestSample
      */
     public function setName($name)
     {
@@ -95,7 +97,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array|mixed|string|null
      */
     public function getEmail()
     {
@@ -103,7 +105,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $email
+     * @return RequestSampleInterface|RequestSample
      */
     public function setEmail($email)
     {
@@ -111,7 +114,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array|mixed|string|null
      */
     public function getPhone()
     {
@@ -119,7 +122,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $phone
+     * @return RequestSampleInterface|RequestSample
      */
     public function setPhone($phone)
     {
@@ -127,7 +131,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array|mixed|string|null
      */
     public function getProductName()
     {
@@ -135,7 +139,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $productName
+     * @return RequestSampleInterface|RequestSample
      */
     public function setProductName($productName)
     {
@@ -143,7 +148,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array|mixed|string|null
      */
     public function getSku()
     {
@@ -151,7 +156,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritdoc
+     * @param $sku
+     * @return RequestSampleInterface|RequestSample
      */
     public function setSku($sku)
     {
@@ -159,7 +165,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|mixed|string|null
      */
     public function getRequest()
     {
@@ -167,7 +173,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @param $request
+     * @return RequestSampleInterface|RequestSample
      */
     public function setRequest($request)
     {
@@ -175,7 +182,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|mixed|string|null
      */
     public function getStatus()
     {
@@ -183,7 +190,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @param $status
+     * @return RequestSampleInterface|RequestSample
      */
     public function setStatus($status)
     {
@@ -191,7 +199,7 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|mixed|string|null
      */
     public function getStoreId()
     {
@@ -199,7 +207,8 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
-     * @inheritDoc
+     * @param $storeId
+     * @return RequestSampleInterface|RequestSample
      */
     public function setStoreId($storeId)
     {

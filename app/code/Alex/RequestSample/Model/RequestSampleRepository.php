@@ -2,12 +2,14 @@
 
 namespace Alex\RequestSample\Model;
 
-use Alex\RequestSample\Api\Data;
 use Alex\RequestSample\Api\Data\RequestSampleInterface;
+use Alex\RequestSample\Api\Data\RequestSampleInterfaceFactory;
+use Alex\RequestSample\Api\Data\RequestSampleSearchResultsInterfaceFactory;
 use Alex\RequestSample\Api\RequestSampleRepositoryInterface;
 use Alex\RequestSample\Model\ResourceModel\RequestSample as ResourceRequestSample;
 use Alex\RequestSample\Model\ResourceModel\RequestSample\Collection;
 use Alex\RequestSample\Model\ResourceModel\RequestSample\CollectionFactory as RequestSampleCollectionFactory;
+use Exception;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SortOrder;
@@ -38,12 +40,12 @@ class RequestSampleRepository implements RequestSampleRepositoryInterface
     protected $requestSampleCollectionFactory;
 
     /**
-     * @var Data\RequestSampleInterfaceFactory
+     * @var RequestSampleInterfaceFactory
      */
     protected $dataRequestSampleFactory;
 
     /**
-     * @var Data\RequestSampleSearchResultsInterfaceFactory
+     * @var RequestSampleSearchResultsInterfaceFactory
      */
     protected $searchResultsFactory;
 
@@ -61,19 +63,19 @@ class RequestSampleRepository implements RequestSampleRepositoryInterface
      * @param ResourceRequestSample $resource
      * @param RequestSampleFactory $requestSampleFactory
      * @param RequestSampleCollectionFactory $requestSampleCollectionFactory
-     * @param Data\RequestSampleInterfaceFactory $dataRequestSampleFactory
-     * @param Data\RequestSampleSearchResultsInterfaceFactory $searchResultsFactory
+     * @param RequestSampleInterfaceFactory $dataRequestSampleFactory
+     * @param RequestSampleSearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
      * @param DataObjectProcessor $dataObjectProcessor
      */
     public function __construct(
-        ResourceRequestSample                           $resource,
-        RequestSampleFactory                            $requestSampleFactory,
-        RequestSampleCollectionFactory                  $requestSampleCollectionFactory,
-        Data\RequestSampleInterfaceFactory              $dataRequestSampleFactory,
-        Data\RequestSampleSearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper                                $dataObjectHelper,
-        DataObjectProcessor                             $dataObjectProcessor
+        ResourceRequestSample                      $resource,
+        RequestSampleFactory                       $requestSampleFactory,
+        RequestSampleCollectionFactory             $requestSampleCollectionFactory,
+        RequestSampleInterfaceFactory              $dataRequestSampleFactory,
+        RequestSampleSearchResultsInterfaceFactory $searchResultsFactory,
+        DataObjectHelper                           $dataObjectHelper,
+        DataObjectProcessor                        $dataObjectProcessor
     ) {
         $this->resource = $resource;
         $this->requestSampleFactory = $requestSampleFactory;
@@ -95,7 +97,7 @@ class RequestSampleRepository implements RequestSampleRepositoryInterface
     {
         try {
             $this->resource->save($requestSample);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(__($exception->getMessage()));
         }
         return $requestSample;
@@ -144,7 +146,7 @@ class RequestSampleRepository implements RequestSampleRepositoryInterface
             foreach ($sortOrders as $sortOrder) {
                 $collection->addOrder(
                     $sortOrder->getField(),
-                    ($sortOrder->getDirection() === SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+                    ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
                 );
             }
         }
@@ -157,11 +159,11 @@ class RequestSampleRepository implements RequestSampleRepositoryInterface
             $this->dataObjectHelper->populateWithArray(
                 $requestSampleData,
                 $requestSampleModel->getData(),
-                RequestSampleInterface::class
+                'Alex\RequestSample\Api\Data\RequestSampleInterface'
             );
             $requestSamples[] = $this->dataObjectProcessor->buildOutputDataArray(
                 $requestSampleData,
-                RequestSampleInterface::class
+                'Alex\RequestSample\Api\Data\RequestSampleInterface'
             );
         }
         $searchResults->setItems($requestSamples);
@@ -179,7 +181,7 @@ class RequestSampleRepository implements RequestSampleRepositoryInterface
     {
         try {
             $this->resource->delete($requestSample);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
         return true;

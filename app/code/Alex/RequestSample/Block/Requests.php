@@ -4,6 +4,7 @@ namespace Alex\RequestSample\Block;
 
 use Alex\RequestSample\Model\ResourceModel\RequestSample\Collection;
 use Alex\RequestSample\Model\ResourceModel\RequestSample\CollectionFactory;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
@@ -31,6 +32,7 @@ class Requests extends Template
 
     /**
      * @return Collection
+     * @throws NoSuchEntityException
      */
     public function getSampleRequests(): Collection
     {

@@ -2,7 +2,8 @@
 
 namespace Alex\RequestSample\Controller\Submit;
 
-use Alex\RequestSample\Model\RequestSample;
+use Alex\RequestSample\Api\Data\RequestSampleInterface;
+use Alex\RequestSample\Api\RequestSampleRepositoryInterface;
 use Alex\RequestSample\Model\RequestSampleFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -29,20 +30,27 @@ class Index extends Action
     private $requestSampleFactory;
 
     /**
+     * @var RequestSampleRepositoryInterface
+     */
+    private $requestSampleRepository;
+
+    /**
      * Index constructor.
      * @param Validator $formKeyValidator
      * @param RequestSampleFactory $requestSampleFactory
+     * @param RequestSampleRepositoryInterface $requestSampleRepository
      * @param Context $context
      */
     public function __construct(
-        Validator            $formKeyValidator,
-        RequestSampleFactory $requestSampleFactory,
-        Context              $context
-    )
-    {
+        Validator                        $formKeyValidator,
+        RequestSampleFactory             $requestSampleFactory,
+        RequestSampleRepositoryInterface $requestSampleRepository,
+        Context                          $context
+    ) {
         parent::__construct($context);
         $this->formKeyValidator = $formKeyValidator;
         $this->requestSampleFactory = $requestSampleFactory;
+        $this->requestSampleRepository = $requestSampleRepository;
     }
 
     /**
@@ -67,7 +75,7 @@ class Index extends Action
             // Here we must also process backend validation or all form fields.
             // Otherwise attackers can just copy our page, remove fields validation and send anything they want
 
-            /** @var RequestSample $requestSample */
+            /** @var RequestSampleInterface $requestSample */
             $requestSample = $this->requestSampleFactory->create();
             $requestSample->setName($request->getParam('name'))
                 ->setEmail($request->getParam('email'))
@@ -75,7 +83,8 @@ class Index extends Action
                 ->setProductName($request->getParam('product_name'))
                 ->setSku($request->getParam('sku'))
                 ->setRequest($request->getParam('request'));
-            $requestSample->save();
+
+            $this->requestSampleRepository->save($requestSample);
 
             $data = [
                 'status' => self::STATUS_SUCCESS,
