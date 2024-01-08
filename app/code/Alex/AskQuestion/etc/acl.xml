@@ -6,6 +6,7 @@
                 <resource id="Magento_Backend::content">
                     <resource id="Magento_Backend::content_elements">
                         <resource id="Alex_AskQuestion::askquestion" title="AskQuestion" translate="title" sortOrder="50" />
+                        <resource id="Alex_AskQuestion::manage" title="Manage Questions" sortOrder="60"/>
                     </resource>
                 </resource>
             </resource>

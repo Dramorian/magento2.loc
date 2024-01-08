@@ -25,4 +25,13 @@
             </argument>
         </arguments>
     </type>
+
+    <!--AskQuestion Interface-->
+    <preference for="Alex\AskQuestion\Api\Data\AskQuestionSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Alex\AskQuestion\Api\Data\AskQuestionInterface"
+                type="Alex\AskQuestion\Model\AskQuestion"/>
+    <preference for="Alex\AskQuestion\Api\AskQuestionRepositoryInterface"
+                type="Alex\AskQuestion\Model\AskQuestionRepository"/>
+
 </config>

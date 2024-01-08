@@ -2,6 +2,8 @@
 
 namespace Alex\AskQuestion\Controller\Submit;
 
+use Alex\AskQuestion\Api\AskQuestionRepositoryInterface;
+use Alex\AskQuestion\Api\Data\AskQuestionInterface;
 use Alex\AskQuestion\Helper\Mail;
 use Alex\AskQuestion\Model\AskQuestionFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
@@ -29,6 +31,11 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
     private $askQuestionFactory;
 
     /**
+     * @var AskQuestionRepositoryInterface
+     */
+    private $askQuestionRepository;
+
+    /**
      * @var RequestInterface
      */
     private $request;
@@ -48,19 +55,22 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
      *
      * @param Validator $formKeyValidator
      * @param AskQuestionFactory $askQuestionFactory
+     * @param AskQuestionRepositoryInterface $askQuestionRepository
      * @param RequestInterface $request
      * @param ResultFactory $resultFactory
      * @param Mail $mailHelper
      */
     public function __construct(
-        Validator          $formKeyValidator,
-        AskQuestionFactory $askQuestionFactory,
-        RequestInterface   $request,
-        ResultFactory      $resultFactory,
-        Mail               $mailHelper
+        Validator                      $formKeyValidator,
+        AskQuestionFactory             $askQuestionFactory,
+        AskQuestionRepositoryInterface $askQuestionRepository,
+        RequestInterface               $request,
+        ResultFactory                  $resultFactory,
+        Mail                           $mailHelper
     ) {
         $this->formKeyValidator = $formKeyValidator;
         $this->askQuestionFactory = $askQuestionFactory;
+        $this->askQuestionRepository = $askQuestionRepository;
         $this->request = $request;
         $this->resultFactory = $resultFactory;
         $this->mailHelper = $mailHelper;
@@ -88,7 +98,7 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
             // @TODO: #111 Backend form validation
             // Here we must also process backend validation or all form fields.
             // Otherwise attackers can just copy our page, remove fields validation and send anything they want
-
+            /** @var AskQuestionInterface $askQuestion */
             $askQuestion = $this->askQuestionFactory->create();
             $askQuestion->setName($request->getParam('name'))
                 ->setEmail($request->getParam('email'))
@@ -96,7 +106,8 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
                 ->setProductName($request->getParam('product_name'))
                 ->setSku($request->getParam('sku'))
                 ->setQuestion($request->getParam('question'));
-            $askQuestion->save();
+
+            $this->askQuestionRepository->save($askQuestion);
 
             /**
              * Send Email
