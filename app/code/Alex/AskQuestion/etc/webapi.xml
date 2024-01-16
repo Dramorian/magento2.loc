@@ -7,12 +7,6 @@
             <resource ref="anonymous" />
         </resources>
     </route>
-    <route url="/V1/askQuestion/:askQuestionId" method="GET">
-        <service class="Alex\AskQuestion\Api\AskQuestionRepositoryInterface" method="getById"/>
-        <resources>
-            <resource ref="anonymous" />
-        </resources>
-    </route>
     <route url="/V1/askQuestion/search" method="GET">
         <service class="Alex\AskQuestion\Api\AskQuestionRepositoryInterface" method="getList"/>
         <resources>

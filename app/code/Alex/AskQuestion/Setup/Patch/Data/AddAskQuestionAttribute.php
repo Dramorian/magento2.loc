@@ -2,8 +2,12 @@
 
 namespace Alex\AskQuestion\Setup\Patch\Data;
 
+use Exception;
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ResourceModel\Product\Action;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
+use Magento\Eav\Model\Entity\Attribute\Source\Boolean;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Exception\LocalizedException;
@@ -23,18 +27,30 @@ class AddAskQuestionAttribute implements DataPatchInterface
      */
     private $eavSetupFactory;
 
+    /** @var CollectionFactory */
+    private $collectionFactory;
+
+    /** @var Action */
+    private $action;
+
     /**
      * AddAskQuestionAttribute constructor.
      *
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory $eavSetupFactory
+     * @param CollectionFactory $collectionFactory
+     * @param Action $action
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
-        EavSetupFactory          $eavSetupFactory
+        EavSetupFactory          $eavSetupFactory,
+        CollectionFactory        $collectionFactory,
+        Action                   $action
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
+        $this->collectionFactory = $collectionFactory;
+        $this->action = $action;
     }
 
     /**
@@ -43,6 +59,7 @@ class AddAskQuestionAttribute implements DataPatchInterface
      * @return void
      * @throws LocalizedException
      * @throws ValidateException
+     * @throws Exception
      */
     public function apply()
     {
@@ -59,13 +76,13 @@ class AddAskQuestionAttribute implements DataPatchInterface
                 'label' => 'Allow to ask question',
                 'input' => 'boolean',
                 'class' => '',
-                'source' => '',
+                'source' => Boolean::class,
                 'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
                 'visible' => true,
                 'required' => true,
                 'sort_order' => 90,
                 'user_defined' => false,
-                'default' => true,
+                'default' => 1, //applies only for new products
                 'searchable' => false,
                 'filterable' => false,
                 'comparable' => false,
@@ -75,6 +92,9 @@ class AddAskQuestionAttribute implements DataPatchInterface
                 'apply_to' => ''
             ]
         );
+        //set default value for the new custom attribute
+        $productIds = $this->collectionFactory->create()->getAllIds();
+        $this->action->updateAttributes($productIds, ['allow_to_ask_questions' => 1], 1);
     }
 
     /**
@@ -98,6 +118,6 @@ class AddAskQuestionAttribute implements DataPatchInterface
      */
     public static function getVersion(): string
     {
-        return '1.0.1';
+        return '1.0.2';
     }
 }
