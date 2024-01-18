@@ -1,0 +1,19 @@
+<?php
+/** @var \Alex\CustomerOrder\Block\Onepage $block */
+?>
+<script>
+    window.checkoutConfig = {};
+    window.checkoutConfig.checkoutUrl = '<?= $block->escapeUrl($block->getUrl('alex/customer/order')) ?>';
+    window.checkoutConfig.pageNotFoundUrl = '<?= $block->escapeUrl($block->getUrl('alex/customer/order')) ?>';
+</script>
+<h3>Test Onepage component</h3>
+<div id="onepageSelectorId" data-bind="scope:'onepageScope'" class="checkout-container">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#onepageSelectorId": {
+                "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        }
+    }
+    </script>
+</div>
