@@ -1,4 +1,32 @@
-<li id="product" data-bind="visible: isVisible">
-    <div>product</div>
-    <a href="#" data-bind="click: nextAction">Next</a>
+<li id="products" data-bind="visible: isVisible">
+    <h3>Products</h3>
+    <div>
+        <span data-bind="i18n: 'Search'"></span>
+        <input type="text" data-bind="value: request">
+    </div>
+    <if args="products().length">
+        <div>
+            <span>ID</span>
+            <span>Name</span>
+            <span>SKU</span>
+            <span>Price</span>
+            <span>Select</span>
+        </div>
+        <each args="data: products, as: 'product'">
+            <div>
+                <span data-bind="text: product.id"></span>
+                <span data-bind="text: product.name"></span>
+                <span data-bind="text: product.sku"></span>
+                <span data-bind="text: product.price"></span>
+                <span data-bind="click: function() { $parent.chooseProduct(product) }">Choose Product</span>
+            </div>
+        </each>
+
+        <a href="#" data-bind="click: nextAction">Next</a>
+
+    </if>
+    <ifnot args="products().length">
+        <div translate="'Sorry, no products found.'"/>
+        <div data-bind="i18n: 'i18n Test'"/>
+    </ifnot>
 </li>

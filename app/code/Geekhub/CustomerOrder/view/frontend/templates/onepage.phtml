@@ -1,11 +1,8 @@
 <?php
 /** @var \Geekhub\CustomerOrder\Block\Onepage $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
-<script>
-    window.checkoutConfig = {};
-    window.checkoutConfig.checkoutUrl = '<?= $block->escapeUrl($block->getUrl('geekhub/customer/order')) ?>';
-    window.checkoutConfig.pageNotFoundUrl = '<?= $block->escapeUrl($block->getUrl('geekhub/customer/order')) ?>';
-</script>
+
 <h3>Onepage component</h3>
 <div id="onepageSelectorId" data-bind="scope:'onepageScope'" class="checkout-container">
     <!-- ko template: getTemplate() --><!-- /ko -->
@@ -16,4 +13,28 @@
             }
         }
     </script>
+
+    <?php $serializedCheckoutConfig = /* @noEscape */ $block->getSerializedCheckoutConfig();
+    $scriptString = <<<script
+        window.checkoutConfig = {$serializedCheckoutConfig};
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+script;
+    ?>
+
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+    <?php $scriptString = <<<script
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function(url, blockLoader) {
+            blockLoader("{$block->escapeJs($block->escapeUrl($block->getViewFileUrl('images/loader-1.gif')))}");
+            return url.setBaseUrl('{$block->escapeJs($block->escapeUrl($block->getBaseUrl()))}');
+        })
+script;
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+
+
 </div>

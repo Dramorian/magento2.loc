@@ -2,16 +2,15 @@
 
 namespace Geekhub\CustomerOrder\Controller\Customer;
 
-use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Exception\LocalizedException;
 
-class GetList extends Action
+class GetProducts extends Action
 {
     /**
      * @var FilterBuilder
@@ -19,61 +18,63 @@ class GetList extends Action
     protected $filterBuilder;
 
     /**
-     * @var CustomerRepositoryInterface
+     * @var ProductRepositoryInterface
      */
-    protected $customerRepository;
+    protected $productRepository;
 
     /**
      * @var SearchCriteriaBuilder
      */
     protected $searchCriteriaBuilder;
 
+    /**
+     * @param Context $context
+     * @param ProductRepositoryInterface $productRepository
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param FilterBuilder $filterBuilder
+     */
     public function __construct(
-        Context                     $context,
-        CustomerRepositoryInterface $customerRepository,
-        SearchCriteriaBuilder       $searchCriteriaBuilder,
-        FilterBuilder               $filterBuilder
+        Context                    $context,
+        ProductRepositoryInterface $productRepository,
+        SearchCriteriaBuilder      $searchCriteriaBuilder,
+        FilterBuilder              $filterBuilder
     ) {
-        $this->customerRepository = $customerRepository;
+        $this->productRepository = $productRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->filterBuilder = $filterBuilder;
         parent::__construct($context);
     }
 
-    /**
-     * @throws LocalizedException
-     */
     public function execute()
     {
-        if ($q = $this->getRequest()->getParam('q')) {
+        if ($p = $this->getRequest()->getParam('p')) {
             $this->searchCriteriaBuilder->addFilter(
                 $this->filterBuilder
-                    ->setField('firstname')
-                    ->setValue('%' . $q . '%')
+                    ->setField('name')
+                    ->setValue('%' . $p . '%')
                     ->setConditionType('like')
                     ->create()
             );
         }
-        $this->searchCriteriaBuilder->addSortOrder('firstname', 'ASC');
+        $this->searchCriteriaBuilder->addSortOrder('name', 'ASC');
         $this->searchCriteriaBuilder->setPageSize(10);
         $this->searchCriteriaBuilder->setCurrentPage(1);
 
-        $customers = $this->customerRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        $products = $this->productRepository->getList($this->searchCriteriaBuilder->create())->getItems();
         $data = [];
-        foreach ($customers as $customer) {
+        foreach ($products as $product) {
             $data[] = [
-                'id' => $customer->getId(),
-                'firstName' => $customer->getFirstname(),
-                'lastName' => $customer->getLastname(),
-                'email' => $customer->getEmail()
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'sku' => $product->getSku(),
+                'price' => $product->getPrice()
             ];
         }
-
         /** @var Json $result */
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
         return $result->setData([
-            'customers' => $data,
+            'products' => $data,
             'error' => false
         ]);
     }

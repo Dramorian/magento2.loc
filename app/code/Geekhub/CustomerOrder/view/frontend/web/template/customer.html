@@ -1,8 +1,8 @@
 <li id="customer" data-bind="visible: isVisible">
     <h3>Customers</h3>
     <div>
-        <span translate="'Search'"/><span>
-        <input data-bind="value:request"></span>
+        <span data-bind="i18n: 'Search'"></span>
+        <input type="text" data-bind="value: request">
     </div>
     <if args="customers().length">
         <div>
@@ -14,10 +14,10 @@
         </div>
         <each args="data: customers, as: 'customer'">
             <div>
-                <span data-bind="html: customer.id"/>
-                <span text="customer.firstName"/>
-                <span text="customer.lastName"/>
-                <span text="customer.email"/>
+                <span data-bind="text: customer.id"></span>
+                <span data-bind="text: customer.firstName"></span>
+                <span data-bind="text: customer.lastName"></span>
+                <span data-bind="text: customer.email"></span>
                 <span data-bind="click: function() { $parent.chooseCustomer(customer) }">Choose Customer</span>
             </div>
         </each>
