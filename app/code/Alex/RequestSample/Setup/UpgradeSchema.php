@@ -2,6 +2,7 @@
 
 namespace Alex\RequestSample\Setup;
 
+use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\UpgradeSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -10,7 +11,7 @@ use Alex\RequestSample\Model\RequestSample;
 class UpgradeSchema implements UpgradeSchemaInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
@@ -26,61 +27,61 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 $installer->getTable('alex_request_sample')
             )->addColumn(
                 'request_id',
-                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                Table::TYPE_INTEGER,
                 null,
                 ['identity' => true, 'nullable' => false, 'primary' => true],
                 'Request ID'
             )->addColumn(
                 'name',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 255,
                 ['nullable' => false],
                 'Customer Name'
             )->addColumn(
                 'email',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 255,
                 ['nullable' => false],
                 'Customer Email'
             )->addColumn(
                 'phone',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 63,
                 [],
                 'Phone'
             )->addColumn(
                 'product_name',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 127,
                 ['nullable' => false],
                 'Product Name'
             )->addColumn(
                 'sku',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 63,
                 ['nullable' => false],
                 'Sku'
             )->addColumn(
                 'request',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 63,
                 ['nullable' => false],
                 'Request'
             )->addColumn(
                 'created_at',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                Table::TYPE_TIMESTAMP,
                 null,
-                ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
+                ['nullable' => false, 'default' => Table::TIMESTAMP_INIT],
                 'Creation Time'
             )->addColumn(
                 'status',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                Table::TYPE_TEXT,
                 15,
                 ['nullable' => false, 'default' => RequestSample::STATUS_PENDING],
                 'Status'
             )->addColumn(
                 'store_id',
-                \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                Table::TYPE_SMALLINT,
                 5,
                 ['unsigned' => true, 'nullable' => false, 'default' => '0'],
                 'Store ID'
@@ -94,13 +95,43 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'store_id',
                 $installer->getTable('store'),
                 'store_id',
-                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE,
-                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+                Table::ACTION_CASCADE,
+                Table::ACTION_CASCADE
             )->setComment(
                 'Request a Sample'
             );
 
             $installer->getConnection()->createTable($table);
+        }
+
+        if (version_compare($context->getVersion(), '1.0.5', '<')) {
+
+            /**
+             * Add column 'Customer id to 'alex_request_sample'
+             */
+            $tableName = $setup->getTable('alex_request_sample');
+            if ($setup->getConnection()->isTableExists($tableName) === true) {
+                $connection = $setup->getConnection();
+                $connection->addColumn(
+                    $tableName,
+                    'customer_id',
+                    [
+                        'type' => Table::TYPE_INTEGER,
+                        'nullable' => true,
+                        'comment' => 'Customer ID',
+                    ]
+                );
+
+                // @todo foreign key failed, fix
+//                $connection ->addForeignKey(
+//                    $setup->getFkName($tableName, 'customer_id', 'customer_entity', 'entity_id'),
+//                    $tableName,
+//                    'customer_id',
+//                    $setup->getTable('customer_entity'),
+//                    'entity_id',
+//                    Table::ACTION_CASCADE
+//                );
+            }
         }
 
         $installer->endSetup();

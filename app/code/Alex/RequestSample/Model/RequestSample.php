@@ -216,6 +216,22 @@ class RequestSample extends AbstractModel implements RequestSampleInterface
     }
 
     /**
+     * @return int
+     */
+    public function getCustomerId(): int
+    {
+        return (int)$this->getData('customer_id');
+    }
+
+    /**
+     * @param int $customerId
+     */
+    public function setCustomerId($customerId)
+    {
+        $this->setData('customer_id', $customerId);
+    }
+
+    /**
      * @return AbstractModel
      * @throws NoSuchEntityException
      */

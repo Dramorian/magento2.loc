@@ -2,9 +2,12 @@
 
 namespace Alex\RequestSample\Observer;
 
-use Magento\Customer\Model\Session;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\SessionFactory;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Registry;
 
 class LayoutGenerateBlocksAfter implements ObserverInterface
@@ -15,20 +18,29 @@ class LayoutGenerateBlocksAfter implements ObserverInterface
     protected $registry;
 
     /**
-     * @var Session
+     * @var CustomerRepositoryInterface
      */
-    protected $customerSession;
+    protected $_customerRepositoryInterface;
+
+    /**
+     * @var SessionFactory
+     */
+    protected $_customerSession;
 
     /**
      * @param Registry $registry
-     * @param Session $customerSession
+     * @param CustomerRepositoryInterface $customerRepositoryInterface
+     * @param SessionFactory $customerSession
      */
     public function __construct(
-        Registry $registry,
-        Session  $customerSession
-    ) {
+        Registry                    $registry,
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        SessionFactory              $customerSession
+    )
+    {
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
         $this->registry = $registry;
-        $this->customerSession = $customerSession;
+        $this->_customerSession = $customerSession;
     }
 
     /**
@@ -43,7 +55,7 @@ class LayoutGenerateBlocksAfter implements ObserverInterface
             return $this;
         }
 
-        if ($this->requestFormDisallowed()) {
+        if ($this->isRequestFormDisallowed()) {
             $layout = $observer->getLayout();
             $sampleRequestBlock = $layout->getBlock('request.sample.tab');
             if ($sampleRequestBlock) {
@@ -55,10 +67,27 @@ class LayoutGenerateBlocksAfter implements ObserverInterface
     }
 
     /**
+     * Check attribute value, disable the form if value is set to 0
+     *
      * @return bool
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
-    private function requestFormDisallowed()
+    private function isRequestFormDisallowed(): bool
     {
-        return !$this->customerSession->getCustomer()->getAllowRequestSample();
+        $customerSession = $this->_customerSession->create();
+
+        if ($customerSession->isLoggedIn()) {
+            $customerId = $customerSession->getCustomerId();
+            $customer = $this->_customerRepositoryInterface->getById($customerId);
+
+            // Check if the attribute exists and is set to 1 (yes), return the opposite
+            $allowRequestSampleAttribute = $customer->getCustomAttribute('allow_request_sample');
+            if ($allowRequestSampleAttribute !== null) {
+                return !$allowRequestSampleAttribute->getValue();
+            }
+        }
+        // If not logged in, consider the form disallowed
+        return true;
     }
 }

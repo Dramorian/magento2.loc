@@ -175,7 +175,7 @@ class UpgradeData implements UpgradeDataInterface
             [
                 'type' => 'int',
                 'label' => 'Allow request sample',
-                'input' => 'select',
+                'input' => 'boolean',
                 'source' => Boolean::class,
                 'required' => false,
                 'visible' => false,

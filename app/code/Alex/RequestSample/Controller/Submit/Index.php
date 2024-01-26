@@ -5,6 +5,7 @@ namespace Alex\RequestSample\Controller\Submit;
 use Alex\RequestSample\Api\Data\RequestSampleInterface;
 use Alex\RequestSample\Api\RequestSampleRepositoryInterface;
 use Alex\RequestSample\Model\RequestSampleFactory;
+use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Request\Http;
@@ -12,6 +13,7 @@ use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\LocalizedException;
+
 
 class Index extends Action
 {
@@ -35,6 +37,12 @@ class Index extends Action
     private $requestSampleRepository;
 
     /**
+     * @var CustomerSession
+     */
+    private $customerSession;
+
+
+    /**
      * Index constructor.
      * @param Validator $formKeyValidator
      * @param RequestSampleFactory $requestSampleFactory
@@ -45,12 +53,15 @@ class Index extends Action
         Validator                        $formKeyValidator,
         RequestSampleFactory             $requestSampleFactory,
         RequestSampleRepositoryInterface $requestSampleRepository,
+        CustomerSession                  $customerSession,
         Context                          $context
     ) {
         parent::__construct($context);
         $this->formKeyValidator = $formKeyValidator;
         $this->requestSampleFactory = $requestSampleFactory;
         $this->requestSampleRepository = $requestSampleRepository;
+        $this->customerSession = $customerSession;
+
     }
 
     /**
@@ -82,7 +93,8 @@ class Index extends Action
                 ->setPhone($request->getParam('phone'))
                 ->setProductName($request->getParam('product_name'))
                 ->setSku($request->getParam('sku'))
-                ->setRequest($request->getParam('request'));
+                ->setRequest($request->getParam('request'))
+                ->setCustomerId($this->customerSession->getCustomerId()); // Retrieve customer_id from customer session
 
             $this->requestSampleRepository->save($requestSample);
 
