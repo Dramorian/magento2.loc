@@ -149,4 +149,19 @@ interface AskQuestionInterface
      * @return AskQuestionInterface
      */
     public function setStoreId($storeId);
+
+    /**
+     * Get customer ID
+     *
+     * @return int
+     */
+    public function getCustomerId(): int;
+
+    /**
+     * Set customer ID
+     *
+     * @param int $customerId
+     * @return AskQuestionInterface
+     */
+    public function setCustomerId($customerId);
 }

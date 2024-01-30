@@ -1,0 +1,18 @@
+<?php /** @var Alex\AskQuestion\Block\Questions $block */ ?>
+<table>
+    <tr>
+        <th><?php echo __('Date'); ?></th>
+        <th><?php echo __('Question'); ?></th>
+        <th><?php echo __('Product'); ?></th>
+        <th><?php echo __('Status'); ?></th>
+    </tr>
+
+    <?php foreach ($block->getMyQuestions() as $question): ?>
+        <tr>
+            <td><?php echo $block->escapeHtml($question->getCreatedAt()) ?></td>
+            <td><?php echo $block->escapeHtml($question->getQuestion()) ?></td>
+            <td><?php echo $block->escapeHtml($question->getProductName()) ?></td>
+            <td><?php echo $block->escapeHtml($question->getStatus()) ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

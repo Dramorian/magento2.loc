@@ -21,4 +21,9 @@
                   instance="Alex\AskQuestion\Observer\TestObserver"
         />
     </event>
+    <event name="layout_generate_blocks_after">
+        <observer name="customer_question_tab_toggle"
+                  instance="Alex\AskQuestion\Observer\CustomerQuestionTabToggle"
+        />
+    </event>
 </config>

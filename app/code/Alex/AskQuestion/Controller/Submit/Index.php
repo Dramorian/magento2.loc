@@ -14,6 +14,7 @@ use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Customer\Model\Session as CustomerSession;
 
 class Index implements HttpGetActionInterface, HttpPostActionInterface
 {
@@ -51,6 +52,11 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
     private $mailHelper;
 
     /**
+     * @var CustomerSession
+     */
+    private $customerSession;
+
+    /**
      * Submit index constructor
      *
      * @param Validator $formKeyValidator
@@ -66,7 +72,8 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
         AskQuestionRepositoryInterface $askQuestionRepository,
         RequestInterface               $request,
         ResultFactory                  $resultFactory,
-        Mail                           $mailHelper
+        Mail                           $mailHelper,
+        CustomerSession $customerSession
     ) {
         $this->formKeyValidator = $formKeyValidator;
         $this->askQuestionFactory = $askQuestionFactory;
@@ -74,6 +81,7 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
         $this->request = $request;
         $this->resultFactory = $resultFactory;
         $this->mailHelper = $mailHelper;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -105,7 +113,8 @@ class Index implements HttpGetActionInterface, HttpPostActionInterface
                 ->setPhone($request->getParam('phone'))
                 ->setProductName($request->getParam('product_name'))
                 ->setSku($request->getParam('sku'))
-                ->setQuestion($request->getParam('question'));
+                ->setQuestion($request->getParam('question'))
+                ->setCustomerId($this->customerSession->getCustomerId()); // Retrieve customer_id from customer session
 
             $this->askQuestionRepository->save($askQuestion);
 
