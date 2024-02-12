@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb9c17817edbdcd1f726d626cbcab4cb",
+    "content-hash": "5b799619b6d53a1b1617781a4b65d429",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1998,6 +1998,69 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.16.0"
             },
             "time": "2022-09-18T07:06:19+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v6.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "a49db6f0a5033aef5143295342f1c95521b075ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/a49db6f0a5033aef5143295342f1c95521b075ff",
+                "reference": "a49db6f0a5033aef5143295342f1c95521b075ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4||^8.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.5||^7.4",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.5",
+                "psr/cache": "^1.0||^2.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0"
+            },
+            "suggest": {
+                "ext-sodium": "Support EdDSA (Ed25519) signatures",
+                "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "keywords": [
+                "jwt",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/firebase/php-jwt/issues",
+                "source": "https://github.com/firebase/php-jwt/tree/v6.10.0"
+            },
+            "time": "2023-12-01T16:26:39+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -6352,6 +6415,34 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-admin-graph-ql-server",
+            "version": "1.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-admin-graph-ql-server/magento-module-admin-graph-ql-server-1.0.1.0.zip",
+                "shasum": "9c7d8537d330b0c17523729813b9033dab1bf920"
+            },
+            "require": {
+                "magento/framework": "^103.0.0",
+                "magento/module-graph-ql-server": "^1.0.1",
+                "php": "~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\AdminGraphQlServer\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Commerce Admin BFF GraphQL Server"
+        },
+        {
             "name": "magento/module-admin-notification",
             "version": "100.4.5",
             "dist": {
@@ -8821,6 +8912,36 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-data-exporter",
+            "version": "103.1.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-data-exporter/magento-module-data-exporter-103.1.6.0.zip",
+                "shasum": "a58f62558698341bf8c353deac03fbd7bb4498eb"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4",
+                "magento/module-analytics": ">=100.4.4",
+                "magento/module-indexer": ">=100.4.4",
+                "magento/module-query-xml": "self.version",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\DataExporter\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento 2 Data Exporter module exports necessary data to Magento cloud services that rely on it"
+        },
+        {
             "name": "magento/module-deploy",
             "version": "100.4.6",
             "dist": {
@@ -9638,6 +9759,36 @@
                 "AFL-3.0"
             ],
             "description": "N/A"
+        },
+        {
+            "name": "magento/module-graph-ql-server",
+            "version": "1.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-graph-ql-server/magento-module-graph-ql-server-1.0.1.0.zip",
+                "shasum": "a6a4a2f01bf6eabf9417bccaaeb6a0426e860cd6"
+            },
+            "require": {
+                "magento/framework": "^103.0.0",
+                "magento/module-backend": ">=101.0.0 <103.0.0",
+                "magento/module-graph-ql": "^100.4.0",
+                "magento/module-webapi": "^100.4.0",
+                "php": "~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\GraphQlServer\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Commerce BFF GraphQL Server"
         },
         {
             "name": "magento/module-grouped-catalog-inventory",
@@ -14187,6 +14338,184 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-payment-services-base",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-payment-services-base/magento-module-payment-services-base-2.3.2.0.zip",
+                "shasum": "581bd57635f336b25b4fcfbf5f6c9a3484957031"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-backend": ">=102.0.4 <=102.0.7",
+                "magento/module-config": ">=101.2.4 <=101.2.7",
+                "magento/module-directory": ">=100.4.4 <=100.4.7",
+                "magento/module-payment": ">=100.4.4 <=100.4.7",
+                "magento/module-sales": ">=103.0.4 <=103.0.7",
+                "magento/module-service-proxy": "2.3.2",
+                "magento/module-services-id": "^3.2.0",
+                "magento/module-services-id-graph-ql-server": "^1.1.0",
+                "magento/module-store": ">=101.1.4 <=101.1.7",
+                "magento/services-connector": "^1.3.0",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\PaymentServicesBase\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Payment Services Base module"
+        },
+        {
+            "name": "magento/module-payment-services-dashboard",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-payment-services-dashboard/magento-module-payment-services-dashboard-2.3.2.0.zip",
+                "shasum": "2bf70194889595ac3de5260f835cff1dcd3dbefc"
+            },
+            "require": {
+                "ext-json": "*",
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-backend": ">=102.0.4 <=102.0.7",
+                "magento/module-config": ">=101.2.4 <=101.2.7",
+                "magento/module-payment-services-base": "2.3.2",
+                "magento/module-payment-services-paypal": "2.3.2",
+                "magento/module-service-proxy": "2.3.2",
+                "magento/module-store": ">=101.1.4 <=101.1.7",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\PaymentServicesDashboard\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Payment Services Dashboard module"
+        },
+        {
+            "name": "magento/module-payment-services-paypal",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-payment-services-paypal/magento-module-payment-services-paypal-2.3.2.0.zip",
+                "shasum": "7496a8e5ad17357c2ec9b13b3ade8a775d9170fa"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-backend": ">=102.0.4 <=102.0.7",
+                "magento/module-catalog": ">=104.0.4 <=104.0.7",
+                "magento/module-checkout": ">=100.4.4 <=100.4.7",
+                "magento/module-checkout-agreements": ">=100.4.3 <=100.4.6",
+                "magento/module-config": ">=101.2.4 <=101.2.7",
+                "magento/module-customer": ">=103.0.4 <=103.0.7",
+                "magento/module-instant-purchase": ">=100.4.3 <=100.4.6",
+                "magento/module-payment": ">=100.4.4 <=100.4.7",
+                "magento/module-payment-services-base": "2.3.2",
+                "magento/module-quote": ">=101.2.4 <=101.2.7",
+                "magento/module-sales": ">=103.0.4 <=103.0.7",
+                "magento/module-service-proxy": "2.3.2",
+                "magento/module-store": ">=101.1.4 <=101.1.7",
+                "magento/module-tax": ">=100.4.4 <=100.4.7",
+                "magento/module-theme": ">=101.1.4 <=101.1.7",
+                "magento/module-vault": ">=101.2.4 <=101.2.7",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\PaymentServicesPaypal\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Payment Services PayPal module"
+        },
+        {
+            "name": "magento/module-payment-services-paypal-graph-ql",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-payment-services-paypal-graph-ql/magento-module-payment-services-paypal-graph-ql-2.3.2.0.zip",
+                "shasum": "aa63307bfbc2564d504097ada2fc5bca63a4527a"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-payment-services-paypal": "2.3.2",
+                "magento/module-quote": ">=101.2.4 <=101.2.7",
+                "magento/module-quote-graph-ql": ">=100.4.4 <=100.4.7",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\PaymentServicesPaypalGraphQl\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Payment Services PayPal GraphQL module"
+        },
+        {
+            "name": "magento/module-payment-services-saas-export",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-payment-services-saas-export/magento-module-payment-services-saas-export-2.3.2.0.zip",
+                "shasum": "c77abbc3d350c731380232f1484c9920604b3db8"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-data-exporter": "^103.0.3",
+                "magento/module-payment-services-base": "2.3.2",
+                "magento/module-saas-common": "^103.0.3",
+                "magento/module-sales-data-exporter": "2.3.2",
+                "magento/module-services-id": "^3.2.0",
+                "magento/module-store-data-exporter": "2.3.2",
+                "magento/services-connector": "^1.3.0",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\PaymentServicesSaaSExport\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento 2 Payment Services SaaS Export module exports necessary Payment Services data to Magento cloud services that rely on it"
+        },
+        {
             "name": "magento/module-paypal",
             "version": "101.0.6",
             "dist": {
@@ -14442,6 +14771,34 @@
                 "AFL-3.0"
             ],
             "description": "Add Video to Products"
+        },
+        {
+            "name": "magento/module-query-xml",
+            "version": "103.1.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-query-xml/magento-module-query-xml-103.1.6.0.zip",
+                "shasum": "85d2dcba61881c8336b7c0f5aee3efd0a2328c77"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4",
+                "magento/module-analytics": ">=100.4.4",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\QueryXml\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Query Xml"
         },
         {
             "name": "magento/module-quote",
@@ -15732,6 +16089,42 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-saas-common",
+            "version": "103.1.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-saas-common/magento-module-saas-common-103.1.6.0.zip",
+                "shasum": "4ef39e82235e689c4ddf3510007f8a2ceb57835e"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4",
+                "magento/module-data-exporter": "103.*",
+                "magento/module-services-id": "^3.1.2",
+                "magento/services-connector": "^1.2.5",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.5.0"
+            },
+            "suggest": {
+                "ext-zlib": "Allow gzip compression of HTTP requests"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SaaSCommon\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento 2 SaaS Common module for shared saas export functionality"
+        },
+        {
             "name": "magento/module-sales",
             "version": "103.0.6",
             "dist": {
@@ -15813,6 +16206,36 @@
                 "AFL-3.0"
             ],
             "description": "N/A"
+        },
+        {
+            "name": "magento/module-sales-data-exporter",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-sales-data-exporter/magento-module-sales-data-exporter-2.3.2.0.zip",
+                "shasum": "d92826634b2e8b5a5825584b43c41cbce77f3482"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-data-exporter": "^103.0.3",
+                "magento/module-query-xml": "^103.0.3",
+                "magento/module-sales": ">=103.0.4 <=103.0.7",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SalesDataExporter\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Sales data exporter"
         },
         {
             "name": "magento/module-sales-graph-ql",
@@ -16219,6 +16642,129 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-service-proxy",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-service-proxy/magento-module-service-proxy-2.3.2.0.zip",
+                "shasum": "7f20a3af59ec9a5efa1caa4b87c6ccb0e0533486"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-backend": ">=102.0.4 <=102.0.7",
+                "magento/module-page-cache": ">=100.4.4 <=100.4.7",
+                "magento/module-store": ">=101.1.4 <=101.1.7",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ServiceProxy\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Service Proxy module"
+        },
+        {
+            "name": "magento/module-services-id",
+            "version": "3.2.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-services-id/magento-module-services-id-3.2.3.0.zip",
+                "shasum": "c7d5e0b8be80304d743058723b0876ab51ad833d"
+            },
+            "require": {
+                "magento/framework": ">=102.0.0 <104.0.0",
+                "magento/module-config": ">=101.1.0 <101.3.0",
+                "magento/services-connector": "^1.3.2",
+                "php": "~7.2.0||~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ServicesId\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Commerce Services identity"
+        },
+        {
+            "name": "magento/module-services-id-graph-ql-server",
+            "version": "1.1.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-services-id-graph-ql-server/magento-module-services-id-graph-ql-server-1.1.2.0.zip",
+                "shasum": "d238abb9685a176cd89dcd2412880732d560c8ba"
+            },
+            "require": {
+                "magento/framework": ">=102.0.0 <104.0.0",
+                "magento/module-admin-graph-ql-server": "^1.0.1",
+                "magento/module-backend": ">=101.0.0 <103.0.0",
+                "magento/module-services-id": "^3.2.2",
+                "magento/services-connector": "^1.3.2",
+                "php": "~7.2.0||~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ServicesIdGraphQlServer\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Commerce Services identity GraphQL server"
+        },
+        {
+            "name": "magento/module-services-id-layout",
+            "version": "1.1.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-services-id-layout/magento-module-services-id-layout-1.1.2.0.zip",
+                "shasum": "0b548dc08891954b5f8c74af12d47e80454729c5"
+            },
+            "require": {
+                "magento/framework": ">=102.0.0 <104.0.0",
+                "magento/module-backend": ">=101.0.0 <103.0.0",
+                "magento/module-config": ">=101.1.0 <101.3.0",
+                "magento/module-graph-ql-server": "^1.0.1",
+                "magento/module-services-id": "^3.2.2",
+                "magento/module-services-id-graph-ql-server": "^1.1.2",
+                "magento/module-store": ">=101.0.0 <101.2.0",
+                "php": "~7.2.0||~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ServicesIdLayout\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Commerce Services identity Layout"
+        },
+        {
             "name": "magento/module-shipping",
             "version": "100.4.6",
             "dist": {
@@ -16340,6 +16886,36 @@
                 "AFL-3.0"
             ],
             "description": "N/A"
+        },
+        {
+            "name": "magento/module-store-data-exporter",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-store-data-exporter/magento-module-store-data-exporter-2.3.2.0.zip",
+                "shasum": "528d5da66229e85534b869b6da8b7532ac89e23f"
+            },
+            "require": {
+                "magento/framework": ">=103.0.4 <=103.0.7",
+                "magento/module-data-exporter": "^103.0.3",
+                "magento/module-query-xml": "^103.0.3",
+                "magento/module-store": ">=101.1.4 <=101.1.7",
+                "php": "~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\StoreDataExporter\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Store data exporter"
         },
         {
             "name": "magento/module-store-graph-ql",
@@ -17627,6 +18203,28 @@
             "description": "Page Builder metapackage"
         },
         {
+            "name": "magento/payment-services",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/payment-services/magento-payment-services-2.3.2.0.zip",
+                "shasum": "cf67855bc7e5e6e96c335b38e3c945dd1c872f6b"
+            },
+            "require": {
+                "magento/module-payment-services-base": "2.3.2",
+                "magento/module-payment-services-dashboard": "2.3.2",
+                "magento/module-payment-services-paypal": "2.3.2",
+                "magento/module-payment-services-paypal-graph-ql": "2.3.2",
+                "magento/module-payment-services-saas-export": "2.3.2",
+                "magento/module-sales-data-exporter": "2.3.2",
+                "magento/module-service-proxy": "2.3.2",
+                "magento/module-store-data-exporter": "2.3.2",
+                "magento/services-id": "^3.2.0"
+            },
+            "type": "metapackage",
+            "description": "Payment Services metapackage"
+        },
+        {
             "name": "magento/product-community-edition",
             "version": "2.4.6",
             "dist": {
@@ -18005,6 +18603,63 @@
             },
             "type": "metapackage",
             "description": "Magento Security Package"
+        },
+        {
+            "name": "magento/services-connector",
+            "version": "1.3.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/services-connector/magento-services-connector-1.3.4.0.zip",
+                "shasum": "9cee2d933433f4082065d502535f3a9fac153e53"
+            },
+            "require": {
+                "firebase/php-jwt": "^6.0.0",
+                "guzzlehttp/guzzle": "^6.0.0||^7.3.0",
+                "magento/framework": ">=101.0.0",
+                "php": "~7.2.0||~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ServicesConnector\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Saas utilities module"
+        },
+        {
+            "name": "magento/services-id",
+            "version": "3.2.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/services-id/magento-services-id-3.2.3.0.zip",
+                "shasum": "033fb0fd8b59b4377b634ef4686aaabc4d301099"
+            },
+            "require": {
+                "magento/framework": ">=102.0.0 <104.0.0",
+                "magento/module-admin-graph-ql-server": "^1.0.1",
+                "magento/module-backend": ">=101.0.0 <103.0.0",
+                "magento/module-config": ">=101.1.0 <101.3.0",
+                "magento/module-graph-ql-server": "^1.0.1",
+                "magento/module-services-id": "3.2.3",
+                "magento/module-services-id-graph-ql-server": "1.1.2",
+                "magento/module-services-id-layout": "1.1.2",
+                "magento/module-store": ">=101.0.0 <101.2.0",
+                "magento/services-connector": "^1.3.2",
+                "php": "~7.2.0||~7.3.0||~7.4.0||~8.1.0||~8.2.0"
+            },
+            "type": "metapackage",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Commerce Services identity metapackage"
         },
         {
             "name": "magento/theme-adminhtml-backend",
@@ -20574,6 +21229,34 @@
                 "source": "https://github.com/Seldaek/signal-handler/tree/2.0.2"
             },
             "time": "2023-09-03T09:24:00+00:00"
+        },
+        {
+            "name": "skynet-technologies-usa-llc/module-allinoneaccessiblity",
+            "version": "1.1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/skynet-technologies-usa-llc/module-allinoneaccessiblity/skynet-technologies-usa-llc-module-allinoneaccessiblity-1.1.0.0.zip",
+                "shasum": "0ce008a9c748889b1ebe7d00ee4a9eff8fa44f52"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Skynettechnologiesusallc\\Allinoneaccessiblity\\": ""
+                }
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Skynet Technologies USA LLC",
+                    "email": "hello@skynettechnologies.com"
+                }
+            ],
+            "description": "All in One Accessibility's UI Options provides accessibility options for users to Adjust Font Sizing, Adjust Line Height, High Contrast, Hide Images (Text only), Accessibility Statement, Dynamic Widget Color, Skip to Menu, Skip to Footer, Skip to Navigation."
         },
         {
             "name": "spomky-labs/aes-key-wrap",
@@ -27777,5 +28460,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }

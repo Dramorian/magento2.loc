@@ -40,8 +40,10 @@
         "magento/module-theme-sample-data": "100.4.*",
         "magento/module-widget-sample-data": "100.4.*",
         "magento/module-wishlist-sample-data": "100.4.*",
+        "magento/payment-services": "^2.3",
         "magento/product-community-edition": "2.4.6",
-        "magento/sample-data-media": "100.4.*"
+        "magento/sample-data-media": "100.4.*",
+        "skynet-technologies-usa-llc/module-allinoneaccessiblity": "^1.1"
     },
     "autoload": {
         "exclude-from-classmap": [
