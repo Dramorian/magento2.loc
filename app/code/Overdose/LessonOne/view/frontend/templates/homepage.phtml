@@ -1,0 +1,10 @@
+<?php /** @var $block \Overdose\LessonOne\Block\Overdose */ ?>
+<?php /** @var $viewModel \Overdose\LessonOne\ViewModel\One */
+$viewModel = $block->getData('viewModel');
+?>
+
+<h1>Hello, World!</h1>
+<p>This is text from homepage.phtml in overdose_index_index.xml</p>
+
+<p><?= $block->doSomethingImportant() ?></p>
+<p><?= $viewModel->iAmViewModel() ?></p>
