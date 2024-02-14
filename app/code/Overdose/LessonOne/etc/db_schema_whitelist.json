@@ -1,0 +1,18 @@
+{
+  "overdose_lesson_one": {
+    "column": {
+      "id": true,
+      "age": true,
+      "name": true,
+      "comment": true,
+      "created_at": true,
+      "updated_at": true
+    },
+    "index": {
+      "OVERDOSE_LESSON_ONE_ID": true
+    },
+    "constraint": {
+      "PRIMARY": true
+    }
+  }
+}
