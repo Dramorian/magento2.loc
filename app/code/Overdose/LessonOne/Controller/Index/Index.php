@@ -42,7 +42,6 @@ class Index extends Action
      */
     public function execute()
     {
-// Check if the form is submitted
         if ($this->getRequest()->isPost()) {
             $friendIdToRetrieve = $this->getRequest()->getPost('friendId');
 

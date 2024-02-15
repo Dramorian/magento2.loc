@@ -10,7 +10,15 @@ $viewModel = $block->getData('viewModel');
 
 <p> <?= $viewModel->iAmViewModel() ?> </p>
 
-<?php $viewModel->saveNewFriend('Elysia', '9000', 'Pink Jesus'); ?>
+<!-- Save new friend with valid data -->
+<?php
+try {
+    $viewModel->saveNewFriend('Eden', 30, 'Diva');
+    echo "Friend save method from view model executed successfully!";
+} catch (\Magento\Framework\Exception\CouldNotSaveException $e) {
+    echo "Error saving friend: " . $e->getMessage();
+}
+?>
 
 <!-- Add HTML Table with CSS Styling -->
 <style>
