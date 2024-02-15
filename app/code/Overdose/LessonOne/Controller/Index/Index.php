@@ -42,34 +42,28 @@ class Index extends Action
      */
     public function execute()
     {
-// Check if the form is submitted
+        // Check if the form is submitted
         if ($this->getRequest()->isPost()) {
-            $friendIdToRetrieve = $this->getRequest()->getPost('friendId');
+            $friendId = $this->getRequest()->getPost('friendId');
 
-// Perform validation on the entered friend ID (add your validation logic here)
-            if (!ctype_digit((string)($friendIdToRetrieve))) {
-                $this->messageManager->addErrorMessage(__('Please enter a valid numeric friend ID.'));
-            } else {
-// Retrieve friend's name and age using injected ViewModel
-                $friendName = $this->viewModel->getFriendName((int)$friendIdToRetrieve);
-                $friendAge = $this->viewModel->getFriendAge((int)$friendIdToRetrieve);
+            if ($friendId) {
+                // Get friend's name and age from ViewModel
+                $friendName = $this->viewModel->getFriendName((int)$friendId);
+                $friendAge = $this->viewModel->getFriendAge((int)$friendId);
 
-// Display results
-                if ($friendName !== null) {
-                    $this->messageManager->addSuccessMessage('Friend\'s Name: ' . $friendName);
+                // Display results
+                if ($friendName && $friendAge !== null) {
+                    $this->messageManager->addSuccessMessage('Friend\'s name: ' . $friendName);
+                    $this->messageManager->addSuccessMessage('Friend\'s age: ' . $friendAge);
                 } else {
-                    $this->messageManager->addErrorMessage('Friend\'s Name not found');
-                }
-
-                if ($friendAge !== null) {
-                    $this->messageManager->addSuccessMessage('Friend\'s Age: ' . $friendAge);
-                } else {
-                    $this->messageManager->addErrorMessage('Friend\'s Age not found');
+                    $this->messageManager->addWarningMessage('Enter valid friend id');
+                    $this->messageManager->addErrorMessage('Friend\'s name not found');
+                    $this->messageManager->addErrorMessage('Friend\'s age not found');
                 }
             }
         }
 
-// Load the page layout
+        // Load the page layout
         return $this->resultPageFactory->create();
     }
 }

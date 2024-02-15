@@ -33,8 +33,10 @@ $viewModel = $block->getData('viewModel');
 <!-- Add HTML Form with Input for Friend's ID and Display Results -->
 <form action="" method="post">
     <label for="friendId">Enter Friend's ID:</label>
-    <input type="number" id="friendId" name="friendId" min="0" size="4" pattern="\d+" title="Please enter only numbers">
-    <button type="submit">Retrieve Name and Age</button>
+    <input type="number" id="friendId" name="friendId" min="0" size="4" pattern="\d+" required>
+    <br>
+    <small>Only numbers allowed</small><br><br>
+    <button type="submit">Get friend's name and age</button>
 </form>
 
 <table>
