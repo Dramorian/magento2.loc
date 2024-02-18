@@ -10,6 +10,11 @@
                     <argument name="viewModel" xsi:type="object">Overdose\LessonOne\ViewModel\One</argument>
                 </arguments>
             </block>
+
+            <block class="Overdose\LessonOne\Block\Index" name="friend_pagination"
+                   template="Overdose_LessonOne::index.phtml" cacheable="false">
+            </block>
+
         </referenceContainer>
     </body>
 </page>

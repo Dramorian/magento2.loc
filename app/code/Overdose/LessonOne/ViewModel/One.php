@@ -3,48 +3,31 @@
 
 namespace Overdose\LessonOne\ViewModel;
 
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\DataObject;
-use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Overdose\LessonOne\Api\Data\FriendInterface;
-use Overdose\LessonOne\Api\FriendRepositoryInterface;
-use Overdose\LessonOne\Model\FriendRepository;
-use Overdose\LessonOne\Model\ResourceModel\Collection\Friends;
 
 class One implements ArgumentInterface
 {
     /**
-     * @var null|\Overdose\LessonOne\Model\Friends
+     * @var null
      */
     private $model = null;
 
-    /**
-     * @var Friends
-     */
-    protected $friendsResourceModel;
+
 
     /**
-     * @var \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory
-     */
-    protected $friendsCollectionFactory;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    protected $searchCriteriaBuilder;
-
-    /**
-     * @param FriendRepositoryInterface $friendsRepository
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param \Overdose\LessonOne\Model\FriendsFactory $friendsFactory
+     * @param \Overdose\LessonOne\Model\ResourceModel\Friends $friendsResourceModel
+     * @param \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory $friendsCollectionFactory
      */
     public function __construct(
-        FriendRepositoryInterface $friendsRepository,
-        SearchCriteriaBuilder     $searchCriteriaBuilder
+        \Overdose\LessonOne\Model\FriendsFactory                          $friendsFactory,
+        \Overdose\LessonOne\Model\ResourceModel\Friends                   $friendsResourceModel,
+        \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory $friendsCollectionFactory
     ) {
-        $this->friendsRepository = $friendsRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->friendsFactory = $friendsFactory;
+        $this->friendsResourceModel = $friendsResourceModel;
+        $this->friendsCollectionFactory = $friendsCollectionFactory;
     }
 
     /**
@@ -56,91 +39,106 @@ class One implements ArgumentInterface
     }
 
     /**
-     * @param string $name
-     * @param int $age
-     * @param string $comment
+     * @param int $friendCount
      * @return void
-     * @throws CouldNotSaveException
+     * @throws AlreadyExistsException
      */
-    /**
-     * @param string $name
-     * @param int $age
-     * @param string $comment
-     * @throws CouldNotSaveException
-     */
-    /**
-     * Save a new friend entity with the provided data.
-     *
-     * @param string $name
-     * @param int $age
-     * @param string $comment
-     */
-    public function saveNewFriend(string $name, int $age, string $comment)
+    public function saveNewFriend(int $friendCount): void
     {
-        // Create a new instance of the friend entity
-        $model = $this->friendsRepository->getEmptyModel();
+        for ($i = 0; $i < $friendCount; $i++) {
+            $model = $this->friendsFactory->create();
 
-        // Set the attributes of the friend entity
-        $model->setName($name)
-            ->setAge($age)
-            ->setComment($comment);
+            $name = $this->generateRandomName();
+            $age = random_int(18, 27);
+            $comment = $this->generateRandomComment();
 
-        // Save the friend entity
-        $this->friendsRepository->save($model);
-    }
+            $model->setData("name", $name)
+                ->setData('age', $age)
+                ->setData('comment', $comment);
 
-
-    /**
-     * Get collection of all friends from 'overdose_lesson_one
-     *
-     * @return \Magento\Framework\Api\ExtensibleDataInterface[]
-     */
-    public function getAllFriends()
-    {
-    $searchCriteria = $this->searchCriteriaBuilder->create();
-
-    // Retrieve the list of friends based on the search criteria
-        // Return an array of friend objects
-    return $this->friendsRepository->getList($searchCriteria)->getItems();
-
-//        $collection = $this->friendsCollectionFactory->create();
-//
-//        // Sort the collection by created_at in descending order
-//        $collection->addOrder('created_at', 'DESC');
-//
-//        // Limit the collection to the desired number of latest items
-//        $collection->setPageSize(20);
-//
-//        return $collection->getItems();
+            $this->friendsResourceModel->save($model);
+        }
     }
 
     /**
-     * @param int $id
+     * @return mixed
+     */
+    public function getAllFriends(): mixed
+    {
+        $collection = $this->friendsCollectionFactory->create();
+
+        // Sort the collection by created_at in descending order
+        $collection->addOrder('created_at', 'DESC');
+
+        // Limit the collection to the 10 latest items
+        $collection->setPageSize(20);
+
+        return $collection->getItems();
+    }
+
+    /**
+     * @param $id
      * @return string|null
      */
-    public function getFriendName(int $id): ?string
+    public function getFriendName($id): ?string
     {
-        try {
-            // Return the friend's name
-            return $this->friendsRepository->getById($id)->getName();
-        } catch (NoSuchEntityException $e) {
-            // Handle the case where the friend with the given ID does not exist
-            return null;
+        if ($this->model === null) {
+            $model = $this->friendsFactory->create();
+
+            $this->friendsResourceModel->load($model, $id);
+
+            $this->model = $model;
         }
+        // Return the friend's name
+        return $this->model->getData('name');
     }
 
     /**
-     * @param int $id
+     * @param $id
      * @return int|null
      */
-    public function getFriendAge(int $id): ?int
+    public function getFriendAge($id): ?int
     {
-        try {
-            // Return the friend's age
-            return $this->friendsRepository->getById($id)->getAge();
-        } catch (NoSuchEntityException $e) {
-            // Handle the case where the friend with the given ID does not exist
-            return null;
+        // Return the friend's age
+        return $this->getFriendModel($id)->getData('age');
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getFriendModel($id): mixed
+    {
+        if ($this->model === null) {
+            $model = $this->friendsFactory->create();
+
+            $this->friendsResourceModel->load($model, $id);
+
+            $this->model = $model;
         }
+
+        return $this->model;
+    }
+
+    /**
+     * Generate a random name
+     *
+     * @return string
+     */
+    protected function generateRandomName()
+    {
+        $names = ['John', 'Jane', 'Alice', 'Bob', 'Emma', 'Michael', 'Olivia', 'William', 'Sophia', 'James'];
+        return $names[array_rand($names)];
+    }
+
+    /**
+     * Generate a random comment
+     *
+     * @return string
+     */
+    protected function generateRandomComment()
+    {
+        $comments = ['Great friend!', 'Awesome person.', 'Always fun to be around.', 'Very kind and helpful.'];
+        return $comments[array_rand($comments)];
     }
 }

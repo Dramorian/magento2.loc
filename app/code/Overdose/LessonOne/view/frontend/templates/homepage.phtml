@@ -3,6 +3,7 @@
 $viewModel = $block->getData('viewModel');
 ?>
 
+
 <h1>Hello, World!</h1>
 <p>This is text from homepage.phtml in overdose_index_index.xml</p>
 
@@ -10,66 +11,20 @@ $viewModel = $block->getData('viewModel');
 
 <p> <?= $viewModel->iAmViewModel() ?> </p>
 
-<!-- Save new friend with valid data -->
-<?php
-try {
-    $viewModel->saveNewFriend('Eden', 30, 'Diva');
-    echo "Friend save method from view model executed successfully!";
-} catch (\Magento\Framework\Exception\CouldNotSaveException $e) {
-    echo "Error saving friend: " . $e->getMessage();
-}
-?>
-
-<!-- Add HTML Table with CSS Styling -->
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-</style>
-
 <!-- Add HTML Form with Input for Friend's ID and Display Results -->
-<form action="" method="post">
+<form method="post" action="?friend=getFriendInfo">
     <label for="friendId">Enter Friend's ID:</label>
-    <input type="number" id="friendId" name="friendId" min="0" size="4" pattern="\d+" title="Please enter only numbers">
-    <button type="submit">Retrieve Name and Age</button>
+    <input type="number" id="friendId" name="friendId" min="0" size="4" pattern="\d+" required>
+    <br>
+    <small>Only numbers allowed</small><br><br>
+    <button type="submit">Get friend's name and age</button>
 </form>
 
-<table>
-    <thead>
-    <tr>
-        <th>Friend Id</th>
-        <th>Age</th>
-        <th>Name</th>
-        <th>Comments</th>
-        <th>Created At</th>
-        <th>Updated At</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php $friends = $viewModel->getAllFriends(); ?>
-
-    <?php foreach ($friends as $friend): ?>
-        <tr>
-            <td><?= $friend->getId() ?></td>
-            <td><?= $friend->getAge() ?></td>
-            <td><?= $friend->getName() ?></td>
-            <td><?= $friend->getComment() ?></td>
-            <td><?= $friend->getCreatedAt() ?></td>
-            <td><?= $friend->getUpdatedAt() ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
+<!-- Friends form generator -->
+<form method="post" action="?friend=generateFriends">
+    <label for="friendCount">Number of Friends:</label>
+    <input type="number" id="friendCount" name="friendCount" placeholder="1-100">
+    <button type="submit">Generate Friends</button>
+</form>
 
 

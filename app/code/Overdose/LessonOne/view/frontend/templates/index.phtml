@@ -1,0 +1,44 @@
+<?php /** @var $block \Overdose\LessonOne\Block\Index */ ?>
+
+<?php $friends = $block->getFriendCollection(); ?>
+<?php if ($friends && count($friends)): ?>
+    <div class="table-wrapper friends-list">
+        <table class="data table table-friends-list" id="my-friend-list">
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?php echo __('ID') ?></th>
+                <th scope="col" class="col friend_name"><?php echo __('Friend Name') ?></th>
+                <th scope="col" class="col age"><?php echo __('Age') ?></th>
+                <th scope="col" class="col comment"><?php echo __('Comment') ?></th>
+                <th scope="col" class="col created_at"><?php echo __('Created At') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($friends as $friend): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
+                        <?php echo $friend->getId() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Friend Name')) ?>" class="col friend_name">
+                        <?php echo $friend->getName() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Age')) ?>" class="col age">
+                        <?php echo $friend->getAge() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('comment')) ?>" class="col comment">
+                        <?php echo $friend->getComment() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Created At')) ?>"
+                        class="col created_at"><?php echo $friend->getCreatedAt(); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="friends-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('No friends =('); ?></span></div>
+<?php endif ?>
