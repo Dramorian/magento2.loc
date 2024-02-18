@@ -5,6 +5,7 @@ namespace Overdose\LessonOne\Controller\Index;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\View\Result\PageFactory;
 use Overdose\LessonOne\ViewModel\One;
 
@@ -21,9 +22,9 @@ class Index extends Action
     private $viewModel;
 
     /**
-     * @param Context $context
+     * @param Context     $context
      * @param PageFactory $resultPageFactory
-     * @param One $viewModel
+     * @param One         $viewModel
      */
     public function __construct(
         Context     $context,
@@ -36,34 +37,45 @@ class Index extends Action
     }
 
     /**
-     * Execute action
-     *
-     * @return ResultInterface
+     * @return \Magento\Framework\App\ResponseInterface|ResultInterface|\Magento\Framework\View\Result\Page
+     * @throws AlreadyExistsException
      */
     public function execute()
     {
-        // Check if the form is submitted
-        if ($this->getRequest()->isPost()) {
-            $friendId = $this->getRequest()->getPost('friendId');
+        $friendId = $this->getRequest()->getParam('friendId');
+        $friendCount = $this->getRequest()->getParam('friendCount');
 
-            if ($friendId) {
-                // Get friend's name and age from ViewModel
-                $friendName = $this->viewModel->getFriendName((int)$friendId);
-                $friendAge = $this->viewModel->getFriendAge((int)$friendId);
+        // Check if the first form is submitted
+        if ($friendId) {
+            // Get friend's name and age from ViewModel
+            $friendName = $this->viewModel->getFriendName((int)$friendId);
+            $friendAge = $this->viewModel->getFriendAge((int)$friendId);
 
-                // Display results
-                if ($friendName && $friendAge !== null) {
-                    $this->messageManager->addSuccessMessage('Friend\'s name: ' . $friendName);
-                    $this->messageManager->addSuccessMessage('Friend\'s age: ' . $friendAge);
-                } else {
-                    $this->messageManager->addWarningMessage('Enter valid friend id');
-                    $this->messageManager->addErrorMessage('Friend\'s name not found');
-                    $this->messageManager->addErrorMessage('Friend\'s age not found');
-                }
+            // Display results
+            if ($friendName && $friendAge !== null) {
+                $this->messageManager->addSuccessMessage('Friend\'s name: ' . $friendName);
+                $this->messageManager->addSuccessMessage('Friend\'s age: ' . $friendAge);
+            } else {
+                $this->messageManager->addWarningMessage('Enter valid friend id');
+                $this->messageManager->addErrorMessage('Friend\'s name not found');
+                $this->messageManager->addErrorMessage('Friend\'s age not found');
+            }
+        }
+
+        // Check if the second form is submitted
+        if ($friendCount !== null) {
+            // Validate and ensure friendCount is within reasonable limits
+            if ($friendCount > 0 && $friendCount <= 100) {
+                // Call the saveNewFriend method with the desired friend count
+                $this->viewModel->saveNewFriend($friendCount);
+            } else {
+                $this->messageManager->addErrorMessage('Friend generation failed. Enter valid number of friends');
             }
         }
 
         // Load the page layout
-        return $this->resultPageFactory->create();
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->set(__('Friends'));
+        return $resultPage;
     }
 }

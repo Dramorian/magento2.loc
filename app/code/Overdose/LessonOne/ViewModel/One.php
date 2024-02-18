@@ -13,20 +13,7 @@ class One implements ArgumentInterface
      */
     private $model = null;
 
-    /**
-     * @var FriendsFactory
-     */
-    protected $friendsFactory;
 
-    /**
-     * @var Friends
-     */
-    protected $friendsResourceModel;
-
-    /**
-     * @var \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory
-     */
-    protected $friendsCollectionFactory;
 
     /**
      * @param \Overdose\LessonOne\Model\FriendsFactory $friendsFactory
@@ -52,18 +39,20 @@ class One implements ArgumentInterface
     }
 
     /**
-     * @param $name
-     * @param $age
-     * @param $comment
+     * @param int $friendCount
      * @return void
      * @throws AlreadyExistsException
      */
-    public function saveNewFriend($name, $age, $comment): void
+    public function saveNewFriend(int $friendCount): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < $friendCount; $i++) {
             $model = $this->friendsFactory->create();
 
-            $model->setData('name', $name)
+            $name = $this->generateRandomName();
+            $age = random_int(18, 27);
+            $comment = $this->generateRandomComment();
+
+            $model->setData("name", $name)
                 ->setData('age', $age)
                 ->setData('comment', $comment);
 
@@ -113,7 +102,7 @@ class One implements ArgumentInterface
         // Return the friend's age
         return $this->getFriendModel($id)->getData('age');
     }
-    
+
     /**
      * @param $id
      * @return mixed
@@ -129,5 +118,27 @@ class One implements ArgumentInterface
         }
 
         return $this->model;
+    }
+
+    /**
+     * Generate a random name
+     *
+     * @return string
+     */
+    protected function generateRandomName()
+    {
+        $names = ['John', 'Jane', 'Alice', 'Bob', 'Emma', 'Michael', 'Olivia', 'William', 'Sophia', 'James'];
+        return $names[array_rand($names)];
+    }
+
+    /**
+     * Generate a random comment
+     *
+     * @return string
+     */
+    protected function generateRandomComment()
+    {
+        $comments = ['Great friend!', 'Awesome person.', 'Always fun to be around.', 'Very kind and helpful.'];
+        return $comments[array_rand($comments)];
     }
 }
