@@ -9,7 +9,7 @@ $viewModel = $block->getData('viewModel');
 
 <p> <?= $block->doSomethingImportant() ?> </p>
 
-<p> <?= $viewModel->iAmViewModel() ?> </p>
+<p> <?= $viewModel->getText('hello', 'bonjour') ?> </p>
 
 <!-- Add HTML Form with Input for Friend's ID and Display Results -->
 <form method="post" action="?friend=getFriendInfo">

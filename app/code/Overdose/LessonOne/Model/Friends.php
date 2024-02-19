@@ -7,6 +7,10 @@ use Overdose\LessonOne\Api\Data\FriendInterface;
 
 class Friends extends AbstractModel implements FriendInterface
 {
+    protected $_eventPrefix = 'friend_model_event_stuff';
+
+    protected $_eventObject = 'friend_event_object';
+
     /**
      * @inheritDoc
      */

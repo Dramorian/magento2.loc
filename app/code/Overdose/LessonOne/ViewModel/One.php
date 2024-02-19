@@ -38,11 +38,13 @@ class One implements ArgumentInterface
     }
 
     /**
+     * @param $arg1
+     * @param $arg2
      * @return string
      */
-    public function iAmViewModel(): string
+    public function getText($arg1, $arg2): string
     {
-        return 'Text from view model';
+        return $arg1 . '||||' . $arg2;
     }
 
     /**
