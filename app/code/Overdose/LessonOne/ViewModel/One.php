@@ -1,33 +1,40 @@
 <?php
 
-
 namespace Overdose\LessonOne\ViewModel;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Overdose\LessonOne\Api\FriendRepositoryInterface;
 
 class One implements ArgumentInterface
 {
     /**
      * @var null
      */
-    private $model = null;
-
-
+    private $model;
 
     /**
-     * @param \Overdose\LessonOne\Model\FriendsFactory $friendsFactory
-     * @param \Overdose\LessonOne\Model\ResourceModel\Friends $friendsResourceModel
-     * @param \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory $friendsCollectionFactory
+     * @var FriendRepositoryInterface
+     */
+    protected $friendsRepository;
+
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+
+    /**
+     * @param FriendRepositoryInterface $friendsRepository
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
      */
     public function __construct(
-        \Overdose\LessonOne\Model\FriendsFactory                          $friendsFactory,
-        \Overdose\LessonOne\Model\ResourceModel\Friends                   $friendsResourceModel,
-        \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory $friendsCollectionFactory
+        FriendRepositoryInterface $friendsRepository,
+        SearchCriteriaBuilder     $searchCriteriaBuilder
     ) {
-        $this->friendsFactory = $friendsFactory;
-        $this->friendsResourceModel = $friendsResourceModel;
-        $this->friendsCollectionFactory = $friendsCollectionFactory;
+        $this->friendsRepository = $friendsRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
@@ -46,7 +53,8 @@ class One implements ArgumentInterface
     public function saveNewFriend(int $friendCount): void
     {
         for ($i = 0; $i < $friendCount; $i++) {
-            $model = $this->friendsFactory->create();
+
+            $model = $this->friendsRepository->getEmptyModel();
 
             $name = $this->generateRandomName();
             $age = random_int(18, 27);
@@ -56,64 +64,56 @@ class One implements ArgumentInterface
                 ->setData('age', $age)
                 ->setData('comment', $comment);
 
-            $this->friendsResourceModel->save($model);
+            $this->friendsRepository->save($model);
         }
     }
 
     /**
-     * @return mixed
+     * Get all friends from database
+     *
+     * @return SearchResultsInterface
      */
-    public function getAllFriends(): mixed
+    public function getAllFriends()
     {
-        $collection = $this->friendsCollectionFactory->create();
+        // Create a search criteria without any filters to retrieve all friends
+        $searchCriteria = $this->searchCriteriaBuilder->create();
 
-        // Sort the collection by created_at in descending order
-        $collection->addOrder('created_at', 'DESC');
-
-        // Limit the collection to the 10 latest items
-        $collection->setPageSize(20);
-
-        return $collection->getItems();
+        // Get the list of friends using getList method
+        return $this->friendsRepository->getList($searchCriteria);
     }
 
     /**
-     * @param $id
+     * Get the name of a friend by ID
+     *
+     * @param int $id
      * @return string|null
      */
-    public function getFriendName($id): ?string
+    public function getFriendName(int $id): ?string
     {
-        if ($this->model === null) {
-            $model = $this->friendsFactory->create();
-
-            $this->friendsResourceModel->load($model, $id);
-
-            $this->model = $model;
-        }
         // Return the friend's name
-        return $this->model->getData('name');
+        return $this->getFriendModel($id)?->getData('name');
     }
 
     /**
-     * @param $id
+     * Get the age of a friend by ID
+     *
+     * @param int $id
      * @return int|null
      */
-    public function getFriendAge($id): ?int
+    public function getFriendAge(int $id): ?int
     {
         // Return the friend's age
-        return $this->getFriendModel($id)->getData('age');
+        return $this->getFriendModel($id)?->getData('age');
     }
 
     /**
      * @param $id
-     * @return mixed
+     * @return \Overdose\LessonOne\Model\Friends|null
      */
-    public function getFriendModel($id): mixed
+    public function getFriendModel($id)
     {
-        if ($this->model === null) {
-            $model = $this->friendsFactory->create();
-
-            $this->friendsResourceModel->load($model, $id);
-
+        if ($this->model === null || $this->model->getId() !== $id) {
+            $model = $this->friendsRepository->getById($id);
             $this->model = $model;
         }
 

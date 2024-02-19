@@ -67,6 +67,7 @@ class FriendRepository implements FriendRepositoryInterface
 
     /**
      * @inheritDoc
+     * @throws CouldNotSaveException
      */
     public function save($model)
     {
@@ -107,6 +108,7 @@ class FriendRepository implements FriendRepositoryInterface
 
     /**
      * @inheritDoc
+     * @throws NoSuchEntityException
      */
     public function getById($id)
     {
@@ -144,6 +146,5 @@ class FriendRepository implements FriendRepositoryInterface
     public function getEmptyModel()
     {
         return $this->friendsFactory->create();
-
     }
 }
