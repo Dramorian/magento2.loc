@@ -1,0 +1,27 @@
+<?php /** @var \Overdose\Cache\ViewModel\Cache $viewModel */ ?>
+
+<?php $viewModel = $this -> getData('view_model'); ?>
+
+<?php echo $viewModel->getCustomerName() ?>
+<br>
+<?php echo $viewModel->getCurrentTime() ?>
+<br>
+
+<div id="customer_info_stuff" data-bind="scope: 'customer_stuff'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#customer_info_stuff": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "customer_stuff": {
+                        "component": "Overdose_Cache/js/view/cache-info-customer",
+                        "template": "Overdose_Cache/cache-info-customer"
+                    }
+                }
+            }
+        }
+    }
+</script>
