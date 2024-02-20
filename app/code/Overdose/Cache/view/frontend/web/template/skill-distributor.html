@@ -1,0 +1,32 @@
+<div id="skill-distributor" data-bind="scope: 'skillDistributor'">
+    <div>
+        <p>Total Skill Points: <span data-bind="text: totalSkillPoints"></span></p>
+    </div>
+
+    <div>
+        <div>
+            <label for="attack-points">Attack Points:</label>
+            <button data-bind="click: function(){ attackPoints(Math.max(attackPoints() - 1, 0)); updateTotalPoints(); }">-</button>
+            <span data-bind="text: attackPoints"></span>
+            <button data-bind="click: function(){ if (!disablePlusButtons()) { attackPoints(attackPoints() + 1); updateTotalPoints(); } }">+</button>
+        </div>
+
+        <div>
+            <label for="defense-points">Defense Points:</label>
+            <button data-bind="click: function(){ defensePoints(Math.max(defensePoints() - 1, 0)); updateTotalPoints(); }">-</button>
+            <span data-bind="text: defensePoints"></span>
+            <button data-bind="click: function(){ if (!disablePlusButtons()) { defensePoints(defensePoints() + 1); updateTotalPoints(); } }">+</button>
+        </div>
+
+        <div>
+            <label for="speed-points">Speed Points:</label>
+            <button data-bind="click: function(){ speedPoints(Math.max(speedPoints() - 1, 0)); updateTotalPoints(); }">-</button>
+            <span data-bind="text: speedPoints"></span>
+            <button data-bind="click: function(){ if (!disablePlusButtons()) { speedPoints(speedPoints() + 1); updateTotalPoints(); } }">+</button>
+        </div>
+    </div>
+
+    <div data-bind="visible: allPointsSpent()">
+        <p>All skill points spent!</p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div id="skill-distributor" data-bind="scope: 'skillDistributor'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#skill-distributor": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "skillDistributor": {
+                        "component": "Overdose_Cache/js/view/skill-distributor",
+                        "template": "Overdose_Cache/skill-distributor",
+                        "attackPoints": 0,
+                        "defensePoints": 0,
+                        "speedPoints": 0
+                    }
+                }
+            }
+        }
+    }
+</script>

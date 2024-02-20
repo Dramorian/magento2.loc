@@ -7,11 +7,24 @@
                    name="homepage.block.cache.stuff"
                    template="Overdose_Cache::cache-show-off.phtml"
                    cacheable="false"
-            after="homepage.block">
+                   after="homepage.block">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Overdose\Cache\ViewModel\Cache</argument>
                 </arguments>
             </block>
+
+            <block name="skillpoints.distribution"
+                   template="Overdose_Cache::skill-distributor.phtml"
+                   cacheable="false"
+                   after="homepage.block.cache.stuff">
+            </block>
+
+            <block name="seat.reservation"
+                   template="Overdose_Cache::seat-reservation.phtml"
+                   cacheable="false"
+                   after="skillpoints.distribution">
+            </block>
+
         </referenceContainer>
     </body>
 </page>

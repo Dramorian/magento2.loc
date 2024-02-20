@@ -1,0 +1,18 @@
+<div id="seat-reservation" data-bind="scope: 'seatReservation'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#seat-reservation": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "seatReservation": {
+                        "component": "Overdose_Cache/js/view/seat-reservation",
+                        "template": "Overdose_Cache/seat-reservation"
+                    }
+                }
+            }
+        }
+    }
+</script>
