@@ -7,6 +7,7 @@ use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Overdose\LessonOne\Api\Data\FriendInterface;
 use Overdose\LessonOne\Api\FriendRepositoryInterface;
 
 class FriendRepository implements FriendRepositoryInterface
@@ -114,13 +115,17 @@ class FriendRepository implements FriendRepositoryInterface
     {
         try {
             $model = $this->friendsFactory->create();
-            $this->friendsResourceModel->load($model, $id);
+            $this->friendsResourceModel->load($model, $id, FriendInterface::FIELD_NAME_ID);
 
-            return $model;
+            if (!empty($model->getData())) {
+                return $model;
+            }
+
         } catch (Exception $e) {
-            throw new NoSuchEntityException(__("Sorry, I can't find your friend with such id =("));
         }
+        throw new NoSuchEntityException(__("There is no friends record with id of %1", $id));
     }
+
 
     /**
      * @inheritDoc
