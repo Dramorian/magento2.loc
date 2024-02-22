@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="Overdose\AdminPanel\Model\ResourceModel\Grid\Collection\Friends"
+    <virtualType name="Overdose\AdminPanel\Model\ResourceModel\Grid\Collection\FriendsVirtual"
                  type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">overdose_lesson_one</argument>
@@ -15,11 +15,12 @@
             </argument>
         </arguments>
     </virtualType>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="overdose_friends_listing_data_source" xsi:type="string">
-                    Overdose\AdminPanel\Model\ResourceModel\Grid\Collection\Friends
+                    Overdose\AdminPanel\Model\ResourceModel\Grid\Collection\FriendsVirtual
                 </item>
             </argument>
         </arguments>

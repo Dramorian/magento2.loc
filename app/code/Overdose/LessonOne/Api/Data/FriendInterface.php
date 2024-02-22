@@ -13,7 +13,6 @@ interface FriendInterface
     public const FIELD_NAME_CREATED_AT = 'created_at';
     public const FIELD_NAME_UPDATED_AT = 'updated_at';
 
-
     /**
      * @return int
      */
@@ -61,5 +60,4 @@ interface FriendInterface
      * @return string
      */
     public function getUpdatedAt();
-
 }

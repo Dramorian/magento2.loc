@@ -3,12 +3,20 @@
 namespace Overdose\LessonOne\Model;
 
 use Exception;
+use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Reflection\DataObjectProcessor;
+use Overdose\LessonOne\Api\Data\AskQuestionInterfaceFactory;
 use Overdose\LessonOne\Api\Data\FriendInterface;
+use Overdose\LessonOne\Api\Data\FriendSearchResultsInterfaceFactory;
 use Overdose\LessonOne\Api\FriendRepositoryInterface;
+use Overdose\LessonOne\Model\ResourceModel\Collection\Friends;
+use Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory;
 
 class FriendRepository implements FriendRepositoryInterface
 {
@@ -39,31 +47,55 @@ class FriendRepository implements FriendRepositoryInterface
     protected $collectionProcessor;
 
     /**
-     * @var \Magento\Framework\Api\Search\SearchResultInterfaceFactory
+     * @var FriendSearchResultsInterfaceFactory
      */
     protected $searchResultFactory;
 
     /**
+     * @var FriendInterfaceFactory
+     */
+    protected $dataFriendFactory;
+
+    /**
+     * @var DataObjectHelper
+     */
+    protected $dataObjectHelper;
+
+    /**
+     * @var DataObjectProcessor
+     */
+    protected $dataObjectProcessor;
+
+    /**
      * Friend Repository constructor
      *
-     * @param \Overdose\LessonOne\Model\FriendsFactory $friendsFactory
+     * @param FriendsFactory $friendsFactory
      * @param \Overdose\LessonOne\Model\ResourceModel\Friends $friendsResourceModel
-     * @param \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory $friendsCollectionFactory
-     * @param \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface $collectionProcessor
-     * @param \Magento\Framework\Api\Search\SearchResultInterfaceFactory $searchResultFactory
+     * @param FriendsFactory $friendsCollectionFactory
+     * @param AskQuestionInterfaceFactory $dataFriendFactory
+     * @param CollectionProcessorInterface $collectionProcessor
+     * @param FriendSearchResultsInterfaceFactory $searchResultFactory
+     * @param DataObjectHelper $dataObjectHelper
+     * @param DataObjectProcessor $dataObjectProcessor
      */
     public function __construct(
         \Overdose\LessonOne\Model\FriendsFactory                           $friendsFactory,
         \Overdose\LessonOne\Model\ResourceModel\Friends                    $friendsResourceModel,
         \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory  $friendsCollectionFactory,
+        \Overdose\LessonOne\Api\Data\FriendInterfaceFactory           $dataFriendFactory,
         \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface $collectionProcessor,
-        \Magento\Framework\Api\Search\SearchResultInterfaceFactory         $searchResultFactory
+        \Overdose\LessonOne\Api\Data\FriendSearchResultsInterfaceFactory   $searchResultFactory,
+        \Magento\Framework\Api\DataObjectHelper                            $dataObjectHelper,
+        \Magento\Framework\Reflection\DataObjectProcessor                  $dataObjectProcessor
     ) {
         $this->friendsFactory = $friendsFactory;
         $this->friendsResourceModel = $friendsResourceModel;
         $this->friendsCollectionFactory = $friendsCollectionFactory;
+        $this->dataFriendFactory = $dataFriendFactory;
         $this->collectionProcessor = $collectionProcessor;
         $this->searchResultFactory = $searchResultFactory;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->dataObjectProcessor = $dataObjectProcessor;
     }
 
     /**
@@ -128,21 +160,49 @@ class FriendRepository implements FriendRepositoryInterface
 
 
     /**
-     * @inheritDoc
+     * @param SearchCriteriaInterface $criteria
+     * @return Friends
      */
-    public function getList($searchCriteria)
+    public function getList(SearchCriteriaInterface $criteria)
     {
+        $searchResults = $this->searchResultFactory->create();
+        $searchResults->setSearchCriteria($criteria);
+
         $collection = $this->friendsCollectionFactory->create();
-
-        $this->collectionProcessor->process($searchCriteria, $collection);
-
-        $searchResult = $this->searchResultFactory->create();
-
-        $searchResult->setSearchCriteria($searchCriteria)
-            ->setTotalCount($collection->getSize())
-            ->setItems($collection->getItems());
-
-        return $searchResult;
+        foreach ($criteria->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition = $filter->getConditionType() ?: 'eq';
+                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+            }
+        }
+        $searchResults->setTotalCount($collection->getSize());
+        $sortOrders = $criteria->getSortOrders();
+        if ($sortOrders) {
+            foreach ($sortOrders as $sortOrder) {
+                $collection->addOrder(
+                    $sortOrder->getField(),
+                    ($sortOrder->getDirection() === SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+                );
+            }
+        }
+        $collection->setCurPage($criteria->getCurrentPage());
+        $collection->setPageSize($criteria->getPageSize());
+        $friends = [];
+        /** @var \Overdose\LessonOne\Model\Friends $friendsModel */
+        foreach ($collection as $friendsModel) {
+            $friendsData = $this->dataFriendFactory->create();
+            $this->dataObjectHelper->populateWithArray(
+                $friendsData,
+                $friendsModel->getData(),
+                FriendInterface::class
+            );
+            $friends[] = $this->dataObjectProcessor->buildOutputDataArray(
+                $friendsData,
+                FriendInterface::class
+            );
+        }
+        $searchResults->setItems($friends);
+        return $searchResults;
     }
 
     /**

@@ -8,7 +8,8 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/overdose/friend/list" method="GET">
+
+    <route url="/V1/overdose/friend/search" method="GET">
         <service class="Overdose\LessonOne\Api\FriendRepositoryInterface" method="getList"/>
         <resources>
             <resource ref="anonymous"/>
