@@ -2,13 +2,15 @@
 
 namespace Overdose\AdminPanel\Controller\Adminhtml\Friend;
 
+use Magento\Framework\Controller\ResultFactory;
+
 class Edit extends Index
 {
     public function execute()
     {
-        $adminPage = $this->resultFactory->create('page');
-        $adminPage->getConfig()->getTitle()->prepend(__('Aloha'));
+        $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        return $adminPage;
+        $page->getConfig()->getTitle()->prepend(__("New Friend"));
+        return $page;
     }
 }

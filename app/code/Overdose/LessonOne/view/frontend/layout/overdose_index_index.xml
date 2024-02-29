@@ -11,8 +11,8 @@
                 </arguments>
             </block>
 
-            <block class="Overdose\LessonOne\Block\Index" name="friend_pagination"
-                   template="Overdose_LessonOne::index.phtml" cacheable="false">
+            <block class="Overdose\LessonOne\Block\FriendPager" name="friend_pagination"
+                   template="Overdose_LessonOne::pager.phtml" cacheable="false">
             </block>
 
         </referenceContainer>

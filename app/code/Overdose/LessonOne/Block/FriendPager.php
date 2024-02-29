@@ -9,7 +9,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Theme\Block\Html\Pager;
 
-class Index extends Template
+class FriendPager extends Template
 {
     /**
      * @var \Overdose\LessonOne\Model\ResourceModel\Collection\FriendsFactory
