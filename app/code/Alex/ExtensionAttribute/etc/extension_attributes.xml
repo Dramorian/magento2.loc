@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Alex\AskQuestion\Api\Data\AskQuestionInterface">
+        <attribute code="website_id" type="int"/>
+        <attribute code="website_ids" type="int[]"/>
+    </extension_attributes>
+</config>

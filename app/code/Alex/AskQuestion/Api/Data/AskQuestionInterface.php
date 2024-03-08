@@ -2,11 +2,13 @@
 
 namespace Alex\AskQuestion\Api\Data;
 
+use Magento\Framework\Api\ExtensibleDataInterface;
+
 /**
  * Ask Question interface.
  * @api
  */
-interface AskQuestionInterface
+interface AskQuestionInterface extends ExtensibleDataInterface
 {
     /**
      * Get ID
@@ -149,4 +151,14 @@ interface AskQuestionInterface
      * @return AskQuestionInterface
      */
     public function setStoreId($storeId);
+
+    /**
+     * @return \Alex\AskQuestion\Api\Data\AskQuestionExtensionInterface
+     */
+    public function getExtensionAttributes();
+
+    /**
+     * @return void
+     */
+    public function setExtensionAttributes(\Alex\AskQuestion\Api\Data\AskQuestionExtensionInterface $extensionAttributes): void;
 }

@@ -2,17 +2,22 @@
 
 namespace Alex\AskQuestion\Model;
 
+use Alex\AskQuestion\Api\Data\AskQuestionExtensionInterface;
+use Alex\AskQuestion\Api\Data\AskQuestionExtensionInterfaceFactory;
+use Alex\AskQuestion\Api\Data\AskQuestionInterface;
 use Alex\AskQuestion\Model\ResourceModel\AskQuestion as AskQuestionResource;
+use Magento\Framework\Api\AttributeValueFactory;
+use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 use Magento\Store\Model\StoreManagerInterface;
-use Alex\AskQuestion\Api\Data\AskQuestionInterface;
 
-class AskQuestion extends AbstractModel implements AskQuestionInterface
+class AskQuestion extends AbstractExtensibleModel implements AskQuestionInterface
 {
     public const STATUS_PENDING = 'Pending';
 
@@ -23,25 +28,17 @@ class AskQuestion extends AbstractModel implements AskQuestionInterface
      */
     private StoreManagerInterface $storeManager;
 
-    /**
-     * AskQuestion model constructor
-     *
-     * @param Context $context
-     * @param Registry $registry
-     * @param StoreManagerInterface $storeManager
-     * @param AbstractResource|null $resource
-     * @param AbstractDb|null $resourceCollection
-     * @param array $data
-     */
     public function __construct(
-        Context               $context,
-        Registry              $registry,
-        StoreManagerInterface $storeManager,
-        AbstractResource      $resource = null,
-        AbstractDb            $resourceCollection = null,
-        array                 $data = []
+        Context                    $context,
+        Registry                   $registry,
+        ExtensionAttributesFactory $extensionFactory,
+        AttributeValueFactory      $customAttributeFactory,
+        StoreManagerInterface      $storeManager,
+        AbstractResource           $resource = null,
+        AbstractDb                 $resourceCollection = null,
+        array                      $data = []
     ) {
-        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $resource, $resourceCollection, $data);
         $this->storeManager = $storeManager;
     }
 
@@ -218,5 +215,26 @@ class AskQuestion extends AbstractModel implements AskQuestionInterface
         }
 
         return parent::beforeSave();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return \Alex\AskQuestion\Api\Data\AskQuestionExtensionInterface|null
+     */
+    public function getExtensionAttributes()
+    {
+        return $this->_getExtensionAttributes();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param \Alex\AskQuestion\Api\Data\AskQuestionExtensionInterface $extensionAttributes
+     * @return $this
+     */
+    public function setExtensionAttributes(\Alex\AskQuestion\Api\Data\AskQuestionExtensionInterface $extensionAttributes): void
+    {
+        $this->_setExtensionAttributes($extensionAttributes);
     }
 }
